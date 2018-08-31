@@ -1,0 +1,19 @@
+{
+  "name": "calcul-mensuel-pajemploi",
+  "version": "1.0.0",
+  "description": "Application de calcul pour remplissage de la déclaration mensuelle Pajemploi d'emploi d'une assistante maternelle agréée",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "npx nodemon"
+  },
+  "author": "tibidibtibo",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "node-xlsx": "^0.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
