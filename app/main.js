@@ -1,32 +1,15 @@
-var fs = require('fs');
-var path = require('path');
+'use strict';
 
-var _ = require('lodash');
-var xlsx = require('node-xlsx').default;
 var moment = require('moment');
+var _ = require('lodash');
+
 var dateUtils = require('./date.utils').dateUtils;
+var configuration = require('./configuration').configuration;
+var excelReader = require('./excel-reader').excelReader;
 
-const workSheetsFromFile = xlsx.parse(fs.readFileSync(path.resolve(__dirname, "../specifications/formulaire_mensuel.xlsx")));
+const data = excelReader.readExcelFile("../specifications/Suivi garde Louise et Joséphine.xlsx");
 
-const HEADERS = {
-    date: 0,
-    enfant: 1,
-    heureArriveeNormale: 2,
-    heureDepartNormale: 3,
-    heureArriveeCompl: 4,
-    heureDepartCompl: 5,
-    dejeuner: 6,
-    gouter: 7,
-    descriptionTrajets: 8,
-    kilometrageTrajets: 9,
-    headerOffset: 2
-};
+console.log(data);
 
-var feuille1 = workSheetsFromFile[0];
-_.forEach(feuille1.data, function (ligne, key) {
-    if (key >= HEADERS.headerOffset) {
-        console.log( dateUtils.excelDateToJSDate(ligne[HEADERS.date]) );
-    }
-});
 
 
