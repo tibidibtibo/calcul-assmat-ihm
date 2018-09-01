@@ -1,7 +1,7 @@
 'use strict';
 
 // UTILS
-var dateUtils = require('./date.utils').dateUtils;
+var dateUtils = require('../utils/date.utils').dateUtils;
 
 const heureDebutEcole = "08:50";
 const heureFinEcole = "16:45";
