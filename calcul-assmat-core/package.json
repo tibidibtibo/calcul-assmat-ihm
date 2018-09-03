@@ -1,8 +1,8 @@
 {
-  "name": "calcul-assmat",
+  "name": "calcul-assmat-core",
   "version": "1.0.0",
   "description": "Application de calcul pour remplissage de la déclaration mensuelle d'emploi d'une assistante maternelle agréée",
-  "main": "calcul-assmat-core/api/server.js",
+  "main": "api/server.js",
   "scripts": {
     "run-server": "npx nodemon"
   },
