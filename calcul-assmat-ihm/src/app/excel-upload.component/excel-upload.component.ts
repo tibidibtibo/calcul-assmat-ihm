@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Observable } from "rxjs";
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 const URL = 'http://localhost:3000/calcul/';
 
@@ -67,22 +65,33 @@ export class ExcelUploadComponent {
 
   public uploadResponse: String = "";
   public monthsList: Array<Object> = MONTHS;
-  public
+
+  fileToUpload: File = null;
+
   constructor(private http: HttpClient) { }
 
   fileChange(event, monthSelected): void {
 
-
     const fileList: FileList = event.target.files;
 
+
     if (fileList.length > 0) {
-      const file = fileList[0];
-      console.log("Envoi du fichier : " + file.name + " - Mois sélectionné : " + monthSelected);
+      this.fileToUpload = fileList[0];
+      console.log("Envoi du fichier : " + this.fileToUpload.name + " - Mois sélectionné : " + monthSelected);
 
+      let headers = new HttpHeaders();
+      headers.set('Content-Type', null);
+      headers.set('Accept', "multipart/form-data");
+
+      let params = new HttpParams();
+
+      console.log(this.fileToUpload);
       const formData = new FormData();
-      formData.append('file', file, file.name);
+      formData.append('file', this.fileToUpload, this.fileToUpload.name);
 
-      this.http.post(URL + monthSelected, formData, {})
+      console.log(formData);
+
+      this.http.post(URL + monthSelected, formData, { params, headers })
         .toPromise()
         .then(res => {
           console.log(res);

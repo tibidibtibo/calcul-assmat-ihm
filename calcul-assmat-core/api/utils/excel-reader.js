@@ -34,7 +34,8 @@ function readExcelFile( filePath ) {
 }
 
 exports.excelReader = {
-    readExcelFile: readExcelFile
+    readExcelFile: readExcelFile,
+    headers: HEADERS
 };
 
 
