@@ -2,12 +2,20 @@
   <div class="col-sm-6">
 
     <form>
-      <input type="file" ng2FileSelect [uploader]="uploader">
-      <button class="btn btn-primary" (click)="uploader.uploadAll()">Calculer</button>
+      <div class="form-group">
+        <label for="mois">Mois du calcul</label>
+        <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected">
+          <option *ngFor="let month of monthsList" [ngValue]="month.code">{{month.libelle}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="file" id="file" (change)="fileChange($event, monthSelected)">
+      </div>
     </form>
 
     <div class="container">
       <p>{{uploadResponse}}</p>
     </div>
+
   </div>
 </div>

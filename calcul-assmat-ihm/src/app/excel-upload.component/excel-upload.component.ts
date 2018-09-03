@@ -1,8 +1,61 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { FileUploader, FileSelectDirective  } from 'ng2-file-upload';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-const URL = 'http://localhost:3000/calcul/08';
+import { Observable } from "rxjs";
+
+const URL = 'http://localhost:3000/calcul/';
+
+const MONTHS = [
+  {
+    "code": "01",
+    "libelle": "Janvier"
+  },
+  {
+    "code": "02",
+    "libelle": "Février"
+  },
+  {
+    "code": "03",
+    "libelle": "Mars"
+  },
+  {
+    "code": "04",
+    "libelle": "Avril"
+  },
+  {
+    "code": "05",
+    "libelle": "Mai"
+  },
+  {
+    "code": "06",
+    "libelle": "Juin"
+  },
+  {
+    "code": "07",
+    "libelle": "Juillet"
+  },
+  {
+    "code": "08",
+    "libelle": "Août"
+  },
+  {
+    "code": "09",
+    "libelle": "Septembre"
+  },
+  {
+    "code": "10",
+    "libelle": "Octobre"
+  },
+  {
+    "code": "11",
+    "libelle": "Novembre"
+  },
+  {
+    "code": "12",
+    "libelle": "Décembre"
+  }
+];
 
 @Component({
   selector: 'excel-upload',
@@ -10,19 +63,31 @@ const URL = 'http://localhost:3000/calcul/08';
   styleUrls: ['./excel-upload.component.css']
 })
 
-export class ExcelUploadComponent implements OnInit {
+export class ExcelUploadComponent {
 
-  public uploader:FileUploader = new FileUploader({url: URL});
+  public uploadResponse: String = "";
+  public monthsList: Array<Object> = MONTHS;
+  public
+  constructor(private http: HttpClient) { }
 
-  uploadResponse: string = "";
+  fileChange(event, monthSelected): void {
 
-  ngOnInit() {
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-         console.log('ImageUpload:uploaded:', item, status, response);
-         this.uploadResponse = response;
-         console.log(this.uploadResponse);
-         alert("!")
-     };
- }
+
+    const fileList: FileList = event.target.files;
+
+    if (fileList.length > 0) {
+      const file = fileList[0];
+      console.log("Envoi du fichier : " + file.name + " - Mois sélectionné : " + monthSelected);
+
+      const formData = new FormData();
+      formData.append('file', file, file.name);
+
+      this.http.post(URL + monthSelected, formData, {})
+        .toPromise()
+        .then(res => {
+          console.log(res);
+          this.uploadResponse = res.toString();
+        });
+    }
+  }
 }
