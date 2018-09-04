@@ -3,17 +3,33 @@
 // LIBRAIRIES
 var moment = require('moment-timezone');
 
-function excelDateToJSDate(excelSerialDate) {
-    const daysBeforeUnixEpoch = 70 * 365 + 19;
-    const hour = 60 * 60 * 1000;
-    return moment(new Date(Math.round((excelSerialDate - daysBeforeUnixEpoch) * 24 * hour) + 12 * hour)).zone('+0100').toDate();
+function excelDateToDate(excelSerialDate) {
+    if(excelSerialDate) {
+        var date = new Date(Math.round((excelSerialDate - (25567 + 2)) * 86400) * 1000);
+        return moment(date).tz("Europe/London");
+    } else {
+        return null;
+    }
+}
+
+function excelHourToDate(excelSerialHour) {
+    var decimalHour = Math.round(moment.duration(excelSerialHour * 1440 / 60) * 100) / 100;
+    var hour = ('0' + Math.floor(decimalHour) % 24).slice(-2);
+    var minutes = ((decimalHour % 1)*60 + '0').slice(0, 2);
+    return hour + ':' + minutes;
 }
 
 function toHour(heureTexte) {
     return moment(heureTexte, "hh:mm").toDate();
 }
 
+function toDate( date ) {
+    return moment(date).format('LL');
+}
+
 exports.dateUtils = {
-    excelDateToJSDate: excelDateToJSDate,
-    toHour: toHour
+    excelDateToDate: excelDateToDate,
+    excelHourToDate: excelHourToDate,
+    toHour: toHour,
+    toDate: toDate
 };
