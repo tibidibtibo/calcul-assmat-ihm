@@ -8,22 +8,22 @@ var configuration = require('../configuration/configuration').configuration;
 
 const LOUISE = "Louise", JOSEPHINE = "Joséphine";
 
-exports.calculMensuel = function(req, res) {
+exports.calculMensuel = function (req, res) {
     const month = req.params.mois;
     console.log("Calcul pour le mois " + month);
 
     const data = excelReader.readExcelFile("../../../specifications/Suivi garde Louise et Joséphine.xlsx");
 
-    var listeGlobale = _.map( data, ligne => {
+    var listeGlobale = _.map(data, ligne => {
         return {
             "horodatageSaisie": dateUtils.excelDateToDate(ligne[excelReader.headers.horodatageSaisie]),
             "dateSaisie": dateUtils.excelDateToDate(ligne[excelReader.headers.dateSaisie]),
             "qui": identifierEnfants(ligne[excelReader.headers.qui]),
-            "action":  ligne[excelReader.headers.action],	
-            "heureAction":  dateUtils.excelHourToDate(ligne[excelReader.headers.heureAction]),
-            "repas":  ligne[excelReader.headers.repas],
-            "deplacements":  ligne[excelReader.headers.deplacements],	
-            "autreDeplacementKm":  ligne[excelReader.headers.autreDeplacementKm]
+            "action": ligne[excelReader.headers.action],
+            "heureAction": dateUtils.excelHourToDate(ligne[excelReader.headers.heureAction]),
+            "repas": ligne[excelReader.headers.repas],
+            "deplacements": ligne[excelReader.headers.deplacements],
+            "autreDeplacementKm": ligne[excelReader.headers.autreDeplacementKm]
         }
     });
 
@@ -32,33 +32,31 @@ exports.calculMensuel = function(req, res) {
 
     res.json({
         JOSEPHINE: horairesJosephine,
-        LOUISE: horairesLouise}
+        LOUISE: horairesLouise
+    }
     );
 };
 
 function selectParPrenom(liste, identifiant) {
-    var listeClone = _.cloneDeep(liste);
-    return _.map(_.filter( listeClone , ligne => {
-        return _.find( ligne.qui, prenom => {
+    return _.map(_.filter(_.cloneDeep(liste), ligne => {
+        return _.find(ligne.qui, prenom => {
             return prenom === identifiant;
         })
-    }), ligne => {
-        ligne.qui = identifiant;
-        return ligne;
+    }), row => {
+        row.qui = identifiant;
+        return row;
     });
 }
 
 function assemblerHoraires(listeHoraires) {
 
-    var clonedListe = _.cloneDeep(listeHoraires );
     var horaires = {};
 
-    clonedListe = clonedListe.forEach( ligne => {
-        
-        var key = dateUtils.toDate(ligne.dateSaisie ? ligne.dateSaisie : ligne.horodatageSaisie);
-        console.log(key);
+    _.forEach( _.cloneDeep(listeHoraires), ligne => {
 
-        if(!horaires[key]) {
+        var key = dateUtils.toDate(ligne.dateSaisie ? ligne.dateSaisie : ligne.horodatageSaisie);
+        if (!horaires[key]) {
+
             var horaireAD = {
                 "A": findHoraire(ligne, "Arrivée"),
                 "D": findHoraire(ligne, "Départ")
@@ -71,14 +69,17 @@ function assemblerHoraires(listeHoraires) {
                 "horaires": horaireAD
             };
         } else {
-            var value = horaires[key];
-            if(!value.horaires.A) {
-                value.horaires.A = findHoraire(ligne, "Arrivée");
+            if (!horaires[key].horaires.A) {
+                horaires[key].horaires.A = findHoraire(ligne, "Arrivée");
             }
-            if(!value.horaires.D) {
-                value.horaires.D = findHoraire(ligne, "Départ");
+            if (!horaires[key].horaires.D) {
+                horaires[key].horaires.D = findHoraire(ligne, "Départ");
             }
-            horaires[key] = value;
+            if(!horaires[key].repas) {
+                horaires[key].repas = ligne.repas;
+            }
+            // horaires[key].deplacements = findHoraire(ligne, "Arrivée");
+            // horaires[key].autreDeplacementKm = findHoraire(ligne, "Arrivée");
         }
     });
     return horaires;
@@ -88,6 +89,6 @@ function findHoraire(ligne, typeHoraire) {
     return (ligne.action === typeHoraire) ? ligne.heureAction : null;
 }
 
-function identifierEnfants( text ) {
-    return text.replace(/ /g,'').split(',');
+function identifierEnfants(text) {
+    return text.replace(/ /g, '').split(',');
 }
