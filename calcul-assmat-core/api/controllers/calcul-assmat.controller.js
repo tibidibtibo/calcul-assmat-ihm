@@ -6,6 +6,7 @@ var dateUtils = require('../utils/date.utils').dateUtils;
 var excelReader = require('../utils/excel-reader').excelReader;
 var configuration = require('../configuration/configuration').configuration;
 
+const LOUISE = "Louise", JOSEPHINE = "Joséphine";
 
 exports.calculMensuel = function(req, res) {
     const month = req.params.mois;
@@ -26,13 +27,13 @@ exports.calculMensuel = function(req, res) {
         }
     });
 
-    var listeLouise = selectParPrenom(listeGlobale, "Louise");
-    var listeJosephine = selectParPrenom(listeGlobale, "Joséphine");
+    var horairesLouise = assemblerHoraires(selectParPrenom(listeGlobale, LOUISE));
+    var horairesJosephine = assemblerHoraires(selectParPrenom(listeGlobale, JOSEPHINE));
 
-    var horairesLouise = assemblerHoraires(listeLouise);
-    var horairesJosephine = assemblerHoraires(listeJosephine);
-
-    res.json(horairesJosephine);
+    res.json({
+        JOSEPHINE: horairesJosephine,
+        LOUISE: horairesLouise}
+    );
 };
 
 function selectParPrenom(liste, identifiant) {
@@ -49,11 +50,13 @@ function selectParPrenom(liste, identifiant) {
 
 function assemblerHoraires(listeHoraires) {
 
+    var clonedListe = _.cloneDeep(listeHoraires );
     var horaires = {};
 
-    _.forEach( listeHoraires, ligne => {
-
+    clonedListe = clonedListe.forEach( ligne => {
+        
         var key = dateUtils.toDate(ligne.dateSaisie ? ligne.dateSaisie : ligne.horodatageSaisie);
+        console.log(key);
 
         if(!horaires[key]) {
             var horaireAD = {
@@ -78,7 +81,6 @@ function assemblerHoraires(listeHoraires) {
             horaires[key] = value;
         }
     });
-
     return horaires;
 }
 
