@@ -5,12 +5,13 @@ var _ = require('lodash');
 var dateUtils = require('../utils/date.utils').dateUtils;
 var excelReader = require('../utils/excel-reader').excelReader;
 var configuration = require('../configuration/configuration').configuration;
+const logger = require('simple-node-logger').createSimpleLogger();
 
 const LOUISE = "Louise", JOSEPHINE = "Joséphine";
 
 exports.calculMensuel = function (req, res) {
     const month = req.params.mois;
-    console.log("Calcul pour le mois " + month);
+    logger.info("Calcul pour le mois " + month);
 
     const data = excelReader.readExcelFile("../../../specifications/Suivi garde Louise et Joséphine.xlsx");
 
@@ -30,11 +31,10 @@ exports.calculMensuel = function (req, res) {
     var horairesLouise = assemblerHoraires(selectParPrenom(listeGlobale, LOUISE));
     var horairesJosephine = assemblerHoraires(selectParPrenom(listeGlobale, JOSEPHINE));
 
-    res.json({
-        JOSEPHINE: horairesJosephine,
-        LOUISE: horairesLouise
-    }
-    );
+    var response = {};
+    response[JOSEPHINE] = horairesJosephine;
+    response[LOUISE] = horairesLouise;
+    res.json(response);
 };
 
 function selectParPrenom(liste, identifiant) {
@@ -63,11 +63,11 @@ function assemblerHoraires(listeHoraires) {
             };
             horaires[key] = {
                 "qui": ligne.qui,
-                "repas": ligne.repas,
-                "deplacements": ligne.deplacements,
-                "autreDeplacementKm": ligne.autreDeplacementKm,
                 "horaires": horaireAD
             };
+            horaires[key].repas = ligne.repas;
+            horaires[key].deplacements = ligne.deplacements;
+            horaires[key].autreDeplacementKm = ligne.autreDeplacementKm;
         } else {
             if (!horaires[key].horaires.A) {
                 horaires[key].horaires.A = findHoraire(ligne, "Arrivée");
@@ -78,8 +78,12 @@ function assemblerHoraires(listeHoraires) {
             if(!horaires[key].repas) {
                 horaires[key].repas = ligne.repas;
             }
-            // horaires[key].deplacements = findHoraire(ligne, "Arrivée");
-            // horaires[key].autreDeplacementKm = findHoraire(ligne, "Arrivée");
+            if(!horaires[key].deplacements) {
+                horaires[key].deplacements = ligne.deplacements;
+            }
+            if(!horaires[key].autreDeplacementKm) {
+                horaires[key].autreDeplacementKm = ligne.autreDeplacementKm;
+            }
         }
     });
     return horaires;

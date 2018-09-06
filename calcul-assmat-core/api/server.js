@@ -1,9 +1,10 @@
 'use strict';
 
-var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 3000,
-  bodyParser = require('body-parser');
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 3000;
+var bodyParser = require('body-parser');
+const logger = require('simple-node-logger').createSimpleLogger();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -22,4 +23,4 @@ routes(app); //register the route
 
 app.listen(port);
 
-console.log('Serveur calcul-assmat-core RESTful API démarré sur le port : ' + port);
+logger.info('"calcul-assmat-core" RESTful API démarrée sur le port "' + port + '"');

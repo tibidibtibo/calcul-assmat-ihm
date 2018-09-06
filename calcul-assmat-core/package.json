@@ -14,7 +14,8 @@
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
-    "node-xlsx": "^0.12.1"
+    "node-xlsx": "^0.12.1",
+    "simple-node-logger": "^0.93.37"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
