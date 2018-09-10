@@ -17,29 +17,98 @@ exports.calculMensuel = function (req, res) {
     const data = excelReader.readExcelFile("../../../specifications/Suivi garde Louise et Joséphine.xlsx");
 
     var donneesParDate = mapperParDate(data, month);
-    var resultat = mapperParPersonne(dissocierTrajets(donneesParDate));
+    var donneesAvecFraisParJour = dissocierFraisJournaliers(donneesParDate);
+    var donneesParPersonne = mapperParPersonne(donneesAvecFraisParJour);
+    var donneesParPersonneHoraires = mapperParHoraires(donneesParPersonne);
 
-    res.json(resultat); 
+    res.json(donneesParPersonneHoraires); 
 
 };
 
-function dissocierTrajets(data) {
+function mapperParHoraires(data) {
+    var clonedData = _.cloneDeep(data);
+    for(var key in clonedData) {
+        data[key].horaires = groupByHoraires(clonedData[key].horaires);
+    }
+    return data;
+}
+
+function groupByHoraires(horaires) {
+    var horairesParPersonne = _.groupBy(horaires, 'qui');
+    for(var key in horairesParPersonne) {
+        var arrivee = getHoraire(horairesParPersonne[key], "Arrivée");
+        var depart = getHoraire(horairesParPersonne[key], "Départ");
+        horairesParPersonne[key] = {
+            arrivee: arrivee,
+            depart: depart
+        }
+    }
+    return horairesParPersonne;
+}
+
+function getHoraire(horaires, typeHoraire) {
+    var horaire = _.find(horaires, horaire => {
+        return horaire.action === typeHoraire;
+    });
+    return horaire ? horaire.heureAction : null;
+}
+
+function dissocierFraisJournaliers(data) {
+    var clonedData = _.cloneDeep(data);
+    for(var key in clonedData) {
+        data[key].repas = extraireFraisJournalier(clonedData[key].horaires, "repas", true);
+        data[key].deplacements = extraireFraisJournalier(clonedData[key].horaires, "deplacements", true);
+        data[key].autreDeplacementKm = extraireFraisJournalier(clonedData[key].horaires, "autreDeplacementKm", false);
+    }
+    return clearFraisJournaliersHoraires(data);
+}
+
+function clearFraisJournaliersHoraires(data) {
     for(var key in data) {
-        _.forEach(data[key], ligne => {
-            if(!data[key].repas) {
-                data[key].repas = ligne.repas ? splitListe(ligne.repas) : null;
-            } else {
-                if(ligne.repas) {
-                    data[key].repas.push(splitListe(ligne.repas));
-                }
-            }
+        data[key].horaires.forEach( horaire => {
+            delete horaire["repas"];
+            delete horaire["deplacements"];
+            delete horaire["autreDeplacementKm"];
         });
     }
     return data;
 }
 
+function extraireFraisJournalier(horaires, type, split) {
+    var frais = _.find(horaires, horaire => {
+        return horaire[type];
+    });
+    return (frais && frais[type]) ? split ? splitListe(frais[type]) : frais[type] : null;
+}
+
 function mapperParPersonne(data) {
+    var clonedData = _.cloneDeep(data);
+    for(var key in clonedData) {
+        data[key].horaires = flattenParPersonne(clonedData[key].horaires);
+    }
     return data;
+}
+
+function flattenParPersonne(horaires) {
+    var listeHoraires = [];
+    _.forEach(horaires, horaire => {
+        if(horaire.qui.length > 1) {
+            _.forEach(horaire.qui, personne => {
+                listeHoraires.push({
+                    qui: personne,
+                    action: horaire.action,
+                    heureAction: horaire.heureAction
+                });
+            });
+        } else {
+            listeHoraires.push({
+                qui: horaire.qui[0],
+                action: horaire.action,
+                heureAction: horaire.heureAction
+            });
+        }
+    });
+    return listeHoraires;
 }
 
 function mapperParDate(data, mois) {
@@ -56,7 +125,7 @@ function mapperParDate(data, mois) {
 
         if(stringDate && Number(mois) === (moment(jsDate).month() + 1)) {
             if(!resultat[stringDate]) {
-                resultat[stringDate] = [{
+                var horaires = [{
                     "qui": splitListe(ligne[excelReader.headers.qui]),
                     "action": ligne[excelReader.headers.action],
                     "heureAction": dateUtils.excelHourToDate(ligne[excelReader.headers.heureAction]),
@@ -64,8 +133,9 @@ function mapperParDate(data, mois) {
                     "deplacements": ligne[excelReader.headers.deplacements],
                     "autreDeplacementKm": ligne[excelReader.headers.autreDeplacementKm]
                 }];
+                resultat[stringDate] = { horaires: horaires };
             } else {
-                resultat[stringDate].push({
+                resultat[stringDate].horaires.push({
                     "qui": splitListe(ligne[excelReader.headers.qui]),
                     "action": ligne[excelReader.headers.action],
                     "heureAction": dateUtils.excelHourToDate(ligne[excelReader.headers.heureAction]),
@@ -81,10 +151,6 @@ function mapperParDate(data, mois) {
     return resultat;
 }
 
-function findHoraire(ligne, typeHoraire) {
-    return (ligne.action === typeHoraire) ? ligne.heureAction : null;
-}
-
 function splitListe(text) {
-    return text.replace(/ /g, '').split(',');
+    return text ? text.replace(/ /g, '').split(',') : null;
 }
