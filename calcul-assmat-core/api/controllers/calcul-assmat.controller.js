@@ -21,9 +21,106 @@ exports.calculMensuel = function (req, res) {
     var donneesParPersonne = mapperParPersonne(donneesAvecFraisParJour);
     var donneesParPersonneHoraires = mapperParHoraires(donneesParPersonne);
 
-    res.json(donneesParPersonneHoraires); 
+    var nbJours = calculerNbJours(donneesParPersonneHoraires);
+    var nbHeures = calculerNbHeure(donneesParPersonneHoraires);
+
+    var synthese = {
+        nbJours: nbJours.mois,
+        nbHeuresNormales: nbHeures.normales,
+        nbHeuresComplementaires: nbHeures.complementaires,
+        salaireHoraireNetHeureNormale: configuration.salaireNetHoraire + " €",
+        salaireNetTotal: calculerSalaireNetTotal(nbHeures) + " €",
+        indemnitesEntretien: calculerIndemnitesEntretien(nbJours) + " €",
+        // indemnitesRepas: calculerIndemnitesRepas(),
+        // indemnitesKm: calculerIndemnitesKm()
+    };
+
+    res.json({
+        synthese: synthese,
+        donneesHoraires: donneesParPersonneHoraires
+    }); 
 
 };
+
+function calculerIndemnitesEntretien(jours) {
+    return (jours.L + jours.J) * configuration.indemnitesEntretien;
+}
+
+function calculerSalaireNetTotal(heures) {
+    return (heures.normales + heures.complementaires) * configuration.salaireNetHoraire;
+}
+
+function calculerNbJours(donnees) {
+    return {
+        mois: Object.keys(donnees).length,
+        L: compterJours(donnees, "Louise"),
+        J: compterJours(donnees, "Joséphine")
+    }
+}
+
+function compterJours(donnees, prenom) {
+    var count = 0;
+    for(var key in donnees) {
+        if(donnees[key].horaires[prenom]) {
+            count++;
+        }
+    }
+    return count;
+}
+
+function calculerNbHeure(donnees) {
+    var heuresLouise = calculerNbHeureEnfant(donnees, "Louise");
+    var heuresJosephine = calculerNbHeureEnfant(donnees, "Joséphine");
+    return {
+        normales: heuresLouise.normales + heuresJosephine.normales,
+        complementaires: heuresLouise.complementaires + heuresJosephine.complementaires
+    }
+}
+
+function calculerNbHeureEnfant(donnees, prenom) {
+    var heures = {
+        normales: 0,
+        complementaires: 0
+    };
+    for(var key in donnees) {
+        if(donnees[key].horaires[prenom]) {
+            var jour = moment(key, "DD-MM-YYYY").isoWeekday();
+            var heuresNormalesConf = configuration.heuresNormales[prenom][jour];
+            var heuresReelles = calculerHeuresReelles(donnees[key].horaires[prenom], prenom);
+            var diffHeures = heuresReelles - heuresNormalesConf;
+            if(diffHeures > 0) {
+                heures.normales += heuresNormalesConf;
+                heures.complementaires += diffHeures;
+            } else {
+                heures.normales += heuresReelles;
+            }
+        }
+    }
+    return heures;
+}
+
+function calculerHeuresReelles(horaires, prenom) {
+    var heures = 0;
+    if(prenom === "Louise") {
+        if(horaires.arrivee) {
+            var debut = moment(horaires.arrivee, "HH:mm");
+            var fin = moment(configuration.heureDebutEcole, "HH:mm");
+            return fin.diff(debut, 'minutes') / 60;
+        }
+        if(horaires.depart) {
+            var debut = moment(configuration.heureFinEcole, "HH:mm");
+            var fin = moment(horaires.depart, "HH:mm");
+            return fin.diff(debut, 'minutes') / 60;
+        }
+    }
+    if(prenom === "Joséphine") {
+        if(horaires.arrivee && horaires.depart) {
+            var debut = moment(horaires.arrivee, "HH:mm");
+            var fin = moment(horaires.depart, "HH:mm");
+            return fin.diff(debut, 'minutes') / 60;
+        }
+    }
+}
 
 function mapperParHoraires(data) {
     var clonedData = _.cloneDeep(data);

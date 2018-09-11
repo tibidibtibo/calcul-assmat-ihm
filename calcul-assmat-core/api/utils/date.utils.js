@@ -24,7 +24,7 @@ function toHour(heureTexte) {
 }
 
 function toDate( date ) {
-    return moment(date).format('LL');
+    return moment(date).tz("Europe/London").format("DD-MM-YYYY");
 }
 
 exports.dateUtils = {
