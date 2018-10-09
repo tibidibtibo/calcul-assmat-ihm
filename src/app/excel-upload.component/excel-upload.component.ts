@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-const URL = 'http://localhost:3000/calcul/';
+const URL = 'http://localhost:7777/api/calcul/2018/09/maternelle';
 
 const MONTHS = [
   {
