@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
-const URL = 'http://localhost:7777/api/calcul/2018/09/maternelle';
+import { CompilerConfig } from '@angular/compiler';
 
 const MONTHS = [
   {
@@ -79,10 +78,13 @@ export class ExcelUploadComponent {
       this.fileToUpload = fileList[0];
       console.log("Envoi du fichier : " + this.fileToUpload.name + " - Mois sélectionné : " + monthSelected);
 
-      let headers = new HttpHeaders();
-      headers.set('Content-Type', null);
-      headers.set('Accept', "multipart/form-data");
-
+      var headers = new HttpHeaders()
+        .set('Content-Type', 'multipart/form-data')
+        .set('Accept', 'multipart/form-data')
+        .set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, X-Auth-Token')
+        .set('Authorization', 'Basic ' + btoa('assmat:assmat'));
+        // .set('Access-Control-Allow-Origin', '*')
+        // .set('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS')
       let params = new HttpParams();
 
       console.log(this.fileToUpload);
@@ -91,12 +93,17 @@ export class ExcelUploadComponent {
 
       console.log(formData);
 
-      this.http.post(URL + monthSelected, formData, { params, headers })
-        .toPromise()
-        .then(res => {
-          console.log(res);
-          this.uploadResponse = res.toString();
+      const URL = 'http://localhost:7777/calcul/file/2018/' + monthSelected + '/maternelle';
+
+      this.http.post(URL, formData, { params, headers, withCredentials: true })
+        .subscribe(data => {
+          console.log(data);
         });
+        // .toPromise()
+        // .then(res => {
+        //   console.log(res);
+        //   this.uploadResponse = res.toString();
+        // });
     }
   }
 }
