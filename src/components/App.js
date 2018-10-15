@@ -1,8 +1,18 @@
 import React from 'react'
-import style from './app.css'
+
+import Header from './header/Header';
+import Footer from './footer/Footer';
+import Home from './home/Home';
 
 const App = () => {
-    return <div className={style.titre}>Hello React!</div>;
+    return (
+        <div>
+            <Header title="calcul-assmat-ihm" />
+            <Home />
+            <Footer />
+        </div>
+    );
+
 };
 
 export default App

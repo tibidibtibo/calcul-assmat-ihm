@@ -7,8 +7,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 module.exports = {
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
@@ -17,23 +16,32 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [
-                    {
-                        loader: "style-loader"
-                    },
-                    {
-                        loader: "css-loader",
-                        options: {
-                            modules: true,
-                            importLoaders: 1,
-                            localIdentName: "[name]_[local]_[hash:base64]",
-                            sourceMap: true,
-                            minimize: true
-                        }
-                    }
-                ]
+                loader: "style-loader!css-loader"
+            },
+            {
+                test: /\.png$/,
+                loader: "url-loader?limit=100000"
+            },
+            {
+                test: /\.jpg$/,
+                loader: "file-loader"
+            },
+            {
+                test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url?limit=10000&mimetype=application/font-woff'
+            },
+            {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url?limit=10000&mimetype=application/octet-stream'
+            },
+            {
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file'
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url?limit=10000&mimetype=image/svg+xml'
             }
-        
         ]
     },
     plugins: [htmlPlugin],
