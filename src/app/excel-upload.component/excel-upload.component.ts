@@ -93,7 +93,7 @@ export class ExcelUploadComponent {
 
       console.log(formData);
 
-      const URL = 'http://localhost:7777/calcul/file/2018/' + monthSelected + '/maternelle';
+      const URL = 'http://localhost:7777/calcul/file/2018/' + monthSelected + '/maternelle/';
 
       this.http.post(URL, formData, { params, headers, withCredentials: true })
         .subscribe(data => {
