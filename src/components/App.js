@@ -1,18 +1,17 @@
-import React from 'react'
+import React from "react";
 
-import Header from './header/Header';
-import Footer from './footer/Footer';
-import Home from './home/Home';
+import Header from "./header/Header";
+import Footer from "./footer/Footer";
+import Main from "./main/Main";
 
 const App = () => {
-    return (
-        <div>
-            <Header title="calcul-assmat-ihm" />
-            <Home />
-            <Footer />
-        </div>
+  return (
+    <div>
+        <Header title="Déclaration mensuelle d'Assistante Maternelle" />
+        <Main />
+        <Footer />
+    </div>
     );
-
 };
 
-export default App
+export default App;
