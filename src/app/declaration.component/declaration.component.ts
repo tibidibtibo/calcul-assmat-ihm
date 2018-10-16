@@ -3,56 +3,7 @@ import { Component } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-const MONTHS = [
-  {
-    "code": "01",
-    "libelle": "Janvier"
-  },
-  {
-    "code": "02",
-    "libelle": "Février"
-  },
-  {
-    "code": "03",
-    "libelle": "Mars"
-  },
-  {
-    "code": "04",
-    "libelle": "Avril"
-  },
-  {
-    "code": "05",
-    "libelle": "Mai"
-  },
-  {
-    "code": "06",
-    "libelle": "Juin"
-  },
-  {
-    "code": "07",
-    "libelle": "Juillet"
-  },
-  {
-    "code": "08",
-    "libelle": "Août"
-  },
-  {
-    "code": "09",
-    "libelle": "Septembre"
-  },
-  {
-    "code": "10",
-    "libelle": "Octobre"
-  },
-  {
-    "code": "11",
-    "libelle": "Novembre"
-  },
-  {
-    "code": "12",
-    "libelle": "Décembre"
-  }
-];
+const MONTHS = ["01", "02", "03","04","05","06","07","08","09","10","11","12"];
 
 @Component({
   selector: 'declaration',
@@ -68,7 +19,8 @@ export class DeclarationComponent {
   fileToUpload: File = null;
 
   constructor(private app: AppService, private http: HttpClient) {
-    http.get('http://localhost:7777/calcul/file/2018/09/maternelle/').subscribe(data => console.log(data));
+    http.get('http://localhost:7777/calcul/test')
+      .subscribe(data => console.log(data));
    }
 
   authenticated() {
