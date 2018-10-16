@@ -1,23 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { ExcelUploadComponent } from './excel-upload.component/excel-upload.component';
+import { DeclarationComponent } from './declaration.component/declaration.component';
+import { LoginComponent } from './authentication/login.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { AppService } from './app.service';
+
+const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'home'},
+  { path: 'declaration', component: DeclarationComponent},
+  { path: 'login', component: LoginComponent}
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ExcelUploadComponent
+    DeclarationComponent,
+    LoginComponent
   ],
   imports: [
+    RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

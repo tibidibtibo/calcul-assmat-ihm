@@ -1,7 +1,7 @@
+import { AppService } from './../app.service';
 import { Component } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { CompilerConfig } from '@angular/compiler';
 
 const MONTHS = [
   {
@@ -55,19 +55,25 @@ const MONTHS = [
 ];
 
 @Component({
-  selector: 'excel-upload',
-  templateUrl: './excel-upload.component.html',
-  styleUrls: ['./excel-upload.component.css']
+  selector: 'declaration',
+  templateUrl: './declaration.component.html',
+  styleUrls: ['./declaration.component.css']
 })
 
-export class ExcelUploadComponent {
+export class DeclarationComponent {
 
   public uploadResponse: String = "";
   public monthsList: Array<Object> = MONTHS;
 
   fileToUpload: File = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private app: AppService, private http: HttpClient) {
+    http.get('http://localhost:7777/calcul/file/2018/09/maternelle/').subscribe(data => console.log(data));
+   }
+
+  authenticated() {
+    return this.app.authenticated;
+  }
 
   fileChange(event, monthSelected): void {
 
@@ -106,4 +112,5 @@ export class ExcelUploadComponent {
         // });
     }
   }
+
 }

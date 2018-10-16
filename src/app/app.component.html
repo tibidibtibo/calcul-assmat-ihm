@@ -1,6 +1,11 @@
 <body class="container-fluid">
-
-  <h1>Déclaration mensuelle</h1>
-
-  <excel-upload></excel-upload>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="/">calcul-assmat</a>
+    <a routerLinkActive="active" routerLink="/declaration">Déclaration</a>
+    <a routerLinkActive="active" routerLink="/login">Connexion</a>
+    <a (click)="logout()">Déconnexion</a>
+  </nav>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </body>
