@@ -22,8 +22,10 @@ export class AppService {
 
     this.http.get('http://localhost:7777/auth/user', { headers: headers }).subscribe(response => {
       if (response['name']) {
+        console.log(response);
         this.authenticated = true;
       } else {
+        console.log(response);
         this.authenticated = false;
       }
       return callback && callback();

@@ -40,9 +40,9 @@ export class DeclarationComponent {
         .set('Content-Type', 'multipart/form-data')
         .set('Accept', 'multipart/form-data')
         .set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, X-Auth-Token')
-        .set('Authorization', 'Basic ' + btoa('assmat:assmat'));
-        // .set('Access-Control-Allow-Origin', '*')
-        // .set('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS')
+        // .set('Authorization', 'Basic ' + btoa('assmat:assmat'))
+        .set('Access-Control-Allow-Origin', '*')
+        .set('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
       let params = new HttpParams();
 
       console.log(this.fileToUpload);
@@ -53,7 +53,7 @@ export class DeclarationComponent {
 
       const URL = 'http://localhost:7777/calcul/file/2018/' + monthSelected + '/maternelle/';
 
-      this.http.post(URL, formData, { params, headers, withCredentials: true })
+      this.http.post(URL, formData, { params, headers })
         .subscribe(data => {
           console.log(data);
         });

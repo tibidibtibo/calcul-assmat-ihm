@@ -1,20 +1,27 @@
 <div class="row">
   <div class="col-sm-6">
-    <p>Connecté : {{authenticated()}}</p>
-    <form>
-      <div class="form-group">
-        <label for="mois">Mois du calcul</label>
-        <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected">
-          <option *ngFor="let month of monthsList" [ngValue]="month.code">{{month.libelle}}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <input type="file" id="file" (change)="fileChange($event, monthSelected)">
-      </div>
-    </form>
 
-    <div class="container">
-      <p>{{uploadResponse}}</p>
+    <p>Connecté : {{authenticated()}}</p>
+
+    <div [hidden]="!authenticated()">
+      <form>
+        <div class="form-group">
+          <label for="mois">Mois du calcul</label>
+          <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected">
+            <option *ngFor="let month of monthsList" [ngValue]="month">{{month}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input type="file" id="file" (change)="fileChange($event, monthSelected)">
+        </div>
+      </form>
+
+      <div class="container">
+        <p>{{uploadResponse}}</p>
+      </div>
+    </div>
+    <div [hidden]="authenticated()">
+      <p>Se connecter pour effectuer une déclaration : <a routerLink="/login">Connexion</a></p>
     </div>
 
   </div>

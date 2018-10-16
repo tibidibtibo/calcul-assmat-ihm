@@ -1,5 +1,9 @@
 {
-  "/": {
+  "/auth/*": {
+    "target": "http://localhost:8888",
+    "secure": false
+  },
+  "/calcul/*": {
     "target": "http://localhost:8888",
     "secure": false
   }
