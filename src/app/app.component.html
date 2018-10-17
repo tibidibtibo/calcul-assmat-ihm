@@ -1,10 +1,5 @@
 <body class="container-fluid">
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">calcul-assmat</a>
-    <a routerLinkActive="active" routerLink="/declaration">Déclaration</a>
-    <a routerLinkActive="active" routerLink="/login">Connexion</a>
-    <a (click)="logout()">Déconnexion</a>
-  </nav>
+  <app-header></app-header>
   <div class="container">
     <router-outlet></router-outlet>
   </div>
