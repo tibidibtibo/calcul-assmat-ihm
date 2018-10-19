@@ -1,10 +1,14 @@
 {
   "/auth/*": {
-    "target": "http://localhost:8888",
-    "secure": false
+    "target": "http://localhost:7777",
+    "secure": true,
+    "logLevel": "debug",
+    "changeOrigin": true
   },
   "/calcul/*": {
-    "target": "http://localhost:8888",
-    "secure": false
+    "target": "http://localhost:7777",
+    "secure": true,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }

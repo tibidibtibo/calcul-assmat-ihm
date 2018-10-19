@@ -13,7 +13,7 @@ import 'rxjs/add/operator/finally';
 export class HeaderComponent {
 
   constructor(private app: AppService, private http: HttpClient, private router: Router) {
-    this.app.authenticate(undefined, undefined);
+    // this.app.authenticate(undefined, undefined);
   }
 
   logout() {
