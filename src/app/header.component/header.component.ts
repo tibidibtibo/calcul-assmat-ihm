@@ -17,12 +17,8 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.http
-      .post('logout', {})
-      .finally(() => {
-        this.app.authenticated = false;
-        this.router.navigateByUrl('/login');
-      })
-      .subscribe();
+    this.app.logout( () => {
+      this.router.navigateByUrl('/login');
+    });
   }
 }
