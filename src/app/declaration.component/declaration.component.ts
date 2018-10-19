@@ -18,9 +18,10 @@ export class DeclarationComponent {
 
   fileToUpload: File = null;
 
+  testResult: string = "";
+
   constructor(private app: AppService, private http: HttpClient) {
-    http.get('http://localhost:7777/calcul/test')
-      .subscribe(data => console.log(data));
+
    }
 
   authenticated() {
@@ -56,6 +57,8 @@ export class DeclarationComponent {
       this.http.post(URL, formData, { params, headers })
         .subscribe(data => {
           console.log(data);
+        }, error => {
+
         });
         // .toPromise()
         // .then(res => {
@@ -63,6 +66,17 @@ export class DeclarationComponent {
         //   this.uploadResponse = res.toString();
         // });
     }
+  }
+
+  testRequest(): void {
+    this.http.get('http://localhost:7777/calcul/test')
+    .subscribe(data => {
+      console.log(data);
+      this.testResult = JSON.stringify(data);
+    }, error => {
+      console.log(error);
+      this.testResult = JSON.stringify(error);
+    });
   }
 
 }

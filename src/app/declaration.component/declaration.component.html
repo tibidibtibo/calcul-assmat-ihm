@@ -4,6 +4,10 @@
     <p>Connecté : {{authenticated()}}</p>
 
     <div [hidden]="!authenticated()">
+      <div class="jumbotron">
+        <button (click)="testRequest()">TEST REQUEST</button>
+        <p>{{testResult}}</p>
+      </div>
       <form>
         <div class="form-group">
           <label for="mois">Mois du calcul</label>
