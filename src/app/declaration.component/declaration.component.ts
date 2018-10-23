@@ -1,7 +1,8 @@
 import { AppService } from "./../app.service";
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, ElementRef } from "@angular/core";
 
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 
 const MONTHS = [
   "01",
@@ -24,24 +25,47 @@ const MONTHS = [
   styleUrls: ["./declaration.component.css"]
 })
 export class DeclarationComponent {
-  public uploadResponse: String = "";
+
+  @ViewChild('fileInput') fileInput: ElementRef;
+
+  public uploadResponse = "";
   public monthsList: Array<Object> = MONTHS;
-
-  @ViewChild("file")
-  fileToUpload;
-
+  form: FormGroup;
+  loading: boolean = false;
   monthSelected: string = "";
 
-  constructor(private app: AppService, private http: HttpClient) {}
+  constructor(private app: AppService, private http: HttpClient, private fb: FormBuilder) {
+    this.createForm();
+  }
 
   authenticated() {
     return this.app.authenticated;
   }
 
-  fileChange(): void {
-    console.log(
-      "Envoi du fichier : " + this.fileToUpload.name + " - Mois sélectionné : " + this.monthSelected
-    );
+  createForm() {
+    this.form = this.fb.group({
+      mois: ['', Validators.required],
+      fichier: null
+    });
+  }
+
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      let file = event.target.files[0];
+      this.form.get('fichier').setValue(file);
+    }
+  }
+
+  private prepareSave(): any {
+    let input = new FormData();
+    input.append('fichier', this.form.get('fichier').value);
+    return input;
+  }
+
+  onSubmit() {
+    const formModel = this.prepareSave();
+
+    this.loading = true;
 
     let headers = new HttpHeaders()
       .set("Accept", "application/json")
@@ -49,24 +73,29 @@ export class DeclarationComponent {
       .set("Authorization", this.app.getBAHeader());
     let params = new HttpParams();
 
-    console.log(this.fileToUpload);
-    const formData = new FormData();
-    formData.append("file", this.fileToUpload, this.fileToUpload.name);
-
-    console.log(formData);
-
     const URL =
       this.app.url + "/calcul/file/2018/" + this.monthSelected + "/maternelle/";
 
     this.http
-      .post(URL, formData, { headers: headers, params: params })
+      .post(URL, formModel, { headers: headers, params: params })
       .subscribe(
         data => {
           console.log(data);
+          this.uploadResponse = JSON.stringify(data);
+          this.loading = false;
         },
         error => {
           console.log(error);
+          this.uploadResponse = null;
+          this.loading = false;
         }
       );
+
   }
+
+  clearFile() {
+    this.form.get('fichier').setValue(null);
+    this.fileInput.nativeElement.value = '';
+  }
+
 }

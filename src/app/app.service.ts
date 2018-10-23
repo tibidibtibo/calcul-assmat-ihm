@@ -28,10 +28,8 @@ export class AppService {
 
     this.http.get(this.url + '/auth/user', { headers: headers }).subscribe(response => {
       if (response['name']) {
-        console.log(response);
         this.authenticated = 'Basic ' + btoa(credentials.username + ':' + credentials.password);
       } else {
-        console.log(response);
         this.authenticated = null;
       }
       return callback && callback();
