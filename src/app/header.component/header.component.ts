@@ -6,14 +6,17 @@ import 'rxjs/add/operator/finally';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html'
-  // styleUrls: ['./app.component.css']
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 
 export class HeaderComponent {
 
   constructor(private app: AppService, private http: HttpClient, private router: Router) {
-    // this.app.authenticate(undefined, undefined);
+  }
+
+  authenticated() {
+    return this.app.authenticated;
   }
 
   logout() {

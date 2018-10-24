@@ -19,6 +19,32 @@ const MONTHS = [
   "12"
 ];
 
+let mock = {
+	"mois": "9",
+	"annee": "2018",
+	"nbJoursTravailles": 16,
+	"nombreHeures": {
+		"heuresReelles": 164.67,
+		"heuresNormalesReelles": 154.91,
+		"heuresNormalesMensualisees": 113.75,
+		"heuresComplementaires": 11.25
+	},
+	"salaire": {
+		"tauxHoraireNetHeureNormale": 2.9,
+		"tauxHoraireNetHeureComplementaire": 2.9,
+		"salaireNetMensualise": 329.86,
+		"salaireNetHeuresComplementaires": 32.63,
+		"congesPayes": 36.25,
+		"salaireNetTotal": 398.74
+	},
+	"indemnites": {
+		"indemnitesEntretien": 74.2,
+		"indemnitesRepas": 3,
+		"indemnitesKm": 39.31
+	},
+	"montantPaiementMensuel": 515.25
+};
+
 @Component({
   selector: "declaration",
   templateUrl: "./declaration.component.html",

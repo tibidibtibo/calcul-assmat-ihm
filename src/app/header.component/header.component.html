@@ -1,19 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" routerLink="/home">calcul-assmat</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" routerLink="/declaration">Déclaration</a>
-        </li>
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" routerLink="/login">Connexion</a>
-        </li>
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" (click)="logout()">Déconnexion</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <a class="navbar-brand" routerLink="/home"><img class="header-logo" src="../../assets/pictures/logo-assmat.svg" />calcul-assmat</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" routerLink="/declaration">Déclaration</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']" *ngIf="!authenticated()">
+        <a class="nav-link" routerLink="/login">Connexion</a>
+      </li>
+      <li class="nav-item na" [routerLinkActive]="['active']" *ngIf="authenticated()">
+        <a class="nav-link logout-link" (click)="logout()">Déconnexion</a>
+      </li>
+    </ul>
+  </div>
+</nav>
