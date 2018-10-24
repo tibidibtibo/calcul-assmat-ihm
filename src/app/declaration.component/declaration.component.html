@@ -1,30 +1,162 @@
-<div class="row">
-  <div class="col-sm-6">
+<div class="container">
+  <div [hidden]="!authenticated()">
 
-    <div [hidden]="!authenticated()">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="mois">Mois du calcul</label>
-          <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected" formControlName="mois">
-            <option *ngFor="let month of monthsList" [ngValue]="month">{{month}}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="fichier">Fichier</label>
-          <input type="file" id="fichier" (change)="onFileChange($event)" #fileInput>
-          <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">Effacer</button>
-        </div>
-        <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success">Valider <i class="fa fa-spinner fa-spin fa-fw"
-            *ngIf="loading"></i></button>
-      </form>
+    <div class="container" *ngIf="!uploadResponse">
+      <div class="row">
+        <div class="col-sm-12">
 
-      <div class="container">
-        <p>{{uploadResponse}}</p>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="mois">Mois du calcul</label>
+              <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected" formControlName="mois">
+                <option *ngFor="let month of monthsList" [ngValue]="month">{{month}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="fichier">Fichier</label>
+              <input type="file" id="fichier" (change)="onFileChange($event)" #fileInput>
+              <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">Effacer</button>
+            </div>
+            <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success">Valider <i class="fa fa-spinner fa-spin fa-fw"
+                *ngIf="loading"></i></button>
+          </form>
+        </div>
       </div>
     </div>
-    <div [hidden]="authenticated()">
-      <p>Se connecter pour effectuer une déclaration : <a class="btn btn-info" routerLink="/login">Connexion</a></p>
+
+    <div class="container" *ngIf="errorMsg">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="alert alert-danger" role="alert">
+            <p>Une erreur s'est produite :</p>
+            <p>{{errorMsg}}</p>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <div class="container" *ngIf="uploadResponse">
+      <div class="row">
+        <div class="col-sm-12">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <button class="btn btn-danger" (click)="reset()">Recommencer</button>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12">
+                <h2>Déclaration du <span class="badge badge-primary">{{uploadResponse.mois}}/{{uploadResponse.annee}}</span>
+                </h2>
+                <h4><span class="badge badge-info">{{uploadResponse.nbJoursTravailles}}</span> jour(s) travaillé(s)</h4>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <h4>Heures</h4>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Réelles</th>
+                      <th scope="col">Normales réelles</th>
+                      <th scope="col">Normales mensualisées</th>
+                      <th scope="col">Complémentaires</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{uploadResponse.nombreHeures.heuresReelles}}</td>
+                      <td>{{uploadResponse.nombreHeures.heuresNormalesReelles}}</td>
+                      <td>{{uploadResponse.nombreHeures.heuresNormalesMensualisees}}</td>
+                      <td>{{uploadResponse.nombreHeures.heuresComplementaires}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <h4>Salaire</h4>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Net mensualisé</th>
+                      <th scope="col">Net heures comp.</th>
+                      <th scope="col">Congés payés</th>
+                      <th scope="col">Net TOTAL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{uploadResponse.salaire.salaireNetMensualise}}</td>
+                      <td>{{uploadResponse.salaire.salaireNetHeuresComplementaires}}</td>
+                      <td>{{uploadResponse.salaire.congesPayes}}</td>
+                      <td>{{uploadResponse.salaire.salaireNetTotal}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <h6>Rappel taux horaires</h6>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Heure normale</th>
+                      <th scope="col">Heure complémentaire</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{uploadResponse.salaire.tauxHoraireNetHeureNormale}}</td>
+                      <td>{{uploadResponse.salaire.tauxHoraireNetHeureComplementaire}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <h4>Indemnités</h4>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Net mensualisé</th>
+                      <th scope="col">Net heures comp.</th>
+                      <th scope="col">Congés payés</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{uploadResponse.indemnites.indemnitesEntretien}}</td>
+                      <td>{{uploadResponse.indemnites.indemnitesRepas}}</td>
+                      <td>{{uploadResponse.indemnites.indemnitesKm}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <h4>Salaire total : <span class="badge badge-primary">{{uploadResponse.montantPaiementMensuel}} €</span>
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="authenticated()">
+    <p>Se connecter pour effectuer une déclaration</p>
+    <p><a class="btn btn-info" routerLink="/login">Connexion</a></p>
   </div>
 </div>

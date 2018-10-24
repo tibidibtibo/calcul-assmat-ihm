@@ -54,11 +54,12 @@ export class DeclarationComponent {
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
-  public uploadResponse = "";
+  public uploadResponse;
   public monthsList: Array<Object> = MONTHS;
-  form: FormGroup;
-  loading: boolean = false;
-  monthSelected: string = "";
+  public errorMsg;
+  public form: FormGroup;
+  public loading: boolean = false;
+  public monthSelected: string = "";
 
   constructor(private app: AppService, private http: HttpClient, private fb: FormBuilder) {
     this.createForm();
@@ -107,13 +108,14 @@ export class DeclarationComponent {
       .subscribe(
         data => {
           console.log(data);
-          this.uploadResponse = JSON.stringify(data);
+          this.uploadResponse = data;
           this.loading = false;
         },
         error => {
           console.log(error);
           this.uploadResponse = null;
           this.loading = false;
+          this.errorMsg = JSON.stringify(error);
         }
       );
 
@@ -122,6 +124,13 @@ export class DeclarationComponent {
   clearFile() {
     this.form.get('fichier').setValue(null);
     this.fileInput.nativeElement.value = '';
+  }
+
+  reset() {
+    this.monthSelected = null;
+    this.uploadResponse = null;
+    this.loading = false;
+    this.clearFile();
   }
 
 }
