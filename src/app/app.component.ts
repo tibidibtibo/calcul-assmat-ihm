@@ -26,6 +26,7 @@ export class AppComponent {
 
   isBackAlive(): void {
     this.httpService.isBackAlive().subscribe(ok => {
+      if(ok && ok.status === 200)
       console.log(ok);
     }, error => {
       console.log(error);

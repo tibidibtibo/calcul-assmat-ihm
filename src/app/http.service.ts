@@ -24,12 +24,11 @@ export class HttpService {
   }
 
   isBackAlive() {
+
     let headers = new HttpHeaders()
-      .set('Content-Type', 'multipart/form-data')
       .set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, X-Auth-Token')
-      .set("Accept", "application/json")
       .set("Access-Control-Allow-Origin", "*");
 
-    return this.http.get(this.appService.url + "/parametrage/alive", { headers: headers});
+    return this.http.get(this.appService.url + "/auth/alive", { headers: headers });
   }
 }
