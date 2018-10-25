@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ConstService } from './const.service';
 
 @Injectable()
-export class AppService {
+export class AuthService {
 
   public authenticated: string = null;
-  public url: string = "http://localhost:7777";
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private constantes: ConstService) {
   }
 
   getBAHeader(): string {
@@ -26,7 +25,7 @@ export class AppService {
       .set('Accept', 'multipart/form-data')
       .set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, X-Auth-Token')
 
-    this.http.get(this.url + '/auth/user', { headers: headers }).subscribe(response => {
+    this.http.get(this.constantes.serverUrl + '/auth/user', { headers: headers }).subscribe(response => {
       if (response['name']) {
         this.authenticated = 'Basic ' + btoa(credentials.username + ':' + credentials.password);
       } else {
@@ -39,7 +38,7 @@ export class AppService {
 
   logout(callback) {
     this.http
-      .post(this.url + '/logout', {})
+      .post(this.constantes.serverUrl + '/logout', {})
       .finally(() => {
         this.authenticated = null;
         callback();

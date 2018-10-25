@@ -9,7 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon-32x32.png"
+        "logo-assmat.ico"
       ],
       "index": "index.html",
       "main": "main.ts",

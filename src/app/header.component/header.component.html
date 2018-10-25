@@ -1,18 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+  <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" aria-expanded="false">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" [collapse]="isCollapsed">
     <ul class="navbar-nav mr-auto">
+      <li class="nav-item text-success status" *ngIf="serverConnected" title="Connexion au serveur back : OK !"><i
+          class="fa fa-circle"></i></li>
+      <li class="nav-item text-danger status" *ngIf="!serverConnected" title="Connexion au serveur back : KO !"><i
+          class="fa fa-circle"></i></li>
       <li class="nav-item" [routerLinkActive]="['active']">
-        <a class="nav-link" routerLink="/declaration">Déclaration</a>
+        <a class="nav-link" routerLink="/synthese">Synthèse</a>
       </li>
     </ul>
   </div>
   <div class="mx-auto order-0">
     <a class="navbar-brand" routerLink="/home"><img class="header-logo" src="../../assets/pictures/logo-assmat.svg" />calcul-assmat</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-      <span class="navbar-toggler-icon"></span>
-    </button>
   </div>
-  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" [collapse]="isCollapsed">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" [routerLinkActive]="['active']" *ngIf="!authenticated()">
         <a class="nav-link" routerLink="/login">Connexion</a>

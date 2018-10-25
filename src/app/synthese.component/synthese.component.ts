@@ -1,8 +1,7 @@
-import { HttpService } from './../http.service';
-import { AppService } from "./../app.service";
+import { HttpService } from '../services/http.service';
+import { AuthService } from "../services/auth.service";
 import { Component, ViewChild, ElementRef } from "@angular/core";
 
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 
 const MONTHS = [
@@ -20,38 +19,12 @@ const MONTHS = [
   "12"
 ];
 
-let mock = {
-	"mois": "9",
-	"annee": "2018",
-	"nbJoursTravailles": 16,
-	"nombreHeures": {
-		"heuresReelles": 164.67,
-		"heuresNormalesReelles": 154.91,
-		"heuresNormalesMensualisees": 113.75,
-		"heuresComplementaires": 11.25
-	},
-	"salaire": {
-		"tauxHoraireNetHeureNormale": 2.9,
-		"tauxHoraireNetHeureComplementaire": 2.9,
-		"salaireNetMensualise": 329.86,
-		"salaireNetHeuresComplementaires": 32.63,
-		"congesPayes": 36.25,
-		"salaireNetTotal": 398.74
-	},
-	"indemnites": {
-		"indemnitesEntretien": 74.2,
-		"indemnitesRepas": 3,
-		"indemnitesKm": 39.31
-	},
-	"montantPaiementMensuel": 515.25
-};
-
 @Component({
-  selector: "declaration",
-  templateUrl: "./declaration.component.html",
-  styleUrls: ["./declaration.component.css"]
+  selector: "synthese",
+  templateUrl: "./synthese.component.html",
+  styleUrls: ["./synthese.component.css"]
 })
-export class DeclarationComponent {
+export class SyntheseComponent {
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -62,12 +35,12 @@ export class DeclarationComponent {
   public loading: boolean = false;
   public monthSelected: string = "";
 
-  constructor(private app: AppService, private httpService: HttpService, private fb: FormBuilder) {
+  constructor(private authService: AuthService, private httpService: HttpService, private fb: FormBuilder) {
     this.createForm();
   }
 
   authenticated() {
-    return this.app.authenticated;
+    return this.authService.authenticated;
   }
 
   createForm() {

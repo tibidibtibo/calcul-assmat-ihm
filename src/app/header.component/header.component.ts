@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { AppService } from './../app.service';
+import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/finally';
+import { HttpService } from '../services/http.service';
+import { ServerAlive } from '../models/serverAlive';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,16 +15,38 @@ import 'rxjs/add/operator/finally';
 
 export class HeaderComponent {
 
-  constructor(private app: AppService, private http: HttpClient, private router: Router) {
+  constructor(private authService: AuthService, private httpService: HttpService, private router: Router) {
+    this.isBackAlive();
+    this.launchAliveIntervalCheck();
   }
 
+  isCollapsed: boolean = true;
+  serverConnected: boolean = false;
+
   authenticated() {
-    return this.app.authenticated;
+    return this.authService.authenticated;
   }
 
   logout() {
-    this.app.logout( () => {
+    this.authService.logout( () => {
       this.router.navigateByUrl('/login');
+    });
+  }
+
+  isBackAlive(): void {
+    this.httpService.isBackAlive().subscribe((ok: ServerAlive) => {
+      if(ok && ok.alive) {
+        this.serverConnected = ok.alive;
+      }
+    }, error => {
+      this.serverConnected = false;
+      console.log(error);
+    });
+  }
+
+  launchAliveIntervalCheck() {
+    Observable.interval(10000).subscribe(x => {
+      this.isBackAlive();
     });
   }
 }

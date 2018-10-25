@@ -7,18 +7,21 @@ import { AppRoutesModule } from './app.routes.module';
 
 import { HeaderComponent } from './header.component/header.component';
 import { AppComponent } from './app.component';
-import { DeclarationComponent } from './declaration.component/declaration.component';
+import { SyntheseComponent } from './synthese.component/synthese.component';
 import { LoginComponent } from './authentication.component/login.component';
 import { PageNotFoundComponent } from './page-not-found.component/page-not-found.component';
 import { HomeComponent } from './home.component/home.component';
 
-import { AppService } from './app.service';
-import { HttpService } from './http.service';
+import { AuthService } from './services/auth.service';
+import { HttpService } from './services/http.service';
+import { ConstService } from './services/const.service';
+
+import { CollapseModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DeclarationComponent,
+    SyntheseComponent,
     LoginComponent,
     PageNotFoundComponent,
     HomeComponent,
@@ -29,9 +32,14 @@ import { HttpService } from './http.service';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CollapseModule
   ],
-  providers: [AppService, HttpService],
+  providers: [
+    ConstService,
+    AuthService,
+    HttpService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
