@@ -8,15 +8,18 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  credentials = {username: '', password: ''};
+  credentials = { username: '', password: '' };
+  error = null;
 
   constructor(private app: AppService, private http: HttpClient, private router: Router) {
   }
 
   login() {
+    this.error = null;
     this.app.authenticate(this.credentials, () => {
-        this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/');
     });
+    // this.error = "Une erreur s'est produite. Veuillez réessayer."
     return false;
   }
 

@@ -1,3 +1,4 @@
+import { HttpService } from './../http.service';
 import { AppService } from "./../app.service";
 import { Component, ViewChild, ElementRef } from "@angular/core";
 
@@ -61,7 +62,7 @@ export class DeclarationComponent {
   public loading: boolean = false;
   public monthSelected: string = "";
 
-  constructor(private app: AppService, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private app: AppService, private httpService: HttpService, private fb: FormBuilder) {
     this.createForm();
   }
 
@@ -94,17 +95,7 @@ export class DeclarationComponent {
 
     this.loading = true;
 
-    let headers = new HttpHeaders()
-      .set("Accept", "application/json")
-      .set("Access-Control-Allow-Origin", "*")
-      .set("Authorization", this.app.getBAHeader());
-    let params = new HttpParams();
-
-    const URL =
-      this.app.url + "/calcul/file/2018/" + this.monthSelected + "/maternelle/";
-
-    this.http
-      .post(URL, formModel, { headers: headers, params: params })
+    this.httpService.calcul(this.monthSelected, formModel)
       .subscribe(
         data => {
           console.log(data);
@@ -115,7 +106,7 @@ export class DeclarationComponent {
           console.log(error);
           this.uploadResponse = null;
           this.loading = false;
-          this.errorMsg = JSON.stringify(error);
+          this.errorMsg = error;
         }
       );
 

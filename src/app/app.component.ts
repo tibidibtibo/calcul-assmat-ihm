@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { AppService } from './app.service';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+
+import { HttpService } from './http.service';
+import { AppService } from './app.service';
+
 import 'rxjs/add/operator/finally';
 
 @Component({
@@ -12,14 +14,22 @@ import 'rxjs/add/operator/finally';
 
 export class AppComponent {
 
-  constructor(private app: AppService, private http: HttpClient, private router: Router) {
-    // this.app.authenticate(undefined, undefined);
+  constructor(private httpService: HttpService, private appService: AppService, private router: Router) {
+    this.isBackAlive();
   }
 
   logout(): void {
-    this.app.logout( () => {
+    this.appService.logout( () => {
       this.router.navigateByUrl('/login');
     })
+  }
+
+  isBackAlive(): void {
+    this.httpService.isBackAlive().subscribe(ok => {
+      console.log(ok);
+    }, error => {
+      console.log(error);
+    });
   }
 
 }

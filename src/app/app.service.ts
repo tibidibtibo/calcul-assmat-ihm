@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
+import { HttpService } from './http.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class AppService {
 
-  url: string = "http://localhost:7777";
-
-  authenticated: string = null;
+  public authenticated: string = null;
+  public url: string = "http://localhost:7777";
 
   constructor(private http: HttpClient) {
   }

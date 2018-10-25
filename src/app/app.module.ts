@@ -13,6 +13,7 @@ import { PageNotFoundComponent } from './page-not-found.component/page-not-found
 import { HomeComponent } from './home.component/home.component';
 
 import { AppService } from './app.service';
+import { HttpService } from './http.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { AppService } from './app.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AppService],
+  providers: [AppService, HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
