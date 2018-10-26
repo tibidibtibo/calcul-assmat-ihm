@@ -18,11 +18,17 @@ import { HttpService } from './services/http.service';
 import { ConstService } from './services/const.service';
 
 import { CollapseModule } from 'ngx-bootstrap';
+import { SyntheseFormComponent } from './synthese.component/form/syntheseForm.component';
+import { SyntheseResultatComponent } from './synthese.component/resultat/syntheseResultat.component';
+import { SyntheseErrorComponent } from './synthese.component/error/syntheseError.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SyntheseComponent,
+    SyntheseFormComponent,
+    SyntheseResultatComponent,
+    SyntheseErrorComponent,
     SaisieComponent,
     LoginComponent,
     PageNotFoundComponent,
