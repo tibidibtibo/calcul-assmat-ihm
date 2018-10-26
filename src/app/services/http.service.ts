@@ -32,4 +32,14 @@ export class HttpService {
 
     return this.http.get(this.constantes.serverUrl + "/auth/alive", { headers: headers });
   }
+
+  getAllEmployes() {
+    let headers = new HttpHeaders()
+      .set("Accept", "application/json")
+      .set("Access-Control-Allow-Origin", "*")
+      .set("Authorization", this.authService.getBAHeader());
+    let params = new HttpParams();
+
+    return this.http.get(this.constantes.serverUrl + "/parametrage/employes", { headers: headers, params: params });
+  }
 }

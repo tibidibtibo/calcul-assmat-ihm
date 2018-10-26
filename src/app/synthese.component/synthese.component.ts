@@ -1,8 +1,8 @@
+import { Component, ViewChild, ElementRef } from "@angular/core";
+import { Validators, FormGroup, FormBuilder } from "@angular/forms";
+
 import { HttpService } from '../services/http.service';
 import { AuthService } from "../services/auth.service";
-import { Component, ViewChild, ElementRef } from "@angular/core";
-
-import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 
 const MONTHS = [
   "01",
@@ -30,6 +30,7 @@ export class SyntheseComponent {
 
   public uploadResponse;
   public monthsList: Array<Object> = MONTHS;
+  public employes: Array<Object> = [];
   public errorMsg;
   public form: FormGroup;
   public loading: boolean = false;
@@ -37,6 +38,13 @@ export class SyntheseComponent {
 
   constructor(private authService: AuthService, private httpService: HttpService, private fb: FormBuilder) {
     this.createForm();
+
+    this.httpService.getAllEmployes()
+      .subscribe(
+        data => {
+          console.log(data);
+        }
+      );
   }
 
   authenticated() {

@@ -1,3 +1,4 @@
+import { SaisieComponent } from './saisie.component/saisie.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +23,7 @@ import { CollapseModule } from 'ngx-bootstrap';
   declarations: [
     AppComponent,
     SyntheseComponent,
+    SaisieComponent,
     LoginComponent,
     PageNotFoundComponent,
     HomeComponent,
