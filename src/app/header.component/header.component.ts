@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/finally';
+
+import { AuthService } from '../services/auth.service';
 import { HttpService } from '../services/http.service';
 import { ServerAlive } from '../models/serverAlive';
+
 import { Observable } from 'rxjs';
+import 'rxjs/add/operator/finally';
 
 @Component({
   selector: 'app-header',

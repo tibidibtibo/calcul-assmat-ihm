@@ -4,12 +4,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstService } from './const.service';
 
+const URL_SEPARATOR: string = "/";
+
 @Injectable()
 export class HttpService {
 
+
   constructor(private http: HttpClient, private authService: AuthService, private constantes: ConstService) { }
 
-  calcul(monthSelected: string, formData) {
+  calcul(monthSelected: string, employeSelected, formData) {
+
+    const annee = "2018";
 
     let headers = new HttpHeaders()
       .set("Accept", "application/json")
@@ -17,11 +22,12 @@ export class HttpService {
       .set("Authorization", this.authService.getBAHeader());
     let params = new HttpParams();
 
-    const URL =
-      this.constantes.serverUrl + "/calcul/file/2018/" + monthSelected + "/maternelle/";
+    let URLArray = [ this.constantes.serverUrl, "calcul/file", annee, monthSelected, employeSelected.id];
+    const URL = URLArray.join(URL_SEPARATOR);
+    console.log(URL);
 
     return this.http
-      .post(URL, formData, { headers: headers, params: params })
+          .post(URL, formData, { headers: headers, params: params })
   }
 
   isBackAlive() {

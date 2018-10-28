@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutesModule } from './app.routes.module';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { HeaderComponent } from './header.component/header.component';
 import { AppComponent } from './app.component';
@@ -41,7 +42,8 @@ import { SyntheseErrorComponent } from './synthese.component/error/syntheseError
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    CollapseModule
+    CollapseModule,
+    AngularFontAwesomeModule
   ],
   providers: [
     ConstService,

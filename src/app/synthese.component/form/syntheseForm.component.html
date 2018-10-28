@@ -1,28 +1,44 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col align-self-center">
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="employe">Employé</label>
-          <!-- <select class="form-control" name="employe" id="employe" [(ngModel)]="employe" formControlName="employe"> -->
-          <!-- <option *ngFor="let employe of employes" [ngValue]="month">{{month}}</option> -->
-          <!-- </select> -->
-        </div>
-        <div class="form-group">
-          <label for="mois">Mois du calcul</label>
-          <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected" formControlName="mois">
-            <option *ngFor="let month of monthsList" [ngValue]="month">{{month}}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="fichier">Fichier</label>
-          <input type="file" id="fichier" (change)="onFileChange($event)" #fileInput>
-          <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">Effacer</button>
-        </div>
-        <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success">Valider <i class="fa fa-spinner fa-spin fa-fw"
-            *ngIf="loading"></i></button>
-      </form>
+      <div class="jumbotron">
+        <h4>Synthèse mensuelle</h4>
+        <p class="lead">Paramétrer et lancer le calcul</p>
+        <hr class="my-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col align-self-center">
+              <div class="form-group">
+                <label for="employe">Employé</label>
+                <select class="form-control" name="employe" id="employe" [(ngModel)]="employeSelected" formControlName="employe">
+                  <option *ngFor="let employe of employes" [ngValue]="employe">{{employe.prenom}} {{employe.nom}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col align-self-center">
+              <div class="form-group">
+                <label for="mois">Mois du calcul</label>
+                <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected" formControlName="mois">
+                  <option *ngFor="let month of monthsList" [ngValue]="month">{{month}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col align-self-center">
+              <div class="form-group">
+                <label for="fichier">Fichier</label>
+                <input type="file" id="fichier" (change)="onFileChange($event)" #fileInput>
+                <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">Effacer</button>
+              </div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success btn-lg">Valider <i class="fa fa-spinner fa-spin fa-fw"
+              *ngIf="loading"></i></button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

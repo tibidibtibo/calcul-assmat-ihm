@@ -1,40 +1,38 @@
-<div class="container error-container" *ngIf="error">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="alert alert-danger" role="alert">
-        <p>Une erreur s'est produite :</p>
+<div class="row error-container" *ngIf="error">
+  <div class="col-sm-12">
+    <div class="alert alert-danger" role="alert">
+      <p>Une erreur s'est produite :</p>
 
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Heure</th>
-              <th scope="col">Erreur</th>
-              <th scope="col">Provenance</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{error.error.timestamp | date : "dd/MM/yyyy HH:mm:ss.sss Z"}}</td>
-              <td>{{error.error.status}}</td>
-              <td>{{error.error.path}}</td>
-            </tr>
-          </tbody>
-        </table>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Heure</th>
+            <th scope="col">Erreur</th>
+            <th scope="col">Provenance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{error.error.timestamp | date : "dd/MM/yyyy HH:mm:ss.sss Z"}}</td>
+            <td>{{error.error.status}}</td>
+            <td>{{error.error.path}}</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Message</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{error.error.message}}</td>
-            </tr>
-          </tbody>
-        </table>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{error.error.message}}</td>
+          </tr>
+        </tbody>
+      </table>
 
-      </div>
     </div>
   </div>
 </div>
