@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 384 512"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="plug-green.svg"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="1.84375"
+     inkscape:cx="70.105769"
+     inkscape:cy="236.42251"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <path
+     style="fill:#00ba45;fill-opacity:1"
+     d="M 96 0 C 78.327 0 64 14.327 64 32 L 64 144 L 128 144 L 128 32 C 128 14.327 113.673 0 96 0 z M 288 0 C 270.327 0 256 14.327 256 32 L 256 144 L 320 144 L 320 32 C 320 14.327 305.673 0 288 0 z M 16 160 C 7.163 160 0 167.163 0 176 L 0 208 C 0 216.837 7.163 224 16 224 L 32 224 L 32 256 C 32 333.406 86.969 397.97186 160 412.79688 L 160 512 L 224 512 L 224 412.79688 C 297.031 397.97188 352 333.406 352 256 L 352 224 L 368 224 C 376.837 224 384 216.837 384 208 L 384 176 C 384 167.163 376.837 160 368 160 L 16 160 z M 309.18359 185.05664 L 322.60547 198.48047 L 336.0293 211.9043 L 249.79297 298.14062 C 202.36336 345.57094 163.4353 384.37695 163.28516 384.37695 C 163.13502 384.37695 141.53468 362.89923 115.28516 336.64844 L 67.558594 288.91992 L 80.982422 275.49805 L 94.404297 262.07617 L 128.8457 296.51367 L 163.28711 330.95117 L 236.23438 258.00391 L 309.18359 185.05664 z "
+     id="path2" />
+</svg>
+<!--
+Font Awesome Free 5.4.2 by @fontawesome - https://fontawesome.com
+License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+-->
+

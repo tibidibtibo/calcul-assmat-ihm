@@ -5,6 +5,7 @@ import { PageNotFoundComponent } from './page-not-found.component/page-not-found
 import { LoginComponent } from './authentication.component/login.component';
 import { SyntheseComponent } from './synthese.component/synthese.component';
 import { SaisieComponent } from './saisie.component/saisie.component';
+import { HistoriqueComponent } from './historique/historique.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'synthese', component: SyntheseComponent },
   { path: 'saisie', component: SaisieComponent },
+  { path: 'historique', component: HistoriqueComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

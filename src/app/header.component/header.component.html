@@ -4,22 +4,27 @@
   </button>
   <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" [collapse]="isCollapsed">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item text-success status" *ngIf="serverConnected" title="Connexion au serveur back : OK !">
-        <i class="fa fa-circle"></i>
+      <li class="nav-item text-success status" *ngIf="serverConnected" tooltip="Connexion OK ;-)" placement="right">
+        <img src="../../assets/icons/plug-green.svg" class="connected-icon"/>
       </li>
-      <li class="nav-item text-danger status" *ngIf="!serverConnected" title="Connexion au serveur back : KO !">
-          <i class="fa fa-exclamation"></i>
+      <li class="nav-item text-danger status" *ngIf="!serverConnected" tooltip="Connexion KO !!" placement="right">
+        <img src="../../assets/icons/plug-red.svg" class="connected-icon"/>
       </li>
+      <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/saisie">Saisie</a>
+        </li>
       <li class="nav-item" [routerLinkActive]="['active']">
         <a class="nav-link" routerLink="/synthese">Synthèse</a>
       </li>
       <li class="nav-item" [routerLinkActive]="['active']">
-        <a class="nav-link" routerLink="/saisie">Saisie</a>
+        <a class="nav-link" routerLink="/historique">Historique</a>
       </li>
     </ul>
   </div>
   <div class="mx-auto order-0">
-    <a class="navbar-brand" routerLink="/home"><img class="header-logo" src="../../assets/pictures/logo-assmat.svg" />calcul-assmat</a>
+    <a class="navbar-brand" tooltip="Retour à l'accueil" placement="bottom" routerLink="/home">
+      <img class="header-logo" src="../../assets/pictures/logo-assmat.svg" />calcul-assmat
+    </a>
   </div>
   <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" [collapse]="isCollapsed">
     <ul class="navbar-nav ml-auto">

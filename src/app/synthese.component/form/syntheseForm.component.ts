@@ -32,6 +32,9 @@ const MONTHS = [
   // styleUrls: ["./syntheseForm.component.css"]
 })
 export class SyntheseFormComponent {
+
+  @Input() resultat: Object;
+
   @Output()
   resultatEvent = new EventEmitter<Object>();
   @Output()
@@ -92,18 +95,22 @@ export class SyntheseFormComponent {
 
     this.loading = true;
 
-    this.httpService.calcul(this.monthSelected, this.employeSelected, formModel).subscribe(
-      data => {
-        this.resultatEvent.emit(data);
-        this.errorEvent.emit(null);
-        this.loading = false;
-      },
-      error => {
-        this.resultatEvent.emit(null);
-        this.errorEvent.emit(error);
-        this.loading = false;
-      }
-    );
+    this.httpService
+      .calcul(this.monthSelected, this.employeSelected, formModel)
+      .subscribe(
+        data => {
+          this.resultatEvent.emit(data);
+          this.errorEvent.emit(null);
+          this.loading = false;
+          this.resultat = data;
+        },
+        error => {
+          this.resultatEvent.emit(null);
+          this.errorEvent.emit(error);
+          this.loading = false;
+          this.resultat = null;
+        }
+      );
   }
 
   clearFile() {
@@ -113,6 +120,7 @@ export class SyntheseFormComponent {
 
   reset() {
     this.monthSelected = null;
+    this.resultat = null;
     this.resultatEvent.emit(null);
     this.errorEvent.emit(null);
     this.loading = false;

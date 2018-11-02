@@ -1,9 +1,9 @@
 <div class="container">
   <div [hidden]="!authenticated()">
-    <synthese-form (resultatEvent)="onChangeResultat($event)"
+    <synthese-form [resultat]="resultat" (resultatEvent)="onChangeResultat($event)"
       (errorEvent)="onChangeError($event)"></synthese-form>
     <synthese-error [error]="error"></synthese-error>
-    <synthese-resultat [resultat]="resultat"></synthese-resultat>
+    <synthese-resultat [resultat]="resultat" (resultatEvent)="onChangeResultat($event)"></synthese-resultat>
   </div>
   <div [hidden]="authenticated()">
     <p>Se connecter pour calculer la synthèse</p>

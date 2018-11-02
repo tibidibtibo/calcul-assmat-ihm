@@ -2,18 +2,15 @@
   <div class="row">
     <div class="col-sm">
 
-      <div class="row">
-        <div class="col-sm">
-          <button class="btn btn-danger" (click)="reset()">Recommencer</button>
-        </div>
-      </div>
-
       <div class="container">
         <div class="row">
           <div class="col-sm">
             <h2>Déclaration du <span class="badge badge-primary">{{resultat.mois}}/{{resultat.annee}}</span>
             </h2>
             <h4><span class="badge badge-info">{{resultat.nbJoursTravailles}}</span> jour(s) travaillé(s)</h4>
+          </div>
+          <div class="col-sm text-right">
+            <button class="btn btn-danger" (click)="reset()">Recommencer</button>
           </div>
         </div>
 
@@ -31,10 +28,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultat.nombreHeures.heuresReelles}}</td>
-                  <td>{{resultat.nombreHeures.heuresNormalesReelles}}</td>
-                  <td>{{resultat.nombreHeures.heuresNormalesMensualisees}}</td>
-                  <td>{{resultat.nombreHeures.heuresComplementaires}}</td>
+                  <td>{{resultat.nombreHeures.heuresReelles}} h</td>
+                  <td>{{resultat.nombreHeures.heuresNormalesReelles}} h</td>
+                  <td>{{resultat.nombreHeures.heuresNormalesMensualisees}} h</td>
+                  <td>{{resultat.nombreHeures.heuresComplementaires}} h</td>
                 </tr>
               </tbody>
             </table>
@@ -55,10 +52,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultat.salaire.salaireNetMensualise}}</td>
-                  <td>{{resultat.salaire.salaireNetHeuresComplementaires}}</td>
-                  <td>{{resultat.salaire.congesPayes}}</td>
-                  <td>{{resultat.salaire.salaireNetTotal}}</td>
+                  <td>{{resultat.salaire.salaireNetMensualise}} €</td>
+                  <td>{{resultat.salaire.salaireNetHeuresComplementaires}} €</td>
+                  <td>{{resultat.salaire.congesPayes}} €</td>
+                  <td>{{resultat.salaire.salaireNetTotal}} €</td>
                 </tr>
               </tbody>
             </table>
@@ -77,8 +74,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultat.salaire.tauxHoraireNetHeureNormale}}</td>
-                  <td>{{resultat.salaire.tauxHoraireNetHeureComplementaire}}</td>
+                  <td>{{resultat.salaire.tauxHoraireNetHeureNormale}} €/h</td>
+                  <td>{{resultat.salaire.tauxHoraireNetHeureComplementaire}} €/h</td>
                 </tr>
               </tbody>
             </table>
@@ -98,9 +95,9 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultat.indemnites.indemnitesEntretien}}</td>
-                  <td>{{resultat.indemnites.indemnitesRepas}}</td>
-                  <td>{{resultat.indemnites.indemnitesKm}}</td>
+                  <td>{{resultat.indemnites.indemnitesEntretien}} €</td>
+                  <td>{{resultat.indemnites.indemnitesRepas}} €</td>
+                  <td>{{resultat.indemnites.indemnitesKm}} €</td>
                 </tr>
               </tbody>
             </table>

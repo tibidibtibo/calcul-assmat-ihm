@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChange } from "@angular/core";
+import { Component, Input, SimpleChange, Output, EventEmitter } from "@angular/core";
 
 @Component({
   selector: "synthese-resultat",
@@ -9,10 +9,13 @@ export class SyntheseResultatComponent {
 
   @Input() resultat: Object;
 
+  @Output()
+  resultatEvent = new EventEmitter<Object>();
+
   constructor() {
   }
 
   reset() {
-    this.resultat = null;
+    this.resultatEvent.emit(null);
   }
 }
