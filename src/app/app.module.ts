@@ -25,6 +25,7 @@ import { SyntheseErrorComponent } from './synthese.component/error/syntheseError
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CollapseModule } from 'ngx-bootstrap';
 import { HistoriqueComponent } from './historique/historique.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { HistoriqueComponent } from './historique/historique.component';
   providers: [
     ConstService,
     AuthService,
+    AuthGuardService,
     HttpService
   ],
   bootstrap: [AppComponent]

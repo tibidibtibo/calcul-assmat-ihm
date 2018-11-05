@@ -8,9 +8,12 @@ import { Component } from "@angular/core";
 })
 export class HistoriqueComponent {
 
+  data: Array<Object> = [];
+
   constructor(httpService: HttpService) {
     httpService.getHistorique().subscribe(
-      data => {
+      (data: Array<Object>) => {
+        this.data = data;
         console.log(data)
       }, error => {
         console.log(error)

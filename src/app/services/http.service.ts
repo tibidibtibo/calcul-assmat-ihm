@@ -20,15 +20,12 @@ export class HttpService {
     return this.http.get(this.constantes.serverUrl + "/auth/alive", { headers: headers });
   }
 
-  calcul(monthSelected: string, employeSelected, formData) {
-
-    // TODO : à mettre en input
-    const annee = "2018";
+  calcul(monthSelected: string, yearSelected: number, employeSelected, formData) {
 
     let headers = this.getAuthenticatedDefaultHeaders();
     let params = new HttpParams();
 
-    let URLArray = [this.constantes.serverUrl, "calcul/file", annee, monthSelected, employeSelected.id];
+    let URLArray = [this.constantes.serverUrl, "calcul/file", yearSelected.toString(), monthSelected, employeSelected.id];
     const URL = URLArray.join(URL_SEPARATOR);
 
     return this.http

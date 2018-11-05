@@ -1,0 +1,6 @@
+<div>
+  <h4>Archives</h4>
+  <ul class="list-group">
+    <li *ngFor="let line of data" class="list-group-item">{{line.mois}}/{{line.annee}} - {{line.horodatage | date:'dd/MM/yyyy HH:mm'}}</li>
+  </ul>
+</div>

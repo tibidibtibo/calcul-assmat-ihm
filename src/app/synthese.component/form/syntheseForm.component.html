@@ -18,10 +18,16 @@
             </div>
             <div class="col align-self-center">
               <div class="form-group">
-                <label for="mois">Mois du calcul</label>
+                <label for="mois">Mois</label>
                 <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected" formControlName="mois">
                   <option *ngFor="let month of monthsList" [ngValue]="month">{{month}}</option>
                 </select>
+              </div>
+            </div>
+            <div class="col align-self-center">
+              <div class="form-group">
+                <label for="annee">Année</label>
+                <input type="number"required minlength="4" class="form-control" name="annee" id="annee" [(ngModel)]="yearSelected" formControlName="annee" />
               </div>
             </div>
           </div>

@@ -48,6 +48,7 @@ export class SyntheseFormComponent {
 
   public loading: boolean = false;
   public monthSelected: string = "";
+  public yearSelected = 2018;
   public employeSelected = null;
 
   constructor(
@@ -71,7 +72,8 @@ export class SyntheseFormComponent {
 
   createForm() {
     this.form = this.fb.group({
-      mois: [null, Validators.required],
+      mois: [null, [Validators.required, Validators.minLength(2)]],
+      annee: [null, [Validators.required, Validators.minLength(4)]],
       employe: [null, Validators.required],
       fichier: null
     });
@@ -96,7 +98,7 @@ export class SyntheseFormComponent {
     this.loading = true;
 
     this.httpService
-      .calcul(this.monthSelected, this.employeSelected, formModel)
+      .calcul(this.monthSelected, this.yearSelected, this.employeSelected, formModel)
       .subscribe(
         data => {
           this.resultatEvent.emit(data);
