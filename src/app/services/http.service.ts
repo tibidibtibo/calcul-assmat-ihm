@@ -9,26 +9,7 @@ const URL_SEPARATOR: string = "/";
 @Injectable()
 export class HttpService {
 
-
   constructor(private http: HttpClient, private authService: AuthService, private constantes: ConstService) { }
-
-  calcul(monthSelected: string, employeSelected, formData) {
-
-    const annee = "2018";
-
-    let headers = new HttpHeaders()
-      .set("Accept", "application/json")
-      .set("Access-Control-Allow-Origin", "*")
-      .set("Authorization", this.authService.getBAHeader());
-    let params = new HttpParams();
-
-    let URLArray = [ this.constantes.serverUrl, "calcul/file", annee, monthSelected, employeSelected.id];
-    const URL = URLArray.join(URL_SEPARATOR);
-    console.log(URL);
-
-    return this.http
-          .post(URL, formData, { headers: headers, params: params })
-  }
 
   isBackAlive() {
 
@@ -39,13 +20,38 @@ export class HttpService {
     return this.http.get(this.constantes.serverUrl + "/auth/alive", { headers: headers });
   }
 
+  calcul(monthSelected: string, employeSelected, formData) {
+
+    // TODO : à mettre en input
+    const annee = "2018";
+
+    let headers = this.getAuthenticatedDefaultHeaders();
+    let params = new HttpParams();
+
+    let URLArray = [this.constantes.serverUrl, "calcul/file", annee, monthSelected, employeSelected.id];
+    const URL = URLArray.join(URL_SEPARATOR);
+
+    return this.http
+      .post(URL, formData, { headers: headers, params: params })
+  }
+
   getAllEmployes() {
+    let headers = this.getAuthenticatedDefaultHeaders();
+    let params = new HttpParams();
+    return this.http.get(this.constantes.serverUrl + "/parametrage/employes", { headers: headers, params: params });
+  }
+
+  getHistorique() {
+    let headers = this.getAuthenticatedDefaultHeaders();
+    let params = new HttpParams();
+    return this.http.get(this.constantes.serverUrl + "/archives/all", { headers: headers, params: params });
+  }
+
+  private getAuthenticatedDefaultHeaders() {
     let headers = new HttpHeaders()
       .set("Accept", "application/json")
       .set("Access-Control-Allow-Origin", "*")
       .set("Authorization", this.authService.getBAHeader());
-    let params = new HttpParams();
-
-    return this.http.get(this.constantes.serverUrl + "/parametrage/employes", { headers: headers, params: params });
+    return headers;
   }
 }

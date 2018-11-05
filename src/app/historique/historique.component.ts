@@ -1,3 +1,4 @@
+import { HttpService } from './../services/http.service';
 import { Component } from "@angular/core";
 
 @Component({
@@ -7,7 +8,14 @@ import { Component } from "@angular/core";
 })
 export class HistoriqueComponent {
 
-  constructor() {
+  constructor(httpService: HttpService) {
+    httpService.getHistorique().subscribe(
+      data => {
+        console.log(data)
+      }, error => {
+        console.log(error)
+      }
+    );
   }
 
 }
