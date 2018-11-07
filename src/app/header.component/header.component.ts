@@ -29,9 +29,13 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.authService.logout( () => {
-      this.router.navigateByUrl('/login');
-    });
+    this.authService.logout().subscribe(
+      data => {
+        console.log(data);
+      }, error => {
+        console.log(error);
+      }
+    );
   }
 
   isBackAlive(): void {

@@ -17,13 +17,10 @@ export class AuthService {
     return this.tokenService.getToken();
   }
 
-  logout(callback) {
-    this.http
-      .post(this.constantes.serverUrl + '/logout', {})
-      .finally(() => {
-        callback();
-      })
-      .subscribe();
+  logout() {
+    return this.http
+      .get(this.constantes.serverUrl + '/logout');
+
   }
 
 }

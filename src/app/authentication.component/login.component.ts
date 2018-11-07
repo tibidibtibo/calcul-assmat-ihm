@@ -5,25 +5,29 @@ import { TokenStorageService } from './../services/token.storage.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 
   credentials = { username: '', password: '' };
-  error = null;
+  error;
 
   constructor(private authService: AuthService, private token: TokenStorageService, private router: Router) {
   }
 
   login(): void {
-    this.error = null;
+    this.error = {};
     this.authService.authenticate(this.credentials).subscribe(
       (data: any) => {
         this.token.saveToken(data.token);
         this.router.navigate(['/']);
+      },
+      error => {
+        this.error.libelle = "Une erreur s'est produite. Veuillez réessayer.";
+        this.error.message = error.message;
       }
     );
-    // this.error = "Une erreur s'est produite. Veuillez réessayer."
   }
 
 }

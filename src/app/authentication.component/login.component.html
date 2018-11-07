@@ -10,13 +10,10 @@
     </div>
     <button type="submit" class="btn btn-info">Connexion</button>
   </form>
-  <div class="container" *ngIf="error">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="alert alert-danger" role="alert">
-          {{error}}
-        </div>
-      </div>
+  <div class="container error-container" *ngIf="error">
+    <div class="alert alert-danger" role="alert">
+      <p>{{error.libelle}}</p>
+      <p>{{error.message}}</p>
     </div>
   </div>
 </div>

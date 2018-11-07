@@ -58,16 +58,16 @@ export class SyntheseFormComponent {
   ) {
     this.createForm();
 
-    // if (this.auth.authenticated) {
-    //   this.httpService.getAllEmployes().subscribe(
-    //     data => {
-    //       this.employes = data;
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     }
-    //   );
-    // }
+    if (this.auth.isAuthenticated()) {
+      this.httpService.getAllEmployes().subscribe(
+        data => {
+          this.employes = data;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   createForm() {
