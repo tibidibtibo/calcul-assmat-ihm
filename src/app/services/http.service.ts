@@ -12,12 +12,7 @@ export class HttpService {
   constructor(private http: HttpClient, private authService: AuthService, private constantes: ConstService) { }
 
   isBackAlive() {
-
-    let headers = new HttpHeaders()
-      .set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, X-Auth-Token')
-      .set("Access-Control-Allow-Origin", "*");
-
-    return this.http.get(this.constantes.serverUrl + "/auth/alive", { headers: headers });
+    return this.http.get(this.constantes.serverUrl + "/token/alive");
   }
 
   calcul(monthSelected: string, yearSelected: number, employeSelected, formData) {
@@ -47,8 +42,8 @@ export class HttpService {
   private getAuthenticatedDefaultHeaders() {
     let headers = new HttpHeaders()
       .set("Accept", "application/json")
-      .set("Access-Control-Allow-Origin", "*")
-      .set("Authorization", this.authService.getBAHeader());
+      .set("Access-Control-Allow-Origin", "*");
+      // .set("Authorization", this.authService.getBAHeader());
     return headers;
   }
 }

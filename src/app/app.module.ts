@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutesModule } from './app.routes.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
@@ -15,8 +15,11 @@ import { PageNotFoundComponent } from './page-not-found.component/page-not-found
 import { HomeComponent } from './home.component/home.component';
 
 import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
 import { HttpService } from './services/http.service';
 import { ConstService } from './services/const.service';
+import { TokenStorageService } from './services/token.storage.service';
+import { AppHttpInterceptor } from './services/app.interceptor.service';
 
 import { SyntheseFormComponent } from './synthese.component/form/syntheseForm.component';
 import { SyntheseResultatComponent } from './synthese.component/resultat/syntheseResultat.component';
@@ -25,7 +28,6 @@ import { SyntheseErrorComponent } from './synthese.component/error/syntheseError
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CollapseModule } from 'ngx-bootstrap';
 import { HistoriqueComponent } from './historique/historique.component';
-import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -54,8 +56,14 @@ import { AuthGuardService } from './services/auth-guard.service';
   providers: [
     ConstService,
     AuthService,
+    HttpService,
     AuthGuardService,
-    HttpService
+    TokenStorageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppHttpInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

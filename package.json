@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "npx ng",
-    "start": "npx ng serve —-proxy-config proxy.conf.json",
+    "start": "npx ng serve",
     "build": "npx ng build --prod",
     "test": "npx ng test",
     "lint": "npx ng lint",

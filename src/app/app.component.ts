@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HttpService } from './services/http.service';
 import { AuthService } from './services/auth.service';
 
 import 'rxjs/add/operator/finally';
@@ -18,9 +17,9 @@ export class AppComponent {
   }
 
   logout(): void {
-    this.authService.logout( () => {
-      this.router.navigateByUrl('/login');
-    })
+    // this.authService.logout( () => {
+    //   this.router.navigateByUrl('/login');
+    // })
   }
 
 }

@@ -25,7 +25,7 @@ export class HeaderComponent {
   serverConnected: boolean = false;
 
   authenticated() {
-    return this.authService.authenticated;
+    return this.authService.isAuthenticated();
   }
 
   logout() {

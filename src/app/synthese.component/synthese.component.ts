@@ -17,7 +17,7 @@ export class SyntheseComponent {
   public error: Object;
 
   authenticated() {
-    return this.authService.authenticated;
+    // return this.authService.authenticated;
   }
 
   onChangeResultat(newResultat: Object) {

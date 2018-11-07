@@ -8,7 +8,6 @@ import { SaisieComponent } from './saisie.component/saisie.component';
 import { HistoriqueComponent } from './historique/historique.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
-
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: HomeComponent },
