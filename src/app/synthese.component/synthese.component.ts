@@ -10,15 +10,11 @@ import { AuthService } from "../services/auth.service";
 })
 export class SyntheseComponent {
 
-  constructor(private authService: AuthService) {
+  constructor() {
   }
 
   public resultat: Object;
   public error: Object;
-
-  authenticated() {
-    return this.authService.isAuthenticated();
-  }
 
   onChangeResultat(newResultat: Object) {
     this.resultat = newResultat;

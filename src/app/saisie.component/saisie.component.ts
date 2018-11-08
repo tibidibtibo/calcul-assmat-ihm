@@ -11,7 +11,7 @@ import { AuthService } from './../services/auth.service';
 })
 export class SaisieComponent {
 
-  constructor(private authService: AuthService, private httpService: HttpService, private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {
     this.createForm();
   }
 

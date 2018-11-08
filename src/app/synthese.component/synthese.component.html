@@ -1,12 +1,5 @@
 <div class="container">
-  <div [hidden]="!authenticated()">
-    <synthese-form [resultat]="resultat" (resultatEvent)="onChangeResultat($event)"
-      (errorEvent)="onChangeError($event)"></synthese-form>
-    <synthese-error [error]="error"></synthese-error>
-    <synthese-resultat [resultat]="resultat" (resultatEvent)="onChangeResultat($event)"></synthese-resultat>
-  </div>
-  <div [hidden]="authenticated()">
-    <p>Se connecter pour calculer la synthèse</p>
-    <p><a class="btn btn-info" routerLink="/login">Connexion</a></p>
-  </div>
+  <synthese-form [resultat]="resultat" (resultatEvent)="onChangeResultat($event)" (errorEvent)="onChangeError($event)"></synthese-form>
+  <synthese-error [error]="error"></synthese-error>
+  <synthese-resultat [resultat]="resultat" (resultatEvent)="onChangeResultat($event)"></synthese-resultat>
 </div>

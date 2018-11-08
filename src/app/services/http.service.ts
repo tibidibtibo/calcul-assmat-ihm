@@ -9,7 +9,7 @@ const URL_SEPARATOR: string = "/";
 @Injectable()
 export class HttpService {
 
-  constructor(private http: HttpClient, private authService: AuthService, private constantes: ConstService) { }
+  constructor(private http: HttpClient, private constantes: ConstService) { }
 
   isBackAlive() {
     return this.http.get(this.constantes.serverUrl + "/token/alive");

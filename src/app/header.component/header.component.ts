@@ -29,13 +29,7 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.authService.logout().subscribe(
-      data => {
-        console.log(data);
-      }, error => {
-        console.log(error);
-      }
-    );
+    this.authService.logout();
   }
 
   isBackAlive(): void {

@@ -51,23 +51,16 @@ export class SyntheseFormComponent {
   public yearSelected = 2018;
   public employeSelected = null;
 
-  constructor(
-    private auth: AuthService,
-    private httpService: HttpService,
-    private fb: FormBuilder
-  ) {
+  constructor(private httpService: HttpService, private fb: FormBuilder) {
     this.createForm();
-
-    if (this.auth.isAuthenticated()) {
-      this.httpService.getAllEmployes().subscribe(
-        data => {
-          this.employes = data;
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
+    this.httpService.getAllEmployes().subscribe(
+      data => {
+        this.employes = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   createForm() {
