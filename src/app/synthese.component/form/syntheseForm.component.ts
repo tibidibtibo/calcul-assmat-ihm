@@ -9,22 +9,7 @@ import {
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 
 import { HttpService } from "../../services/http.service";
-import { AuthService } from "../../services/auth.service";
-
-const MONTHS = [
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-  "09",
-  "10",
-  "11",
-  "12"
-];
+import { ConstService } from "../../services/const.service";
 
 @Component({
   selector: "synthese-form",
@@ -43,16 +28,20 @@ export class SyntheseFormComponent {
   @ViewChild("fileInput")
   fileInput: ElementRef;
   public form: FormGroup;
-  public monthsList: Array<Object> = MONTHS;
+  public monthsList: Array<Object> = this.constantes.MONTHS_LIST;
   public employes;
 
   public loading: boolean = false;
-  public monthSelected: string = "";
-  public yearSelected = 2018;
+  public monthSelected = ((new Date()).getMonth()).toString().padStart(2, "0");
+  public yearSelected = (new Date()).getFullYear();
   public employeSelected = null;
 
-  constructor(private httpService: HttpService, private fb: FormBuilder) {
+  constructor(private httpService: HttpService, private fb: FormBuilder, private constantes: ConstService) {
     this.createForm();
+    this.loadReferentiel();
+  }
+
+  loadReferentiel() {
     this.httpService.getAllEmployes().subscribe(
       data => {
         this.employes = data;
