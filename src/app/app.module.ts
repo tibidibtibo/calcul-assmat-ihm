@@ -19,7 +19,7 @@ import { HomeComponent } from './home.component/home.component';
 import { SyntheseFormComponent } from './synthese.component/form/syntheseForm.component';
 import { SyntheseResultatComponent } from './synthese.component/resultat/syntheseResultat.component';
 import { SyntheseErrorComponent } from './synthese.component/error/syntheseError.component';
-import { HistoriqueComponent } from './historique/historique.component';
+import { HistoriqueComponent } from './historique.component/historique.component';
 import { ParametrageComponent } from './parametrage.component.ts/parametrage.component';
 
 import { AuthService } from './services/auth.service';

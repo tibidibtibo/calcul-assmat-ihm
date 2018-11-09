@@ -12,6 +12,26 @@
           <input type="text" class="form-control" name="'heurearrivee_' + {{enfant.id}}" [(ngModel)]="model['heurearrivee_' + enfant.id]" />
         </div>
       </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="'heuredepart_' + {{enfant.id}}">Heure Départ</label>
+          <input type="text" class="form-control" name="'heuredepart_' + {{enfant.id}}" [(ngModel)]="model['heuredepart_' + enfant.id]" />
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <p>Déjeuner</p>
+          <div class="form-check form-check-inline">
+            <input type="radio" value="0" class="form-check-input" name="'dejeuner0_' + {{enfant.id}}" [(ngModel)]="model['dejeuner__' + enfant.id]"
+              checked />
+            <label class="form-check-label" for="'dejeuner0_' + {{enfant.id}}">0</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="1" name="'dejeuner1_' + {{enfant.id}}" [(ngModel)]="model['dejeuner__' + enfant.id]" />
+            <label class="form-check-label" for="'dejeuner1_' + {{enfant.id}}">1</label>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col">
