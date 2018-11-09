@@ -4,7 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutesModule } from './app.routes.module';
+
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { CollapseModule } from 'ngx-bootstrap';
 
 import { HeaderComponent } from './header.component/header.component';
 import { AppComponent } from './app.component';
@@ -13,6 +16,11 @@ import { SyntheseComponent } from './synthese.component/synthese.component';
 import { LoginComponent } from './authentication.component/login.component';
 import { PageNotFoundComponent } from './page-not-found.component/page-not-found.component';
 import { HomeComponent } from './home.component/home.component';
+import { SyntheseFormComponent } from './synthese.component/form/syntheseForm.component';
+import { SyntheseResultatComponent } from './synthese.component/resultat/syntheseResultat.component';
+import { SyntheseErrorComponent } from './synthese.component/error/syntheseError.component';
+import { HistoriqueComponent } from './historique/historique.component';
+import { ParametrageComponent } from './parametrage.component.ts/parametrage.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -21,13 +29,6 @@ import { ConstService } from './services/const.service';
 import { TokenStorageService } from './services/token.storage.service';
 import { AppHttpInterceptor } from './services/app.interceptor.service';
 
-import { SyntheseFormComponent } from './synthese.component/form/syntheseForm.component';
-import { SyntheseResultatComponent } from './synthese.component/resultat/syntheseResultat.component';
-import { SyntheseErrorComponent } from './synthese.component/error/syntheseError.component';
-
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { CollapseModule } from 'ngx-bootstrap';
-import { HistoriqueComponent } from './historique/historique.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { HistoriqueComponent } from './historique/historique.component';
     PageNotFoundComponent,
     HomeComponent,
     HistoriqueComponent,
-    HeaderComponent
+    HeaderComponent,
+    ParametrageComponent
   ],
   imports: [
     AppRoutesModule,
