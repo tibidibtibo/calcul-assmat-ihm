@@ -1,9 +1,22 @@
 <div class="container">
   <h4>Saisie</h4>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-          <label for="nom">Nom</label>
-          <input name="nom" id="nom">
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="row" *ngFor="let enfant of enfants">
+      <div class="col">
+        <h6>{{enfant.nom}}</h6>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="'heurearrivee_' + {{enfant.id}}">Heure Arrivée</label>
+          <input type="text" class="form-control" name="'heurearrivee_' + {{enfant.id}}" [(ngModel)]="model['heurearrivee_' + enfant.id]" />
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary">Saisir</button>
+      </div>
+    </div>
   </form>
 </div>
