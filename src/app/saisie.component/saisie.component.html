@@ -4,31 +4,59 @@
   <form (ngSubmit)="onSubmit()">
     <div class="row" *ngFor="let enfant of enfants">
       <div class="col">
-        <h6>{{enfant.nom}}</h6>
+        <div class="form-group">
+          <h6>{{enfant.nom}}</h6>
+          <label class="container">
+            <input type="checkbox" checked="checked" id="saisie{{enfant.id}}" name="saisie{{enfant.id}}" [(ngModel)]="model[enfant.id].saisie">
+            <span class="checkmark"></span>
+          </label>
+        </div>
       </div>
       <div class="col">
         <div class="form-group">
           <label for="'heurearrivee_' + {{enfant.id}}">Heure Arrivée</label>
-          <input type="text" class="form-control" name="'heurearrivee_' + {{enfant.id}}" [(ngModel)]="model['heurearrivee_' + enfant.id]" />
+          <input type="text" class="form-control" name="'heurearrivee_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureArrivee" />
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <label for="'heuredepart_' + {{enfant.id}}">Heure Départ</label>
-          <input type="text" class="form-control" name="'heuredepart_' + {{enfant.id}}" [(ngModel)]="model['heuredepart_' + enfant.id]" />
+          <input type="text" class="form-control" name="'heuredepart_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureDepart" />
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <p>Déjeuner</p>
-          <div class="form-check form-check-inline">
-            <input type="radio" value="0" class="form-check-input" name="'dejeuner0_' + {{enfant.id}}" [(ngModel)]="model['dejeuner__' + enfant.id]"
-              checked />
-            <label class="form-check-label" for="'dejeuner0_' + {{enfant.id}}">0</label>
+          <div class="form-check form-check-inline" *ngFor="let dej of inputNbDejeuner">
+            <label class="radio-container">{{dej}}
+              <input type="radio" [value]="dej" checked="checked" id="nbDejeuner{{dej}}_{{enfant.id}}" name="nbDejeuner{{dej}}_{{enfant.id}}"
+                [(ngModel)]="model[enfant.id].nbDejeuner">
+              <span class="radio-checkmark"></span>
+            </label>
           </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" value="1" name="'dejeuner1_' + {{enfant.id}}" [(ngModel)]="model['dejeuner__' + enfant.id]" />
-            <label class="form-check-label" for="'dejeuner1_' + {{enfant.id}}">1</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <p>Goûter</p>
+          <div class="form-check form-check-inline" *ngFor="let gouter of inputNbGouters">
+            <label class="radio-container">{{gouter}}
+              <input type="radio" [value]="gouter" checked="checked" id="nbGouter{{gouter}}_{{enfant.id}}" name="nbGouter{{gouter}}_{{enfant.id}}"
+                [(ngModel)]="model[enfant.id].nbGouter" />
+              <span class="radio-checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <p>AR école</p>
+          <div class="form-check form-check-inline" *ngFor="let ecole of inputNbAREcole">
+            <label class="radio-container">{{ecole}}
+              <input type="radio" [value]="ecole" checked="checked" id="nbArEcole{{ecole}}_{{enfant.id}}" name="nbArEcole{{ecole}}_{{enfant.id}}"
+                [(ngModel)]="model[enfant.id].nbArEcole" />
+              <span class=" radio-checkmark"></span>
+            </label>
           </div>
         </div>
       </div>
