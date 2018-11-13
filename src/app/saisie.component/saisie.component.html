@@ -4,9 +4,8 @@
   <form (ngSubmit)="onSubmit()">
     <div class="row" *ngFor="let enfant of enfants">
       <div class="col">
-        <div class="form-group">
-          <h6>{{enfant.nom}}</h6>
-          <label class="container">
+        <div class="form-group form-check-inline">
+          <label class="check-container"><span class="check-lib">{{enfant.nom}}</span>
             <input type="checkbox" checked="checked" id="saisie{{enfant.id}}" name="saisie{{enfant.id}}" [(ngModel)]="model[enfant.id].saisie">
             <span class="checkmark"></span>
           </label>
@@ -25,10 +24,10 @@
         </div>
       </div>
       <div class="col">
-        <div class="form-group">
-          <p>Déjeuner</p>
-          <div class="form-check form-check-inline" *ngFor="let dej of inputNbDejeuner">
-            <label class="radio-container">{{dej}}
+        <p>Déjeuner</p>
+        <div class="form-group form-check-inline">
+          <div class="form-check" *ngFor="let dej of inputNbDejeuner">
+            <label class="check-container"><span class="check-lib">{{dej}}</span>
               <input type="radio" [value]="dej" checked="checked" id="nbDejeuner{{dej}}_{{enfant.id}}" name="nbDejeuner{{dej}}_{{enfant.id}}"
                 [(ngModel)]="model[enfant.id].nbDejeuner">
               <span class="radio-checkmark"></span>
@@ -37,10 +36,10 @@
         </div>
       </div>
       <div class="col">
-        <div class="form-group">
-          <p>Goûter</p>
-          <div class="form-check form-check-inline" *ngFor="let gouter of inputNbGouters">
-            <label class="radio-container">{{gouter}}
+        <p>Goûter</p>
+        <div class="form-group form-check-inline">
+          <div class="form-check" *ngFor="let gouter of inputNbGouters">
+            <label class="check-container"><span class="check-lib">{{gouter}}</span>
               <input type="radio" [value]="gouter" checked="checked" id="nbGouter{{gouter}}_{{enfant.id}}" name="nbGouter{{gouter}}_{{enfant.id}}"
                 [(ngModel)]="model[enfant.id].nbGouter" />
               <span class="radio-checkmark"></span>
@@ -49,10 +48,10 @@
         </div>
       </div>
       <div class="col">
-        <div class="form-group">
-          <p>AR école</p>
-          <div class="form-check form-check-inline" *ngFor="let ecole of inputNbAREcole">
-            <label class="radio-container">{{ecole}}
+        <p>AR école</p>
+        <div class="form-group form-check-inline">
+          <div class="form-check" *ngFor="let ecole of inputNbAREcole">
+            <label class="check-container"><span class="check-lib">{{ecole}}</span>
               <input type="radio" [value]="ecole" checked="checked" id="nbArEcole{{ecole}}_{{enfant.id}}" name="nbArEcole{{ecole}}_{{enfant.id}}"
                 [(ngModel)]="model[enfant.id].nbArEcole" />
               <span class=" radio-checkmark"></span>
@@ -60,6 +59,7 @@
           </div>
         </div>
       </div>
+    <hr />
     </div>
     <div class="row">
       <div class="col">
