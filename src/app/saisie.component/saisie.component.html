@@ -1,69 +1,79 @@
 <div class="container">
   <h4>Saisie</h4>
 
-  <form (ngSubmit)="onSubmit()">
-    <div class="row" *ngFor="let enfant of enfants">
-      <div class="col">
-        <div class="form-group form-check-inline">
-          <label class="check-container"><span class="check-lib">{{enfant.nom}}</span>
-            <input type="checkbox" checked="checked" id="saisie{{enfant.id}}" name="saisie{{enfant.id}}" [(ngModel)]="model[enfant.id].saisie">
-            <span class="checkmark"></span>
-          </label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-group">
-          <label for="'heurearrivee_' + {{enfant.id}}">Heure Arrivée</label>
-          <input type="text" class="form-control" name="'heurearrivee_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureArrivee" />
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-group">
-          <label for="'heuredepart_' + {{enfant.id}}">Heure Départ</label>
-          <input type="text" class="form-control" name="'heuredepart_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureDepart" />
-        </div>
-      </div>
-      <div class="col">
-        <p>Déjeuner</p>
-        <div class="form-group form-check-inline">
-          <div class="form-check" *ngFor="let dej of inputNbDejeuner">
-            <label class="check-container"><span class="check-lib">{{dej}}</span>
-              <input type="radio" [value]="dej" checked="checked" id="nbDejeuner{{dej}}_{{enfant.id}}" name="nbDejeuner{{dej}}_{{enfant.id}}"
-                [(ngModel)]="model[enfant.id].nbDejeuner">
-              <span class="radio-checkmark"></span>
+  <form [formGroup]="saisieForm" (ngSubmit)="onSubmit()" *ngIf="saisieForm">
+    <div *ngFor="let enfant of enfants">
+      <div class="row">
+        <div class="col">
+          <div class="form-group form-check-inline check-prenom">
+            <label class="check-container"><span class="check-lib">{{enfant.nom}}</span>
+              <input type="checkbox" checked="checked" id="saisie_{{enfant.id}}" name="saisie_{{enfant.id}}"
+                [(ngModel)]="model[enfant.id].saisie" formControlName="saisie_{{enfant.id}}">
+              <span class="checkmark"></span>
             </label>
           </div>
         </div>
-      </div>
-      <div class="col">
-        <p>Goûter</p>
-        <div class="form-group form-check-inline">
-          <div class="form-check" *ngFor="let gouter of inputNbGouters">
-            <label class="check-container"><span class="check-lib">{{gouter}}</span>
-              <input type="radio" [value]="gouter" checked="checked" id="nbGouter{{gouter}}_{{enfant.id}}" name="nbGouter{{gouter}}_{{enfant.id}}"
-                [(ngModel)]="model[enfant.id].nbGouter" />
-              <span class="radio-checkmark"></span>
-            </label>
+        <div class="col">
+          <div class="form-group">
+            <label for="'heurearrivee_' + {{enfant.id}}">Heure Arrivée</label>
+            <input type="text" class="form-control" name="'heurearrivee_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureArrivee"
+              formControlName="heurearrivee_{{enfant.id}}" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="'heuredepart_' + {{enfant.id}}">Heure Départ</label>
+            <input type="text" class="form-control" name="'heuredepart_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureDepart"
+              formControlName="heuredepart_{{enfant.id}}" />
+          </div>
+        </div>
+        <div class="col">
+          <p>Déjeuner</p>
+          <div class="form-group form-check-inline">
+            <div class="form-check" *ngFor="let dej of inputNbDejeuner">
+              <label class="check-container"><span class="check-lib">{{dej}}</span>
+                <input type="radio" [value]="dej" checked="checked" id="nbDejeuner_{{enfant.id}}" name="nbDejeuner_{{enfant.id}}"
+                  [(ngModel)]="model[enfant.id].nbDejeuner" formControlName="nbDejeuner_{{enfant.id}}" />
+                <span class="radio-checkmark"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <p>Goûter</p>
+          <div class="form-group form-check-inline">
+            <div class="form-check" *ngFor="let gouter of inputNbGouters">
+              <label class="check-container"><span class="check-lib">{{gouter}}</span>
+                <input type="radio" [value]="gouter" checked="checked" id="nbGouter_{{enfant.id}}" name="nbGouter_{{enfant.id}}"
+                  [(ngModel)]="model[enfant.id].nbGouter" formControlName="nbGouter_{{enfant.id}}" />
+                <span class="radio-checkmark"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <p>AR école</p>
+          <div class="form-group form-check-inline">
+            <div class="form-check" *ngFor="let ecole of inputNbAREcole">
+              <label class="check-container"><span class="check-lib">{{ecole}}</span>
+                <input type="radio" [value]="ecole" checked="checked" id="nbArEcole_{{enfant.id}}" name="nbArEcole_{{enfant.id}}"
+                  [(ngModel)]="model[enfant.id].nbArEcole" formControlName="nbArEcole_{{enfant.id}}" />
+                <span class=" radio-checkmark"></span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col">
-        <p>AR école</p>
-        <div class="form-group form-check-inline">
-          <div class="form-check" *ngFor="let ecole of inputNbAREcole">
-            <label class="check-container"><span class="check-lib">{{ecole}}</span>
-              <input type="radio" [value]="ecole" checked="checked" id="nbArEcole{{ecole}}_{{enfant.id}}" name="nbArEcole{{ecole}}_{{enfant.id}}"
-                [(ngModel)]="model[enfant.id].nbArEcole" />
-              <span class=" radio-checkmark"></span>
-            </label>
-          </div>
+      <div class="row">
+        <div class="col">
+          <hr>
         </div>
       </div>
-    <hr />
     </div>
     <div class="row">
       <div class="col">
-        <button class="btn btn-primary">Saisir</button>
+        <button type="submit" class="btn btn-success btn-lg">Valider <i
+            class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
       </div>
     </div>
   </form>
