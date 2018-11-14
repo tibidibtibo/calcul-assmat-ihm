@@ -20,7 +20,7 @@ export class SaisieComponent {
   constructor(private httpService: HttpService, private fb: FormBuilder) {
     this.httpService.getAllEnfants().subscribe(
       (data: any) => {
-        if(data && data.length > 0) {
+        if (data && data.length > 0) {
 
           data.forEach(enfant => {
             this.model[enfant.id] = {};
@@ -36,21 +36,53 @@ export class SaisieComponent {
   createForm(enfants: any) {
     var group = {};
     enfants.forEach(enfant => {
-      group['saisie_' + enfant.id] = null;
-      group['heurearrivee_' + enfant.id] = [{ value: null }, [Validators.required]];
-      group['heuredepart_' + enfant.id] = [null, [Validators.required]];
-      group['nbDejeuner_' + enfant.id] = [null, [Validators.required]];
-      group['nbGouter_' + enfant.id] = [null, [Validators.required]];
-      group['nbArEcole_' + enfant.id] = [null, [Validators.required]];
+
+      var saisieControl = this.fb.control({ value: null });
+      var heureArriveeControl = this.fb.control(this.initVoidInput(), [Validators.required]);
+      var heureDepartControl = this.fb.control(this.initVoidInput(), [Validators.required]);
+      var nbDejControl = this.fb.control(this.initVoidInput(), [Validators.required]);
+      var nbGouterControl = this.fb.control(this.initVoidInput(), [Validators.required]);
+      var nbArControl = this.fb.control(this.initVoidInput(), [Validators.required]);
+
+      group['saisie_' + enfant.id] = saisieControl;
+      group['heurearrivee_' + enfant.id] = heureArriveeControl;
+      group['heuredepart_' + enfant.id] = heureDepartControl;
+      group['nbDejeuner_' + enfant.id] = nbDejControl;
+      group['nbGouter_' + enfant.id] = nbGouterControl;
+      group['nbArEcole_' + enfant.id] = nbArControl;
+      // group['submit'] = [] // TODO disable submit
+
+      saisieControl.statusChanges.subscribe(
+        () => {
+          if(!saisieControl.value) {
+            heureArriveeControl.disable();
+            heureDepartControl.disable();
+            nbDejControl.disable();
+            nbGouterControl.disable();
+            nbArControl.disable();
+          } else {
+            heureArriveeControl.enable();
+            heureDepartControl.enable();
+            nbDejControl.enable();
+            nbGouterControl.enable();
+            nbArControl.enable();
+          }
+        }
+      );
     });
+
     this.saisieForm = this.fb.group(group);
   }
 
-  onSubmit() {
+  private initVoidInput() {
+    return { value: null, disabled: true };
+  }
+
+  public onSubmit() {
     console.log(this.model)
   }
 
-  getNumArray(size: number) {
-    return Array.from(new Array(size),(val,index)=>index);
+  public getNumArray(size: number) {
+    return Array.from(new Array(size), (val, index) => index);
   }
 }
