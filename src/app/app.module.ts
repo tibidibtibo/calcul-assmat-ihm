@@ -8,6 +8,7 @@ import { AppRoutesModule } from './app.routes.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CollapseModule } from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { HeaderComponent } from './header.component/header.component';
 import { AppComponent } from './app.component';
@@ -53,6 +54,7 @@ import { AppHttpInterceptor } from './services/app.interceptor.service';
     ReactiveFormsModule,
     CollapseModule,
     TooltipModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     AngularFontAwesomeModule
   ],
   providers: [

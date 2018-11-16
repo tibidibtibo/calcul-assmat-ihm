@@ -16,6 +16,7 @@ export class SaisieComponent {
   public inputNbDejeuner = this.getNumArray(2);
   public inputNbGouters = this.getNumArray(2);
   public inputNbAREcole = this.getNumArray(4);
+  public currentDate = new Date();
 
   constructor(private httpService: HttpService, private fb: FormBuilder) {
     this.httpService.getAllEnfants().subscribe(

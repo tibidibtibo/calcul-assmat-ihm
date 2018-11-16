@@ -2,6 +2,15 @@
   <h4>Saisie</h4>
 
   <form [formGroup]="saisieForm" (ngSubmit)="onSubmit()" *ngIf="saisieForm">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="dateSaisie">Date</label>
+          <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="currentDate" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+            name="dateSaisie" id="dateSaisie" />
+        </div>
+      </div>
+    </div>
     <div *ngFor="let enfant of enfants">
       <div class="row">
         <div class="col">
@@ -27,6 +36,8 @@
               formControlName="heuredepart_{{enfant.id}}" />
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col">
           <p>Déjeuner</p>
           <div class="form-group form-check-inline">
@@ -72,8 +83,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <button type="submit" class="btn btn-success btn-lg" formControlName="submit">Valider <i
-            class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
+        <button type="submit" class="btn btn-success btn-lg">Valider <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
       </div>
     </div>
   </form>
