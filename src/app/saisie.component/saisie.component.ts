@@ -16,7 +16,7 @@ export class SaisieComponent {
   public inputNbDejeuner = this.getNumArray(2);
   public inputNbGouters = this.getNumArray(2);
   public inputNbAREcole = this.getNumArray(4);
-  public currentDate = new Date();
+  public dateSaisie = new Date();
 
   constructor(private httpService: HttpService, private fb: FormBuilder) {
     this.httpService.getAllEnfants().subscribe(
@@ -36,6 +36,7 @@ export class SaisieComponent {
 
   createForm(enfants: any) {
     var group = {};
+    group['dateSaisie'] = this.fb.control({ value: new Date()}, [Validators.required]);
     enfants.forEach(enfant => {
 
       var saisieControl = this.fb.control({ value: null });
@@ -44,6 +45,7 @@ export class SaisieComponent {
       var nbDejControl = this.fb.control(this.initVoidInput(), [Validators.required]);
       var nbGouterControl = this.fb.control(this.initVoidInput(), [Validators.required]);
       var nbArControl = this.fb.control(this.initVoidInput(), [Validators.required]);
+      var autreKmControl = this.fb.control(this.initVoidInput(), [Validators.required]);
 
       group['saisie_' + enfant.id] = saisieControl;
       group['heurearrivee_' + enfant.id] = heureArriveeControl;
@@ -51,6 +53,7 @@ export class SaisieComponent {
       group['nbDejeuner_' + enfant.id] = nbDejControl;
       group['nbGouter_' + enfant.id] = nbGouterControl;
       group['nbArEcole_' + enfant.id] = nbArControl;
+      group['autreKm_' + enfant.id] = autreKmControl;
       // group['submit'] = [] // TODO disable submit
 
       saisieControl.statusChanges.subscribe(
@@ -61,12 +64,14 @@ export class SaisieComponent {
             nbDejControl.disable();
             nbGouterControl.disable();
             nbArControl.disable();
+            autreKmControl.disable();
           } else {
             heureArriveeControl.enable();
             heureDepartControl.enable();
             nbDejControl.enable();
             nbGouterControl.enable();
             nbArControl.enable();
+            autreKmControl.enable();
           }
         }
       );
