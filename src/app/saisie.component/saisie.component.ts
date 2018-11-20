@@ -10,7 +10,6 @@ import { HttpService } from './../services/http.service';
 })
 export class SaisieComponent {
 
-  public saisieForm: FormGroup;
   public enfants = [];
   public model: any = {};
   public inputNbDejeuner = this.getNumArray(2);
@@ -18,70 +17,23 @@ export class SaisieComponent {
   public inputNbAREcole = this.getNumArray(4);
   public dateSaisie = new Date();
 
-  constructor(private httpService: HttpService, private fb: FormBuilder) {
+  constructor(private httpService: HttpService) {
     this.httpService.getAllEnfants().subscribe(
       (data: any) => {
         if (data && data.length > 0) {
 
           data.forEach(enfant => {
-            this.model[enfant.id] = {};
+            this.model[enfant.id] = {
+              saisie: false,
+              heureArrivee: this.initTime(7, 45),
+              heureDepart: this.initTime(17, 0)
+            };
           });
 
           this.enfants = data;
-          this.createForm(data);
         }
       }
     );
-  }
-
-  createForm(enfants: any) {
-    var group = {};
-    group['dateSaisie'] = this.fb.control({ value: new Date()}, [Validators.required]);
-    enfants.forEach(enfant => {
-
-      var saisieControl = this.fb.control({ value: null });
-      var heureArriveeControl = this.fb.control(this.initVoidInput(), [Validators.required]);
-      var heureDepartControl = this.fb.control(this.initVoidInput(), [Validators.required]);
-      var nbDejControl = this.fb.control(this.initVoidInput(), [Validators.required]);
-      var nbGouterControl = this.fb.control(this.initVoidInput(), [Validators.required]);
-      var nbArControl = this.fb.control(this.initVoidInput(), [Validators.required]);
-      var autreKmControl = this.fb.control(this.initVoidInput(), [Validators.required]);
-
-      group['saisie_' + enfant.id] = saisieControl;
-      group['heurearrivee_' + enfant.id] = heureArriveeControl;
-      group['heuredepart_' + enfant.id] = heureDepartControl;
-      group['nbDejeuner_' + enfant.id] = nbDejControl;
-      group['nbGouter_' + enfant.id] = nbGouterControl;
-      group['nbArEcole_' + enfant.id] = nbArControl;
-      group['autreKm_' + enfant.id] = autreKmControl;
-      // group['submit'] = [] // TODO disable submit
-
-      saisieControl.statusChanges.subscribe(
-        () => {
-          if(!saisieControl.value) {
-            heureArriveeControl.disable();
-            heureDepartControl.disable();
-            nbDejControl.disable();
-            nbGouterControl.disable();
-            nbArControl.disable();
-            autreKmControl.disable();
-          } else {
-            heureArriveeControl.enable();
-            heureDepartControl.enable();
-            nbDejControl.enable();
-            nbGouterControl.enable();
-            nbArControl.enable();
-            autreKmControl.enable();
-          }
-        }
-      );
-    });
-
-    this.saisieForm = this.fb.group(group);
-  }
-
-  private initVoidInput() {
-    return { value: null, disabled: true };
   }
 
   public onSubmit() {
@@ -90,5 +42,16 @@ export class SaisieComponent {
 
   public getNumArray(size: number) {
     return Array.from(new Array(size), (val, index) => index);
+  }
+
+  public initTime(hours, minutes) {
+    var date = new Date();
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    return date;
+  }
+
+  public toggleEnfant(enfant) {
+    console.log(enfant);
   }
 }

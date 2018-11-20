@@ -9,6 +9,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CollapseModule } from 'ngx-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 import { HeaderComponent } from './header.component/header.component';
 import { AppComponent } from './app.component';
@@ -55,6 +56,7 @@ import { AppHttpInterceptor } from './services/app.interceptor.service';
     CollapseModule,
     TooltipModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
     AngularFontAwesomeModule
   ],
   providers: [
