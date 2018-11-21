@@ -52,6 +52,8 @@ export class SaisieComponent {
   }
 
   public toggleEnfant(enfant) {
-    console.log(enfant);
+    if(enfant && enfant.id && this.model[enfant.id]) {
+      this.model[enfant.id].saisie = !this.model[enfant.id].saisie;
+    }
   }
 }

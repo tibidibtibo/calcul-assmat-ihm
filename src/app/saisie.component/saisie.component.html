@@ -13,10 +13,12 @@
     </div>
 
     <div class="row enfant-row" *ngFor="let enfant of enfants">
-      <div class="col-2 check-prenom" (click)="toggleEnfant(enfant)">
-        <div class="form-group">
-          <span>{{enfant.nom}}</span>
-        </div>
+      <div class="col-2 toggle-enfant text-center" (click)="toggleEnfant(enfant)"
+        title="Activer/Désactiver la saisie"
+        [ngClass]="{'bg-primary text-white': model[enfant.id].saisie, 'bg-light text-dark': !model[enfant.id].saisie}">
+        <span class="align-middle">{{enfant.nom}}</span>
+        <span class="toggle-enfant-check align-middle" *ngIf="model[enfant.id].saisie">☑</span>
+        <span class="toggle-enfant-check align-middle" *ngIf="!model[enfant.id].saisie">☒</span>
       </div>
       <div class="col">
         <div class="row">
@@ -30,10 +32,9 @@
             <p>Déjeuner</p>
             <div class="form-group form-check-inline">
               <div class="form-check" *ngFor="let dej of inputNbDejeuner">
-                <label class="check-container"><span class="check-lib">{{dej}}</span>
+                <label class="radio-container"><span class="radio-lib">{{dej}}</span>
                   <input type="radio" [value]="dej" checked="checked" id="nbDejeuner_{{enfant.id}}" name="nbDejeuner_{{enfant.id}}"
                     [(ngModel)]="model[enfant.id].nbDejeuner" />
-                  <span class="radio-checkmark"></span>
                 </label>
               </div>
             </div>
@@ -42,10 +43,9 @@
             <p>AR école</p>
             <div class="form-group form-check-inline">
               <div class="form-check" *ngFor="let ecole of inputNbAREcole">
-                <label class="check-container"><span class="check-lib">{{ecole}}</span>
+                <label class="radio-container"><span class="radio-lib">{{ecole}}</span>
                   <input type="radio" [value]="ecole" checked="checked" id="nbArEcole_{{enfant.id}}" name="nbArEcole_{{enfant.id}}"
                     [(ngModel)]="model[enfant.id].nbArEcole" />
-                  <span class=" radio-checkmark"></span>
                 </label>
               </div>
             </div>
@@ -65,10 +65,9 @@
             <p>Goûter</p>
             <div class="form-group form-check-inline">
               <div class="form-check" *ngFor="let gouter of inputNbGouters">
-                <label class="check-container"><span class="check-lib">{{gouter}}</span>
+                <label class="radio-container"><span class="radio-lib">{{gouter}}</span>
                   <input type="radio" [value]="gouter" checked="checked" id="nbGouter_{{enfant.id}}" name="nbGouter_{{enfant.id}}"
                     [(ngModel)]="model[enfant.id].nbGouter" />
-                  <span class="radio-checkmark"></span>
                 </label>
               </div>
             </div>
