@@ -14,10 +14,11 @@ export class SaisieComponent {
   public model: any = {};
   public inputNbDejeuner = this.getNumArray(2);
   public inputNbGouters = this.getNumArray(2);
-  public inputNbAREcole = this.getNumArray(4);
+  public inputNbAREcole = this.getNumArray(5);
   public dateSaisie = new Date();
 
   constructor(private httpService: HttpService) {
+
     this.httpService.getAllEnfants().subscribe(
       (data: any) => {
         if (data && data.length > 0) {
@@ -34,6 +35,7 @@ export class SaisieComponent {
         }
       }
     );
+
   }
 
   public onSubmit() {
@@ -56,4 +58,5 @@ export class SaisieComponent {
       this.model[enfant.id].saisie = !this.model[enfant.id].saisie;
     }
   }
+
 }

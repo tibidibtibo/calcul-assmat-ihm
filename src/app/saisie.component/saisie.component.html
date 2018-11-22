@@ -13,19 +13,17 @@
     </div>
 
     <div class="row enfant-row" *ngFor="let enfant of enfants">
-      <div class="col-2 toggle-enfant text-center" (click)="toggleEnfant(enfant)"
+      <div class="col-2 text-center toggle-enfant" (click)="toggleEnfant(enfant)"
         title="Activer/Désactiver la saisie"
-        [ngClass]="{'bg-primary text-white': model[enfant.id].saisie, 'bg-light text-dark': !model[enfant.id].saisie}">
-        <span class="align-middle">{{enfant.nom}}</span>
-        <span class="toggle-enfant-check align-middle" *ngIf="model[enfant.id].saisie">☑</span>
-        <span class="toggle-enfant-check align-middle" *ngIf="!model[enfant.id].saisie">☒</span>
+        [ngClass]="{'bg-white text-black': model[enfant.id].saisie, 'bg-light text-secondary': !model[enfant.id].saisie}">
+        <p>{{enfant.nom}} <span class="toggle-enfant-check" *ngIf="!model[enfant.id].saisie">✖</span><span class="toggle-enfant-check" *ngIf="model[enfant.id].saisie">✔</span></p>
       </div>
       <div class="col">
         <div class="row">
           <div class="col">
             <div class="form-group">
               <span>Arrivée</span>
-              <timepicker name="'heurearrivee_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureArrivee"></timepicker>
+              <timepicker name="'heurearrivee_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureArrivee" [disabled]="!model[enfant.id].saisie"></timepicker>
             </div>
           </div>
           <div class="col">
@@ -34,7 +32,7 @@
               <div class="form-check" *ngFor="let dej of inputNbDejeuner">
                 <label class="radio-container"><span class="radio-lib">{{dej}}</span>
                   <input type="radio" [value]="dej" checked="checked" id="nbDejeuner_{{enfant.id}}" name="nbDejeuner_{{enfant.id}}"
-                    [(ngModel)]="model[enfant.id].nbDejeuner" />
+                    [(ngModel)]="model[enfant.id].nbDejeuner" [disabled]="!model[enfant.id].saisie" />
                 </label>
               </div>
             </div>
@@ -45,7 +43,7 @@
               <div class="form-check" *ngFor="let ecole of inputNbAREcole">
                 <label class="radio-container"><span class="radio-lib">{{ecole}}</span>
                   <input type="radio" [value]="ecole" checked="checked" id="nbArEcole_{{enfant.id}}" name="nbArEcole_{{enfant.id}}"
-                    [(ngModel)]="model[enfant.id].nbArEcole" />
+                    [(ngModel)]="model[enfant.id].nbArEcole" [disabled]="!model[enfant.id].saisie" />
                 </label>
               </div>
             </div>
@@ -53,11 +51,10 @@
         </div>
 
         <div class="row">
-
           <div class="col">
             <div class="form-group">
               <span>Départ</span>
-              <timepicker name="'heuredepart_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureDepart"></timepicker>
+              <timepicker name="'heuredepart_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureDepart" [disabled]="!model[enfant.id].saisie"></timepicker>
             </div>
           </div>
 
@@ -67,7 +64,7 @@
               <div class="form-check" *ngFor="let gouter of inputNbGouters">
                 <label class="radio-container"><span class="radio-lib">{{gouter}}</span>
                   <input type="radio" [value]="gouter" checked="checked" id="nbGouter_{{enfant.id}}" name="nbGouter_{{enfant.id}}"
-                    [(ngModel)]="model[enfant.id].nbGouter" />
+                    [(ngModel)]="model[enfant.id].nbGouter" [disabled]="!model[enfant.id].saisie" />
                 </label>
               </div>
             </div>
@@ -75,7 +72,7 @@
           <div class="col">
             <div class="form-group">
               <label for="'autreKm_' + {{enfant.id}}">Autres déplacements</label>
-              <input type="text" class="form-control" name="'autreKm_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].autreKm" />
+              <input type="text" class="form-control" name="'autreKm_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].autreKm" [disabled]="!model[enfant.id].saisie" />
             </div>
           </div>
         </div>

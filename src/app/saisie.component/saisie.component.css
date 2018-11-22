@@ -19,6 +19,13 @@ input[type=radio] {
 }
 
 .toggle-enfant {
+  width: 100%;
   cursor: pointer;
   font-size: 1.5em;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-enfant-check {
+  font-family: Arial, Helvetica, sans-serif;
 }
