@@ -1,29 +1,44 @@
 <div class="container">
-  <h4>Saisie</h4>
+
+  <div class="row">
+    <div class="col">
+      <p>Saisie des heures de garde des enfants.</p>
+    </div>
+  </div>
 
   <form (ngSubmit)="onSubmit()">
-    <div class="row">
+
+    <div class="form-group row">
+      <label for="dateSaisie" class="col-1 col-form-label">Date : </label>
       <div class="col-3 text-center">
-        <div class="form-group">
-          <label for="dateSaisie">Date</label>
-          <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
-            name="dateSaisie" id="dateSaisie" [(ngModel)]="dateSaisie" />
-        </div>
+        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          name="dateSaisie" id="dateSaisie" [(ngModel)]="dateSaisie" />
       </div>
     </div>
 
     <div class="row enfant-row" *ngFor="let enfant of enfants">
-      <div class="col-2 text-center toggle-enfant" (click)="toggleEnfant(enfant)"
-        title="Activer/Désactiver la saisie"
-        [ngClass]="{'bg-white text-black': model[enfant.id].saisie, 'bg-light text-secondary': !model[enfant.id].saisie}">
-        <p>{{enfant.nom}} <span class="toggle-enfant-check" *ngIf="!model[enfant.id].saisie">✖</span><span class="toggle-enfant-check" *ngIf="model[enfant.id].saisie">✔</span></p>
+
+      <div class="col-2 toggle-enfant" (click)="toggleEnfant(enfant)" title="Activer/Désactiver la saisie" [ngClass]="{'bg-white text-black': model[enfant.id].saisie, 'bg-light text-secondary': !model[enfant.id].saisie}">
+        <p>{{enfant.nom}} <span class="toggle-enfant-check" *ngIf="!model[enfant.id].saisie">✖</span><span class="toggle-enfant-check"
+            *ngIf="model[enfant.id].saisie">✔</span></p>
       </div>
+      <div class="col-2 select-employe">
+        <div class="form-group text-center">
+          <span>Employé</span>
+          <select [(ngModel)]="model[enfant.id].employe" name="employe_{{enfant.id}}" class="custom-select" [disabled]="!model[enfant.id].saisie">
+            <option *ngFor="let employe of enfant.employes" [ngValue]="employe.id">{{employe.text}}</option>
+          </select>
+        </div>
+      </div>
+
       <div class="col">
+
         <div class="row">
           <div class="col">
             <div class="form-group">
               <span>Arrivée</span>
-              <timepicker name="'heurearrivee_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureArrivee" [disabled]="!model[enfant.id].saisie"></timepicker>
+              <timepicker name="heurearrivee_{{enfant.id}}" [(ngModel)]="model[enfant.id].heureArrivee" [disabled]="!model[enfant.id].saisie"
+                [showMeridian]="false"></timepicker>
             </div>
           </div>
           <div class="col">
@@ -54,10 +69,10 @@
           <div class="col">
             <div class="form-group">
               <span>Départ</span>
-              <timepicker name="'heuredepart_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].heureDepart" [disabled]="!model[enfant.id].saisie"></timepicker>
+              <timepicker name="heuredepart_{{enfant.id}}" [(ngModel)]="model[enfant.id].heureDepart" [disabled]="!model[enfant.id].saisie"
+                [showMeridian]="false"></timepicker>
             </div>
           </div>
-
           <div class="col">
             <p>Goûter</p>
             <div class="form-group form-check-inline">
@@ -71,11 +86,13 @@
           </div>
           <div class="col">
             <div class="form-group">
-              <label for="'autreKm_' + {{enfant.id}}">Autres déplacements</label>
-              <input type="text" class="form-control" name="'autreKm_' + {{enfant.id}}" [(ngModel)]="model[enfant.id].autreKm" [disabled]="!model[enfant.id].saisie" />
+              <label for="autreKm_{{enfant.id}}">Autres déplacements</label>
+              <input type="text" class="form-control" name="autreKm_{{enfant.id}}" [(ngModel)]="model[enfant.id].autreKm"
+                [disabled]="!model[enfant.id].saisie" />
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -84,5 +101,6 @@
         <button type="submit" class="btn btn-success btn-lg">Valider <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
       </div>
     </div>
+
   </form>
 </div>

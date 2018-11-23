@@ -1,16 +1,18 @@
-import { Component } from "@angular/core";
-import { Validators, FormGroup, FormBuilder } from "@angular/forms";
+import { map } from 'rxjs/operator/map';
+import { Component, OnInit } from "@angular/core";
 
 import { HttpService } from './../services/http.service';
+import { forkJoin } from "rxjs/observable/forkJoin";
 
 @Component({
   selector: "saisie",
   templateUrl: "./saisie.component.html",
   styleUrls: ["./saisie.component.css"]
 })
-export class SaisieComponent {
+export class SaisieComponent implements OnInit {
 
   public enfants = [];
+  public employes = [];
   public model: any = {};
   public inputNbDejeuner = this.getNumArray(2);
   public inputNbGouters = this.getNumArray(2);
@@ -19,23 +21,67 @@ export class SaisieComponent {
 
   constructor(private httpService: HttpService) {
 
-    this.httpService.getAllEnfants().subscribe(
-      (data: any) => {
-        if (data && data.length > 0) {
+    var employesCall = this.httpService.getAllEmployes();
+    var enfantsCall = this.httpService.getAllEnfants();
 
-          data.forEach(enfant => {
-            this.model[enfant.id] = {
-              saisie: false,
-              heureArrivee: this.initTime(7, 45),
-              heureDepart: this.initTime(17, 0)
-            };
-          });
+    forkJoin(employesCall, enfantsCall).subscribe((results: any) => {
 
-          this.enfants = data;
-        }
-      }
-    );
+      // init employes object
+      this.employes = results[0];
 
+      // init enfants object
+      var enfants = [];
+      results[1].forEach(enfant => {
+
+        // init model object
+        this.model[enfant.id] = {
+          saisie: false,
+          heureArrivee: this.initTime(7, 45),
+          heureDepart: this.initTime(17, 0)
+        };
+
+        // init view object
+        enfants.push({
+          id: enfant.id,
+          nom: enfant.nom,
+          employes: this.findEmployesById(enfant.employesIds, this.employes)
+        })
+      });
+      this.enfants = enfants;
+    });
+  }
+
+  public ngOnInit(): any {
+  }
+
+  public findEmployesById(idEmployesEnfant: any, employes: any) {
+    return employes.map(employe => {
+      return {
+        id: employe.id,
+        text: employe.prenom + " " + employe.nom
+      };
+    }).filter(employe => {
+      var isEmp = idEmployesEnfant.find(id => {
+        return id === employe.id
+      })
+      return isEmp;
+    });
+  }
+
+  public selected(value: any, enfantId): void {
+    console.log('Selected value is: ', value);
+  }
+
+  public removed(value: any, enfantId): void {
+    console.log('Removed value is: ', value);
+  }
+
+  public typed(value: any, enfantId): void {
+    console.log('New search input: ', value);
+  }
+
+  public refreshValue(value: any, enfantId): void {
+    console.log(enfantId)
   }
 
   public onSubmit() {
@@ -54,7 +100,7 @@ export class SaisieComponent {
   }
 
   public toggleEnfant(enfant) {
-    if(enfant && enfant.id && this.model[enfant.id]) {
+    if (enfant && enfant.id && this.model[enfant.id]) {
       this.model[enfant.id].saisie = !this.model[enfant.id].saisie;
     }
   }

@@ -26,6 +26,13 @@ input[type=radio] {
   align-items: center;
 }
 
+.select-employe {
+  display: flex;
+  align-items: center;
+}
+
 .toggle-enfant-check {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.open.dropdown .dropdown-menu { display: block; transform: none; }
