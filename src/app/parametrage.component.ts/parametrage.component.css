@@ -1,0 +1,14 @@
+.acc-header {
+  color: white;
+  background-color: #17a2b8;
+}
+
+.delete-employe-link {
+  padding-left: 20px;
+  color: red;
+  font-style: italic;
+  font-size: 0.9em;
+  text-decoration: underline;
+  text-decoration-color: red;
+  cursor: pointer;
+}

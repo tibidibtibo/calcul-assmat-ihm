@@ -41,4 +41,12 @@ export class ParametrageComponent {
     }
   }
 
+  public saveEmploye(employeId) {
+    console.log(this.modelEmploye[employeId]);
+  }
+
+  public deleteEmploye(employeId) {
+    console.log(this.modelEmploye[employeId]);
+  }
+
 }

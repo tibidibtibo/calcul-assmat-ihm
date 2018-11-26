@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col">
     <accordion [closeOthers]="true">
-      <accordion-group *ngFor="let employe of employes" heading="{{employe.prenom}} {{employe.nom}}" class="">
+      <accordion-group *ngFor="let employe of employes" heading="{{employe.prenom}} {{employe.nom}}" panelClass="acc-header">
 
         <form name="form{{employe.id}}">
 
@@ -20,50 +20,49 @@
           <div class="row">
             <div class="col form-group">
               <label for="tauxHoraireNormalBrut{{employe.id}}">Tx horaire HN BRUT</label>
-              <input type="number" class="form-control" name="tauxHoraireNormalBrut{{employe.id}}"
-              [(ngModel)]="modelEmploye[employe.id].tauxHoraireNormalBrut" />
+              <input type="number" class="form-control" name="tauxHoraireNormalBrut{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxHoraireNormalBrut" />
             </div>
             <div class="col form-group">
               <label for="tauxHoraireNormalNet{{employe.id}}">Tx horaire HN NET</label>
-              <input type="number" class="form-control" name="tauxHoraireNormalNet{{employe.id}}"
-              [(ngModel)]="modelEmploye[employe.id].tauxHoraireNormalNet" />
+              <input type="number" class="form-control" name="tauxHoraireNormalNet{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxHoraireNormalNet" />
             </div>
             <div class="col form-group">
               <label for="tauxHoraireComplementaireBrut{{employe.id}}">Tx horaire HC BRUT</label>
-              <input type="number" class="form-control" name="tauxHoraireComplementaireBrut{{employe.id}}"
-              [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireBrut" />
+              <input type="number" class="form-control" name="tauxHoraireComplementaireBrut{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireBrut" />
             </div>
             <div class="col form-group">
               <label for="tauxHoraireComplementaireNet{{employe.id}}">Tx horaire HC NET</label>
-              <input type="number" class="form-control" name="tauxHoraireComplementaireNet{{employe.id}}"
-              [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireNet" />
+              <input type="number" class="form-control" name="tauxHoraireComplementaireNet{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireNet" />
             </div>
           </div>
           <div class="row">
             <div class="col form-group">
               <label for="indemnitesKm{{employe.id}}">Ind. KM</label>
-              <input type="number" class="form-control" name="indemnitesKm{{employe.id}}"
-              [(ngModel)]="modelEmploye[employe.id].indemnitesKm" />
+              <input type="number" class="form-control" name="indemnitesKm{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].indemnitesKm" />
             </div>
             <div class="col form-group">
               <label for="indemnitesEntretien{{employe.id}}">Ind. entretien</label>
-              <input type="number" class="form-control" name="indemnitesEntretien{{employe.id}}"
-              [(ngModel)]="modelEmploye[employe.id].indemnitesEntretien" />
+              <input type="number" class="form-control" name="indemnitesEntretien{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].indemnitesEntretien" />
             </div>
             <div class="col form-group">
               <label for="fraisDejeuner{{employe.id}}">Déjeuner</label>
-              <input type="number" class="form-control" name="fraisDejeuner{{employe.id}}"
-              [(ngModel)]="modelEmploye[employe.id].fraisDejeuner" />
+              <input type="number" class="form-control" name="fraisDejeuner{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].fraisDejeuner" />
             </div>
             <div class="col form-group">
               <label for="fraisGouter{{employe.id}}">Goûter</label>
-              <input type="number" class="form-control" name="fraisGouter{{employe.id}}"
-              [(ngModel)]="modelEmploye[employe.id].fraisGouter" />
+              <input type="number" class="form-control" name="fraisGouter{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].fraisGouter" />
             </div>
             <div class="col form-group">
               <label for="tauxCongesPayes{{employe.id}}">Tx CP</label>
-              <input type="number" class="form-control" name="tauxCongesPayes{{employe.id}}"
-              [(ngModel)]="modelEmploye[employe.id].tauxCongesPayes" />
+              <input type="number" class="form-control" name="tauxCongesPayes{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxCongesPayes" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col form-group">
+              <span class="delete-employe-link" (click)="deleteEmploye(employe.id)">Supprimer</span>
+            </div>
+            <div class="col form-group text-right">
+              <button class="btn btn-primary" (click)="saveEmploye(employe.id)">Enregistrer</button>
             </div>
           </div>
         </form>
