@@ -11,6 +11,7 @@ import { CollapseModule } from 'ngx-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { HeaderComponent } from './header.component/header.component';
 import { AppComponent } from './app.component';
@@ -59,6 +60,7 @@ import { AppHttpInterceptor } from './services/app.interceptor.service';
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot(),
     AccordionModule.forRoot(),
+    ModalModule.forRoot(),
     AngularFontAwesomeModule
   ],
   providers: [

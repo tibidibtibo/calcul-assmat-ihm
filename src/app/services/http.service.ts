@@ -1,3 +1,4 @@
+import { Employe } from './../models/employe';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstService } from './const.service';
@@ -24,15 +25,15 @@ export class HttpService {
   }
 
   getAllEnfants() {
-    return this.http.get(this.buildUrl("/parametrage/enfants"), { });
+    return this.http.get(this.buildUrl("/parametrage/enfants"), {});
   }
 
   getAllEmployes() {
-    return this.http.get(this.buildUrl("/parametrage/employes"), { });
+    return this.http.get<Array<Employe>>(this.buildUrl("/parametrage/employes"), {});
   }
 
   getHistorique() {
-    return this.http.get(this.buildUrl("/archives/all"), { });
+    return this.http.get(this.buildUrl("/archives/all"), {});
   }
 
   buildUrl(param: string): string {
