@@ -12,3 +12,7 @@
   text-decoration-color: red;
   cursor: pointer;
 }
+
+.param-row {
+  padding-top: 40px;
+}

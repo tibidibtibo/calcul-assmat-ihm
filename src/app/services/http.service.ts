@@ -2,7 +2,6 @@ import { Employe } from './../models/employe';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConstService } from './const.service';
-import { PARAMETERS } from '@angular/core/src/util/decorators';
 
 const URL_SEPARATOR: string = "/";
 
@@ -11,11 +10,11 @@ export class HttpService {
 
   constructor(private http: HttpClient, private constantes: ConstService) { }
 
-  isBackAlive() {
+  public isBackAlive() {
     return this.http.get(this.constantes.serverUrl + "/token/alive");
   }
 
-  calcul(monthSelected: string, yearSelected: number, employeSelected, formData) {
+  public calcul(monthSelected: string, yearSelected: number, employeSelected, formData) {
 
     let URLArray = [this.constantes.serverUrl, "calcul/file", yearSelected.toString(), monthSelected, employeSelected.id];
     const URL = URLArray.join(URL_SEPARATOR);
@@ -24,19 +23,29 @@ export class HttpService {
       .post(URL, formData)
   }
 
-  getAllEnfants() {
+  public getAllEnfants() {
     return this.http.get(this.buildUrl("/parametrage/enfants"), {});
   }
 
-  getAllEmployes() {
+  public getAllEmployes() {
     return this.http.get<Array<Employe>>(this.buildUrl("/parametrage/employes"), {});
   }
 
-  getHistorique() {
+  public deleteParamEnfant(enfantId) {
+    // TODO : corriger methode path param
+    return this.http.delete(this.buildUrl("/parametrage/enfants/"+ enfantId))
+  }
+
+  public deleteParamEmploye(employeId) {
+    return this.http.delete(this.buildUrl("/parametrage/test/"+ employeId))
+  }
+
+  public getHistorique() {
     return this.http.get(this.buildUrl("/archives/all"), {});
   }
 
-  buildUrl(param: string): string {
+
+  private buildUrl(param: string): string {
     return this.constantes.serverUrl + param;
   }
 }

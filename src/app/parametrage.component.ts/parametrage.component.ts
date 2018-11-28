@@ -8,6 +8,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class ParametrageComponent {
   public modalRef: BsModalRef;
   public toDelete;
 
-  constructor(private httpService: HttpService, private modalService: BsModalService) {
+  constructor(public httpService: HttpService, private modalService: BsModalService) {
     this.loadData();
   }
 
@@ -74,6 +75,14 @@ export class ParametrageComponent {
     this.modalRef = this.modalService.show(template);
   }
 
+  private deleteEnfantService(enfantId) {
+    return this.httpService.deleteParamEnfant(enfantId);
+  }
+
+  private deleteEmployeService(employeId) {
+    return this.httpService.deleteParamEmploye(employeId);
+  }
+
   // INTERFACE
   // ---------
 
@@ -94,26 +103,45 @@ export class ParametrageComponent {
   }
 
   public deleteEmploye(employeId, template: TemplateRef<any>) {
-    console.log(this.modelEmploye[employeId]);
     this.toDelete = {
       id: employeId,
-      name: this.modelEmploye[employeId].prenom + " " + this.modelEmploye[employeId].nom
+      name: this.modelEmploye[employeId].prenom + " " + this.modelEmploye[employeId].nom,
+      deleteFunction: "employe",
+      deleteEnCours: false
     }
     this.openDeleteModal(template);
   }
 
   public deleteEnfant(enfantId, template: TemplateRef<any>) {
-    console.log(this.modelEnfant[enfantId]);
     this.toDelete = {
       id: enfantId,
-      name: this.modelEnfant[enfantId].nom
+      name: this.modelEnfant[enfantId].nom,
+      deleteFunction: "enfant",
+      deleteEnCours: false
     }
     this.openDeleteModal(template);
   }
 
-  public confirmDeletion() {
-    // TODO appel service suppression
-    this.modalRef.hide();
+  public confirmDeletion(deleteFunction, paramId) {
+    this.toDelete.deleteEnCours = true;
+    if(deleteFunction === "enfant") {
+      this.deleteEnfantService(paramId).subscribe(
+        ok => {
+          this.toDelete.deleteEnCours = false;
+          this.modalRef.hide();
+        }, ko => {
+          this.toDelete.deleteEnCours = false;
+        }
+        );
+      } else if (deleteFunction === "employe") {
+        console.log("employe")
+      this.deleteEmployeService(paramId).subscribe(ok => {
+        this.toDelete.deleteEnCours = false;
+        this.modalRef.hide();
+      }, ko => {
+        this.toDelete.deleteEnCours = false;
+      });
+    }
   }
 
   public declineDeletion() {
