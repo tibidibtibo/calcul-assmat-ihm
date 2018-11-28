@@ -1,3 +1,4 @@
+import { Enfant } from './../models/enfant';
 import { Employe } from './../models/employe';
 import { Component, TemplateRef } from "@angular/core";
 
@@ -19,6 +20,7 @@ export class ParametrageComponent {
   public enfants;
   public employes: Array<Employe>;
   public modelEmploye = {};
+  public modelEnfant = {};
   public modalRef: BsModalRef;
   public toDelete;
 
@@ -35,7 +37,8 @@ export class ParametrageComponent {
       this.employes = results[0];
       this.initModelEmployes(this.employes);
 
-      this.initModelEnfants(results[1], this.employes);
+      this.enfants = results[1];
+      this.initModelEnfants(this.enfants, this.employes);
     });
   }
 
@@ -50,16 +53,21 @@ export class ParametrageComponent {
   }
 
   private initModelEnfants(enfants, enployes) {
-    var listeEnfants = [];
-    if (enfants) {
       enfants.forEach(enfant => {
-        // var enf
+        var listeEmployesEnfant = [];
         enfant.employesIds.forEach(empId => {
-          // TODO:  match enfant / id
+          listeEmployesEnfant.push(enployes.find(employe => {
+            return employe.id === empId;
+          }))
         });
+        this.modelEnfant[enfant.id] = this.forkEnfantModel(enfant, listeEmployesEnfant);
       });
-      this.enfants = enfants;
-    }
+  }
+
+  private forkEnfantModel(enfant, listeEmployesEnfant) {
+    var newEnfant = Enfant.fork(enfant);
+    newEnfant.employes = listeEmployesEnfant;
+    return newEnfant;
   }
 
   private openDeleteModal(template: TemplateRef<any>) {
@@ -73,8 +81,16 @@ export class ParametrageComponent {
     this.initModelEmployes(this.employes);
   }
 
+  public reinitEnfants() {
+    this.initModelEnfants(this.enfants, this.employes);
+  }
+
   public saveEmploye(employeId) {
     console.log(this.modelEmploye[employeId]);
+  }
+
+  public saveEnfant(enfantId) {
+    console.log(this.modelEnfant[enfantId]);
   }
 
   public deleteEmploye(employeId, template: TemplateRef<any>) {
@@ -82,6 +98,15 @@ export class ParametrageComponent {
     this.toDelete = {
       id: employeId,
       name: this.modelEmploye[employeId].prenom + " " + this.modelEmploye[employeId].nom
+    }
+    this.openDeleteModal(template);
+  }
+
+  public deleteEnfant(enfantId, template: TemplateRef<any>) {
+    console.log(this.modelEnfant[enfantId]);
+    this.toDelete = {
+      id: enfantId,
+      name: this.modelEnfant[enfantId].nom
     }
     this.openDeleteModal(template);
   }

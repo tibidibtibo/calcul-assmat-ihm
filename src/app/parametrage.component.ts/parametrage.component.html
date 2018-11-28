@@ -3,7 +3,7 @@
     <h4>Employés</h4>
   </div>
   <div class="col text-right">
-      <button type="button" class="btn btn-light" (click)="reinitEmployes()">Réinitialiser</button>
+    <button type="button" class="btn btn-light" (click)="reinitEmployes()">Réinitialiser</button>
   </div>
 </div>
 <hr>
@@ -76,6 +76,46 @@
   </div>
 </div>
 
+<hr>
+<div class="row">
+  <div class="col">
+    <h4>Enfants</h4>
+  </div>
+  <div class="col text-right">
+    <button type="button" class="btn btn-light" (click)="reinitEnfants()">Réinitialiser</button>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col">
+    <accordion [closeOthers]="true">
+      <accordion-group *ngFor="let enfant of enfants" heading="{{enfant.nom}}" panelClass="acc-header">
+        <i *ngIf="!modelEnfant[enfant.id]" class="fa fa-spinner fa-spin fa-fw"></i>
+        <form name="form{{enfant.id}}" *ngIf="modelEnfant[enfant.id]">
+
+          <div class="row">
+            <div class="col form-group">
+              <label for="nom{{enfant.id}}">Nom</label>
+              <input type="text" class="form-control" name="nom{{enfant.id}}" [(ngModel)]="modelEnfant[enfant.id].nom" />
+            </div>
+
+
+          </div>
+          <div class="row">
+            <div class="col form-group text-right">
+              <button class="btn btn-primary" (click)="saveEnfant(enfant.id)">Enregistrer</button>
+              <span class="delete-employe-link" (click)="deleteEnfant(enfant.id, deleteModalTemplate)">Supprimer</span>
+            </div>
+          </div>
+        </form>
+      </accordion-group>
+    </accordion>
+  </div>
+</div>
+
+
 <ng-template #deleteModalTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Suppression</h4>
@@ -86,10 +126,8 @@
   <div class="modal-body">
     <p>Voulez-vous vraiment supprimer <strong>{{toDelete.name}}</strong> du paramétrage ?</p>
     <div class="row">
-      <div class="col">
-        <button type="button" class="btn btn-light" (click)="declineDeletion()">Annuler</button>
-      </div>
       <div class="col text-right">
+        <button type="button" class="btn btn-light" (click)="declineDeletion()">Annuler</button>
         <button type="button" class="btn btn-danger" (click)="confirmDeletion(toDelete.id)">Supprimer</button>
       </div>
     </div>
