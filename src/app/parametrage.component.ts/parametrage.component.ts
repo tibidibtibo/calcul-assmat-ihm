@@ -1,15 +1,14 @@
-import { Enfant } from './../models/enfant';
-import { Employe } from './../models/employe';
+import { Enfant } from "./../models/enfant";
+import { Employe } from "./../models/employe";
 import { Component, TemplateRef } from "@angular/core";
 
-import { HttpService } from './../services/http.service';
+import { HttpService } from "./../services/http.service";
 
-import { forkJoin } from 'rxjs/observable/forkJoin';
+import { forkJoin } from "rxjs/observable/forkJoin";
 
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { Observable } from 'rxjs';
-
+import { BsModalService } from "ngx-bootstrap/modal";
+import { BsModalRef } from "ngx-bootstrap/modal/bs-modal-ref.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "parametrage",
@@ -17,7 +16,6 @@ import { Observable } from 'rxjs';
   styleUrls: ["./parametrage.component.css"]
 })
 export class ParametrageComponent {
-
   public enfants;
   public employes: Array<Employe>;
   public modelEmploye = {};
@@ -25,7 +23,10 @@ export class ParametrageComponent {
   public modalRef: BsModalRef;
   public toDelete;
 
-  constructor(public httpService: HttpService, private modalService: BsModalService) {
+  constructor(
+    public httpService: HttpService,
+    private modalService: BsModalService
+  ) {
     this.loadData();
   }
 
@@ -34,7 +35,6 @@ export class ParametrageComponent {
     var enfantsCall = this.httpService.getAllEnfants();
 
     forkJoin(employesCall, enfantsCall).subscribe((results: any) => {
-
       this.employes = results[0];
       this.initModelEmployes(this.employes);
 
@@ -54,15 +54,20 @@ export class ParametrageComponent {
   }
 
   private initModelEnfants(enfants, enployes) {
-      enfants.forEach(enfant => {
-        var listeEmployesEnfant = [];
-        enfant.employesIds.forEach(empId => {
-          listeEmployesEnfant.push(enployes.find(employe => {
+    enfants.forEach(enfant => {
+      var listeEmployesEnfant = [];
+      enfant.employesIds.forEach(empId => {
+        listeEmployesEnfant.push(
+          enployes.find(employe => {
             return employe.id === empId;
-          }))
-        });
-        this.modelEnfant[enfant.id] = this.forkEnfantModel(enfant, listeEmployesEnfant);
+          })
+        );
       });
+      this.modelEnfant[enfant.id] = this.forkEnfantModel(
+        enfant,
+        listeEmployesEnfant
+      );
+    });
   }
 
   private forkEnfantModel(enfant, listeEmployesEnfant) {
@@ -75,12 +80,12 @@ export class ParametrageComponent {
     this.modalRef = this.modalService.show(template);
   }
 
-  private deleteEnfantService(enfantId) {
-    return this.httpService.deleteParamEnfant(enfantId);
+  private deleteEnfantService(enfantId, httpService) {
+    return httpService.deleteParamEnfant(enfantId);
   }
 
-  private deleteEmployeService(employeId) {
-    return this.httpService.deleteParamEmploye(employeId);
+  private deleteEmployeService(employeId, httpService) {
+    return httpService.deleteParamEmploye(employeId);
   }
 
   // INTERFACE
@@ -105,10 +110,13 @@ export class ParametrageComponent {
   public deleteEmploye(employeId, template: TemplateRef<any>) {
     this.toDelete = {
       id: employeId,
-      name: this.modelEmploye[employeId].prenom + " " + this.modelEmploye[employeId].nom,
-      deleteFunction: "employe",
+      name:
+        this.modelEmploye[employeId].prenom +
+        " " +
+        this.modelEmploye[employeId].nom,
+      deleteFunction: this.deleteEmployeService,
       deleteEnCours: false
-    }
+    };
     this.openDeleteModal(template);
   }
 
@@ -116,32 +124,22 @@ export class ParametrageComponent {
     this.toDelete = {
       id: enfantId,
       name: this.modelEnfant[enfantId].nom,
-      deleteFunction: "enfant",
+      deleteFunction: this.deleteEnfantService,
       deleteEnCours: false
-    }
+    };
     this.openDeleteModal(template);
   }
 
   public confirmDeletion(deleteFunction, paramId) {
     this.toDelete.deleteEnCours = true;
-    if(deleteFunction === "enfant") {
-      this.deleteEnfantService(paramId).subscribe(
+    deleteFunction(paramId, this.httpService).subscribe(
         ok => {
           this.toDelete.deleteEnCours = false;
           this.modalRef.hide();
         }, ko => {
           this.toDelete.deleteEnCours = false;
         }
-        );
-      } else if (deleteFunction === "employe") {
-        console.log("employe")
-      this.deleteEmployeService(paramId).subscribe(ok => {
-        this.toDelete.deleteEnCours = false;
-        this.modalRef.hide();
-      }, ko => {
-        this.toDelete.deleteEnCours = false;
-      });
-    }
+    );
   }
 
   public declineDeletion() {

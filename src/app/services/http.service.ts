@@ -1,6 +1,6 @@
 import { Employe } from './../models/employe';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConstService } from './const.service';
 
 const URL_SEPARATOR: string = "/";
@@ -32,12 +32,11 @@ export class HttpService {
   }
 
   public deleteParamEnfant(enfantId) {
-    // TODO : corriger methode path param
     return this.http.delete(this.buildUrl("/parametrage/enfants/"+ enfantId))
   }
 
   public deleteParamEmploye(employeId) {
-    return this.http.delete(this.buildUrl("/parametrage/test/"+ employeId))
+    return this.http.delete(this.buildUrl("/parametrage/employes/"+ employeId))
   }
 
   public getHistorique() {
