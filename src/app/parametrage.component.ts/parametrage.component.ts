@@ -101,10 +101,20 @@ export class ParametrageComponent {
 
   public saveEmploye(employeId) {
     console.log(this.modelEmploye[employeId]);
+    this.httpService.updateParamEmploye(employeId, this.modelEmploye[employeId]).subscribe( ok => {
+      console.log(ok);
+    }, ko => {
+      console.log(ko);
+    })
   }
 
   public saveEnfant(enfantId) {
     console.log(this.modelEnfant[enfantId]);
+    this.httpService.updateParamEnfant(enfantId, this.modelEnfant[enfantId]).subscribe( ok => {
+      console.log(ok);
+    }, ko => {
+      console.log(ko);
+    })
   }
 
   public deleteEmploye(employeId, template: TemplateRef<any>) {
