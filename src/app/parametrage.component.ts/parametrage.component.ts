@@ -99,10 +99,11 @@ export class ParametrageComponent {
     this.initModelEnfants(this.enfants, this.employes);
   }
 
-  public saveEmploye(employeId) {
+  public saveEmploye(employeId, savedTemplate: TemplateRef<any>) {
     console.log(this.modelEmploye[employeId]);
     this.httpService.updateParamEmploye(employeId, this.modelEmploye[employeId]).subscribe( ok => {
-      console.log(ok);
+      this.modalRef = this.modalService.show(savedTemplate);
+      this.loadData();
     }, ko => {
       console.log(ko);
     })
@@ -144,6 +145,7 @@ export class ParametrageComponent {
     this.toDelete.deleteEnCours = true;
     deleteFunction(paramId, this.httpService).subscribe(
         ok => {
+          this.loadData();
           this.toDelete.deleteEnCours = false;
           this.modalRef.hide();
         }, ko => {

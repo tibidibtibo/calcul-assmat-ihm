@@ -57,9 +57,7 @@ export class HttpService {
   }
 
   public updateParamEmploye(employeId, data) {
-    return this.http.put(this.buildUrl("/parametrage/employes/" + employeId), {
-      body: data
-    })
+    return this.http.put(this.buildUrl("/parametrage/employes/" + employeId), data)
   }
 
   // HISTORIQUE
