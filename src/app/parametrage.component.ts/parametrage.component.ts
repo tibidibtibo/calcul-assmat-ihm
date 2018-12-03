@@ -118,6 +118,10 @@ export class ParametrageComponent {
     })
   }
 
+  public okModalSave() {
+    this.modalRef.hide();
+  }
+
   public deleteEmploye(employeId, template: TemplateRef<any>) {
     this.toDelete = {
       id: employeId,
