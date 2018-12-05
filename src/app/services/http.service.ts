@@ -22,9 +22,9 @@ export class HttpService {
   }
 
   // CALCUL
-  public calcul(monthSelected: string, yearSelected: number, employeSelected, formData) {
+  public calcul(monthSelected: string, yearSelected: number, formData) {
 
-    let URLArray = [this.constantes.serverUrl, "calcul/file", yearSelected.toString(), monthSelected, employeSelected.id];
+    let URLArray = [this.constantes.serverUrl, "calcul/file", yearSelected.toString(), monthSelected];
     const URL = URLArray.join(URL_SEPARATOR);
 
     return this.http

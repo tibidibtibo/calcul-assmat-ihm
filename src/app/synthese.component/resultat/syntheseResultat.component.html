@@ -1,13 +1,13 @@
 <div class="container resultats-container" *ngIf="resultat">
-  <div class="row">
+  <div class="row" *ngFor="let resultatEmploye of resultat">
     <div class="col-sm">
 
       <div class="container">
         <div class="row">
           <div class="col-sm">
-            <h2>Déclaration du <span class="badge badge-primary">{{resultat.mois}}/{{resultat.annee}}</span>
+            <h2>Déclaration du <span class="badge badge-primary">{{resultatEmploye.mois}}/{{resultatEmploye.annee}}</span>
             </h2>
-            <h4><span class="badge badge-info">{{resultat.nbJoursTravailles}}</span> jour(s) travaillé(s)</h4>
+            <h4><span class="badge badge-info">{{resultatEmploye.nbJoursTravailles}}</span> jour(s) travaillé(s)</h4>
           </div>
           <div class="col-sm text-right">
             <button class="btn btn-danger" (click)="reset()">Recommencer</button>
@@ -28,10 +28,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultat.nombreHeures.heuresReelles}} h</td>
-                  <td>{{resultat.nombreHeures.heuresNormalesReelles}} h</td>
-                  <td>{{resultat.nombreHeures.heuresNormalesMensualisees}} h</td>
-                  <td>{{resultat.nombreHeures.heuresComplementaires}} h</td>
+                  <td>{{resultatEmploye.nombreHeures.heuresReelles}} h</td>
+                  <td>{{resultatEmploye.nombreHeures.heuresNormalesReelles}} h</td>
+                  <td>{{resultatEmploye.nombreHeures.heuresNormalesMensualisees}} h</td>
+                  <td>{{resultatEmploye.nombreHeures.heuresComplementaires}} h</td>
                 </tr>
               </tbody>
             </table>
@@ -52,10 +52,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultat.salaire.salaireNetMensualise}} €</td>
-                  <td>{{resultat.salaire.salaireNetHeuresComplementaires}} €</td>
-                  <td>{{resultat.salaire.congesPayes}} €</td>
-                  <td>{{resultat.salaire.salaireNetTotal}} €</td>
+                  <td>{{resultatEmploye.salaire.salaireNetMensualise}} €</td>
+                  <td>{{resultatEmploye.salaire.salaireNetHeuresComplementaires}} €</td>
+                  <td>{{resultatEmploye.salaire.congesPayes}} €</td>
+                  <td>{{resultatEmploye.salaire.salaireNetTotal}} €</td>
                 </tr>
               </tbody>
             </table>
@@ -74,8 +74,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultat.salaire.tauxHoraireNetHeureNormale}} €/h</td>
-                  <td>{{resultat.salaire.tauxHoraireNetHeureComplementaire}} €/h</td>
+                  <td>{{resultatEmploye.salaire.tauxHoraireNetHeureNormale}} €/h</td>
+                  <td>{{resultatEmploye.salaire.tauxHoraireNetHeureComplementaire}} €/h</td>
                 </tr>
               </tbody>
             </table>
@@ -95,9 +95,9 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultat.indemnites.indemnitesEntretien}} €</td>
-                  <td>{{resultat.indemnites.indemnitesRepas}} €</td>
-                  <td>{{resultat.indemnites.indemnitesKm}} €</td>
+                  <td>{{resultatEmploye.indemnites.indemnitesEntretien}} €</td>
+                  <td>{{resultatEmploye.indemnites.indemnitesRepas}} €</td>
+                  <td>{{resultatEmploye.indemnites.indemnitesKm}} €</td>
                 </tr>
               </tbody>
             </table>
@@ -106,7 +106,7 @@
 
         <div class="row">
           <div class="col-sm">
-            <h4>Salaire total : <span class="badge badge-primary">{{resultat.montantPaiementMensuel}} €</span>
+            <h4>Salaire total : <span class="badge badge-primary">{{resultatEmploye.montantPaiementMensuel}} €</span>
             </h4>
           </div>
         </div>

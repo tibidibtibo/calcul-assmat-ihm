@@ -10,14 +10,6 @@
           <div class="row">
             <div class="col align-self-center">
               <div class="form-group">
-                <label for="employe">Employé</label>
-                <select class="form-control" name="employe" id="employe" [(ngModel)]="employeSelected" formControlName="employe">
-                  <option *ngFor="let employe of employes" [ngValue]="employe">{{employe.prenom}} {{employe.nom}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col align-self-center">
-              <div class="form-group">
                 <label for="mois">Mois</label>
                 <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected" formControlName="mois">
                   <option *ngFor="let month of monthsList" [ngValue]="month">{{month}}</option>

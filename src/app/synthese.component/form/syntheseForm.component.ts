@@ -29,34 +29,19 @@ export class SyntheseFormComponent {
   fileInput: ElementRef;
   public form: FormGroup;
   public monthsList: Array<Object> = this.constantes.MONTHS_LIST;
-  public employes;
 
   public loading: boolean = false;
   public monthSelected = ((new Date()).getMonth()).toString().padStart(2, "0");
   public yearSelected = (new Date()).getFullYear();
-  public employeSelected = null;
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private constantes: ConstService) {
     this.createForm();
-    this.loadReferentiel();
-  }
-
-  loadReferentiel() {
-    this.httpService.getAllEmployes().subscribe(
-      data => {
-        this.employes = data;
-      },
-      error => {
-        console.log(error);
-      }
-    );
   }
 
   createForm() {
     this.form = this.fb.group({
       mois: [null, [Validators.required, Validators.minLength(2)]],
       annee: [null, [Validators.required, Validators.minLength(4)]],
-      employe: [null, Validators.required],
       fichier: null
     });
   }
@@ -80,7 +65,7 @@ export class SyntheseFormComponent {
     this.loading = true;
 
     this.httpService
-      .calcul(this.monthSelected, this.yearSelected, this.employeSelected, formModel)
+      .calcul(this.monthSelected, this.yearSelected, formModel)
       .subscribe(
         data => {
           this.resultatEvent.emit(data);
