@@ -60,14 +60,18 @@ export class SyntheseFormComponent {
   }
 
   onSubmit() {
-    const formModel = this.prepareSave();
 
-    this.loading = true;
+    if(this.fileInput) {
 
-    this.httpService
+      const formModel = this.prepareSave();
+
+      this.loading = true;
+
+      this.httpService
       .calcul(this.monthSelected, this.yearSelected, formModel)
       .subscribe(
-        data => {
+        (data: Object) => {
+          console.log(data)
           this.resultatEvent.emit(data);
           this.errorEvent.emit(null);
           this.loading = false;
@@ -79,7 +83,8 @@ export class SyntheseFormComponent {
           this.loading = false;
           this.resultat = null;
         }
-      );
+        );
+      }
   }
 
   clearFile() {

@@ -1,16 +1,22 @@
-<div class="container resultats-container" *ngIf="resultat">
-  <div class="row" *ngFor="let resultatEmploye of resultat">
+<div class="container resultats-container" *ngIf="resultat && resultat.synthese">
+  <div class="row">
+    <div class="col-sm">
+      <h2>Synthèse du <span class="badge badge-primary">{{resultat.mois}}/{{resultat.annee}}</span>
+      </h2>
+    </div>
+    <div class="col-sm text-right">
+      <button class="btn btn-danger" (click)="reset()">Recommencer</button>
+    </div>
+  </div>
+
+  <div class="row resultat-row" *ngFor="let syntheseEmploye of resultat.synthese">
     <div class="col-sm">
 
       <div class="container">
         <div class="row">
           <div class="col-sm">
-            <h2>Déclaration du <span class="badge badge-primary">{{resultatEmploye.mois}}/{{resultatEmploye.annee}}</span>
-            </h2>
-            <h4><span class="badge badge-info">{{resultatEmploye.nbJoursTravailles}}</span> jour(s) travaillé(s)</h4>
-          </div>
-          <div class="col-sm text-right">
-            <button class="btn btn-danger" (click)="reset()">Recommencer</button>
+            <h4>{{syntheseEmploye.nomEmploye}} : <span class="badge badge-info">{{syntheseEmploye.nbJoursTravailles}}</span>
+              jour(s) travaillé(s)</h4>
           </div>
         </div>
 
@@ -28,10 +34,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultatEmploye.nombreHeures.heuresReelles}} h</td>
-                  <td>{{resultatEmploye.nombreHeures.heuresNormalesReelles}} h</td>
-                  <td>{{resultatEmploye.nombreHeures.heuresNormalesMensualisees}} h</td>
-                  <td>{{resultatEmploye.nombreHeures.heuresComplementaires}} h</td>
+                  <td>{{syntheseEmploye.nombreHeures.heuresReelles}} h</td>
+                  <td>{{syntheseEmploye.nombreHeures.heuresNormalesReelles}} h</td>
+                  <td>{{syntheseEmploye.nombreHeures.heuresNormalesMensualisees}} h</td>
+                  <td>{{syntheseEmploye.nombreHeures.heuresComplementaires}} h</td>
                 </tr>
               </tbody>
             </table>
@@ -52,10 +58,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultatEmploye.salaire.salaireNetMensualise}} €</td>
-                  <td>{{resultatEmploye.salaire.salaireNetHeuresComplementaires}} €</td>
-                  <td>{{resultatEmploye.salaire.congesPayes}} €</td>
-                  <td>{{resultatEmploye.salaire.salaireNetTotal}} €</td>
+                  <td>{{syntheseEmploye.salaire.salaireNetMensualise}} €</td>
+                  <td>{{syntheseEmploye.salaire.salaireNetHeuresComplementaires}} €</td>
+                  <td>{{syntheseEmploye.salaire.congesPayes}} €</td>
+                  <td>{{syntheseEmploye.salaire.salaireNetTotal}} €</td>
                 </tr>
               </tbody>
             </table>
@@ -74,8 +80,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultatEmploye.salaire.tauxHoraireNetHeureNormale}} €/h</td>
-                  <td>{{resultatEmploye.salaire.tauxHoraireNetHeureComplementaire}} €/h</td>
+                  <td>{{syntheseEmploye.salaire.tauxHoraireNetHeureNormale}} €/h</td>
+                  <td>{{syntheseEmploye.salaire.tauxHoraireNetHeureComplementaire}} €/h</td>
                 </tr>
               </tbody>
             </table>
@@ -95,9 +101,9 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{resultatEmploye.indemnites.indemnitesEntretien}} €</td>
-                  <td>{{resultatEmploye.indemnites.indemnitesRepas}} €</td>
-                  <td>{{resultatEmploye.indemnites.indemnitesKm}} €</td>
+                  <td>{{syntheseEmploye.indemnites.indemnitesEntretien}} €</td>
+                  <td>{{syntheseEmploye.indemnites.indemnitesRepas}} €</td>
+                  <td>{{syntheseEmploye.indemnites.indemnitesKm}} €</td>
                 </tr>
               </tbody>
             </table>
@@ -106,10 +112,17 @@
 
         <div class="row">
           <div class="col-sm">
-            <h4>Salaire total : <span class="badge badge-primary">{{resultatEmploye.montantPaiementMensuel}} €</span>
+            <h4>Salaire total : <span class="badge badge-primary">{{syntheseEmploye.montantPaiementMensuel}} €</span>
             </h4>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-sm">
+            <hr>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
