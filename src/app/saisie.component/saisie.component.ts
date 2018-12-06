@@ -85,7 +85,13 @@ export class SaisieComponent implements OnInit {
   }
 
   public onSubmit() {
-    console.log(this.model)
+    var request = [];
+    if(this.model) {
+      Object.keys(this.model).forEach(enfant => {
+        request.push(this.model[enfant]);
+      });
+      this.httpService.sendSaisie(request);
+    }
   }
 
   public getNumArray(size: number) {

@@ -31,6 +31,11 @@ export class HttpService {
       .post(URL, formData)
   }
 
+  // SAISIE
+  public sendSaisie(saisie) {
+    return this.http.post(this.buildUrl("/saisie"), {});
+  }
+
   // PARAMS
   // Enfants
   public getAllEnfants() {
