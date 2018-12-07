@@ -33,7 +33,7 @@ export class HttpService {
 
   // SAISIE
   public sendSaisie(saisie) {
-    return this.http.post(this.buildUrl("/saisie"), {});
+    return this.http.post(this.buildUrl("/saisie"), saisie);
   }
 
   // PARAMS

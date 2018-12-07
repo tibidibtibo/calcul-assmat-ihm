@@ -11,6 +11,7 @@ import { forkJoin } from "rxjs/observable/forkJoin";
 })
 export class SaisieComponent implements OnInit {
 
+  public loading = false;
   public enfants = [];
   public employes = [];
   public model: any = {};
@@ -86,11 +87,19 @@ export class SaisieComponent implements OnInit {
 
   public onSubmit() {
     var request = [];
+    this.loading = true;
     if(this.model) {
       Object.keys(this.model).forEach(enfant => {
         request.push(this.model[enfant]);
       });
-      this.httpService.sendSaisie(request);
+      console.log(request)
+      this.httpService.sendSaisie({ saisie: request}).subscribe(
+        ok => {
+          this.loading = false;
+        }, ko => {
+          this.loading = false;
+        }
+      );
     }
   }
 
