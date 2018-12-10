@@ -91,9 +91,11 @@ export class SaisieComponent implements OnInit {
     this.loading = true;
     if(this.model) {
       Object.keys(this.model).forEach(enfant => {
-        request.push(this.model[enfant]);
+        if(this.model[enfant] && this.model[enfant].saisie) {
+          request.push(this.model[enfant]);
+        }
       });
-      console.log(request)
+      console.log({ saisie: request })
       this.httpService.sendSaisie({ saisie: request}).subscribe(
         ok => {
           this.loading = false;
