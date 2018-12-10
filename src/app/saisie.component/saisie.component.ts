@@ -36,6 +36,7 @@ export class SaisieComponent implements OnInit {
 
         // init model object
         this.model[enfant.id] = {
+          enfant: enfant.id,
           saisie: false,
           heureArrivee: this.initTime(7, 45),
           heureDepart: this.initTime(17, 0)
