@@ -19,6 +19,13 @@
       </div>
     </div>
 
+    <div class="row" *ngIf="error">
+      <div class="col alert alert-danger" role="alert">
+        <p><strong>{{error.libelle}}</strong></p>
+        <p>{{error.message}}</p>
+      </div>
+    </div>
+
     <div class="row enfant-row" *ngFor="let enfant of enfants">
 
       <div class="col-2 toggle-enfant" (click)="toggleEnfant(enfant)" title="Activer/Désactiver la saisie" [ngClass]="{'bg-white text-black': model[enfant.id].saisie, 'bg-light text-secondary': !model[enfant.id].saisie}">
