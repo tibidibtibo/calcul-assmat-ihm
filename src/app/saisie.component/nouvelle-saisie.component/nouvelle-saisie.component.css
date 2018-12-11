@@ -1,0 +1,36 @@
+.enfant-row {
+  border: 1px solid #888;
+  border-radius: 0.25rem;
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+input[type=radio] {
+  -ms-transform: scale(1.5);
+  /* IE 9 */
+  -webkit-transform: scale(1.5);
+  /* Chrome, Safari, Opera */
+  transform: scale(1.5);
+}
+
+.radio-lib {
+  padding-right: 1em;
+}
+
+.toggle-enfant {
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+}
+
+.select-employe {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-enfant-check {
+  font-family: Arial, Helvetica, sans-serif;
+}

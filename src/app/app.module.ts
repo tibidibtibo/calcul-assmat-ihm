@@ -12,6 +12,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { HeaderComponent } from './header.component/header.component';
 import { AppComponent } from './app.component';
@@ -32,6 +33,8 @@ import { HttpService } from './services/http.service';
 import { ConstService } from './services/const.service';
 import { TokenStorageService } from './services/token.storage.service';
 import { AppHttpInterceptor } from './services/app.interceptor.service';
+import { NouvelleSaisieComponent } from './saisie.component/nouvelle-saisie.component/nouvelle-saisie.component';
+import { GestionSaisieComponent } from './saisie.component/gestion-saisie.component/gestion-saisie.component';
 
 
 @NgModule({
@@ -47,7 +50,9 @@ import { AppHttpInterceptor } from './services/app.interceptor.service';
     HomeComponent,
     HistoriqueComponent,
     HeaderComponent,
-    ParametrageComponent
+    ParametrageComponent,
+    NouvelleSaisieComponent,
+    GestionSaisieComponent
   ],
   imports: [
     AppRoutesModule,
@@ -61,6 +66,7 @@ import { AppHttpInterceptor } from './services/app.interceptor.service';
     TimepickerModule.forRoot(),
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
+    TabsModule.forRoot(),
     AngularFontAwesomeModule
   ],
   providers: [
