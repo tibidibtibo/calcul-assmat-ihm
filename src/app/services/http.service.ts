@@ -36,6 +36,10 @@ export class HttpService {
     return this.http.post(this.buildUrl("/saisie"), saisie);
   }
 
+  public findSaisieMonth(month, year) {
+    return this.http.get(this.buildUrl("/saisie/" + year + "/" + month))
+  }
+
   // PARAMS
   // Enfants
   public getAllEnfants() {

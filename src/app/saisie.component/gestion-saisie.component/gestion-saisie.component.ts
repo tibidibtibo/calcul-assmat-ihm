@@ -11,6 +11,13 @@ export class GestionSaisieComponent {
 
   constructor(private httpService: HttpService) {
     // TODO : appel service recherche par mois/année
+    httpService.findSaisieMonth(this.monthSelected, this.yearSelected)
+    .subscribe( ok => {
+      console.log(ok);
+    })
   }
+
+  public monthSelected = ((new Date()).getMonth() + 1).toString().padStart(2, "0");
+  public yearSelected = (new Date()).getFullYear();
 
 }
