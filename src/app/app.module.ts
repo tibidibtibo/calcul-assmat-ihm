@@ -1,3 +1,4 @@
+import { SaisieModule } from './saisie.module/saisie.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,7 +17,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { HeaderComponent } from './header.component/header.component';
 import { AppComponent } from './app.component';
-import { SaisieComponent } from './saisie.component/saisie.component';
+import { SaisieComponent } from './saisie.module/saisie.component';
 import { SyntheseComponent } from './synthese.component/synthese.component';
 import { LoginComponent } from './authentication.component/login.component';
 import { PageNotFoundComponent } from './page-not-found.component/page-not-found.component';
@@ -33,8 +34,6 @@ import { HttpService } from './services/http.service';
 import { ConstService } from './services/const.service';
 import { TokenStorageService } from './services/token.storage.service';
 import { AppHttpInterceptor } from './services/app.interceptor.service';
-import { NouvelleSaisieComponent } from './saisie.component/nouvelle-saisie.component/nouvelle-saisie.component';
-import { GestionSaisieComponent } from './saisie.component/gestion-saisie.component/gestion-saisie.component';
 
 
 @NgModule({
@@ -44,15 +43,12 @@ import { GestionSaisieComponent } from './saisie.component/gestion-saisie.compon
     SyntheseFormComponent,
     SyntheseResultatComponent,
     SyntheseErrorComponent,
-    SaisieComponent,
     LoginComponent,
     PageNotFoundComponent,
     HomeComponent,
     HistoriqueComponent,
     HeaderComponent,
-    ParametrageComponent,
-    NouvelleSaisieComponent,
-    GestionSaisieComponent
+    ParametrageComponent
   ],
   imports: [
     AppRoutesModule,
@@ -67,7 +63,8 @@ import { GestionSaisieComponent } from './saisie.component/gestion-saisie.compon
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    SaisieModule
   ],
   providers: [
     ConstService,
