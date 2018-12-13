@@ -1,16 +1,16 @@
-import { SaisieComponent } from './saisie.module/saisie.component';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './home.component/home.component';
-import { PageNotFoundComponent } from './page-not-found.component/page-not-found.component';
-import { LoginComponent } from './authentication.component/login.component';
-import { SyntheseComponent } from './synthese.component/synthese.component';
-import { HistoriqueComponent } from './historique.component/historique.component';
-import { ParametrageComponent } from './parametrage.component.ts/parametrage.component';
 
 import { AuthGuardService } from './services/auth-guard.service';
-import { NouvelleSaisieComponent } from './saisie.module/nouvelle-saisie.component/nouvelle-saisie.component';
-import { GestionSaisieComponent } from './saisie.module/gestion-saisie.component/gestion-saisie.component';
+import { HomeComponent } from './components/home.component/home.component';
+import { SyntheseComponent } from './components/synthese.component/synthese.component';
+import { SaisieComponent } from './modules/saisie.module/saisie.component';
+import { NouvelleSaisieComponent } from './modules/saisie.module/nouvelle-saisie.component/nouvelle-saisie.component';
+import { GestionSaisieComponent } from './modules/saisie.module/gestion-saisie.component/gestion-saisie.component';
+import { HistoriqueComponent } from './components/historique.component/historique.component';
+import { ParametrageComponent } from './components/parametrage.component.ts/parametrage.component';
+import { LoginComponent } from './components/authentication.component/login.component';
+import { PageNotFoundComponent } from './components/page-not-found.component/page-not-found.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },

@@ -7,9 +7,9 @@ import {
   EventEmitter
 } from "@angular/core";
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
+import { HttpService } from "../../../services/http.service";
+import { ConstService } from "../../../services/const.service";
 
-import { HttpService } from "../../services/http.service";
-import { ConstService } from "../../services/const.service";
 
 @Component({
   selector: "synthese-form",

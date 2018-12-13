@@ -1,9 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { AuthService } from './services/auth.service';
-
-import 'rxjs/add/operator/finally';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +8,7 @@ import 'rxjs/add/operator/finally';
 
 export class AppComponent {
 
-  constructor(private authService: AuthService, private router: Router) {
-  }
-
-  logout(): void {
-    // this.authService.logout( () => {
-    //   this.router.navigateByUrl('/login');
-    // })
+  constructor() {
   }
 
 }

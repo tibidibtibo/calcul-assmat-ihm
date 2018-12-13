@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { TokenStorageService } from './../services/token.storage.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { TokenStorageService } from '../../services/token.storage.service';
 
 @Component({
   templateUrl: './login.component.html',

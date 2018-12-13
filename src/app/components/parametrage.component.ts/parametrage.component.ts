@@ -1,14 +1,12 @@
-import { Enfant } from "./../models/enfant";
-import { Employe } from "./../models/employe";
 import { Component, TemplateRef } from "@angular/core";
-
-import { HttpService } from "./../services/http.service";
 
 import { forkJoin } from "rxjs/observable/forkJoin";
 
 import { BsModalService } from "ngx-bootstrap/modal";
 import { BsModalRef } from "ngx-bootstrap/modal/bs-modal-ref.service";
-import { Observable } from "rxjs";
+import { Employe } from "../../models/employe";
+import { HttpService } from "../../services/http.service";
+import { Enfant } from "../../models/enfant";
 
 @Component({
   selector: "parametrage",

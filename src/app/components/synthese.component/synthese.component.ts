@@ -1,8 +1,5 @@
 import { Component } from "@angular/core";
 
-import { HttpService } from '../services/http.service';
-import { AuthService } from "../services/auth.service";
-
 @Component({
   selector: "synthese",
   templateUrl: "./synthese.component.html",

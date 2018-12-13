@@ -1,4 +1,3 @@
-import { SaisieModule } from './saisie.module/saisie.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,18 +14,17 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
-import { HeaderComponent } from './header.component/header.component';
 import { AppComponent } from './app.component';
-import { SaisieComponent } from './saisie.module/saisie.component';
-import { SyntheseComponent } from './synthese.component/synthese.component';
-import { LoginComponent } from './authentication.component/login.component';
-import { PageNotFoundComponent } from './page-not-found.component/page-not-found.component';
-import { HomeComponent } from './home.component/home.component';
-import { SyntheseFormComponent } from './synthese.component/form/syntheseForm.component';
-import { SyntheseResultatComponent } from './synthese.component/resultat/syntheseResultat.component';
-import { SyntheseErrorComponent } from './synthese.component/error/syntheseError.component';
-import { HistoriqueComponent } from './historique.component/historique.component';
-import { ParametrageComponent } from './parametrage.component.ts/parametrage.component';
+import { SyntheseComponent } from './components/synthese.component/synthese.component';
+import { SyntheseFormComponent } from './components/synthese.component/form/syntheseForm.component';
+import { SyntheseResultatComponent } from './components/synthese.component/resultat/syntheseResultat.component';
+import { SyntheseErrorComponent } from './components/synthese.component/error/syntheseError.component';
+import { LoginComponent } from './components/authentication.component/login.component';
+import { PageNotFoundComponent } from './components/page-not-found.component/page-not-found.component';
+import { HomeComponent } from './components/home.component/home.component';
+import { HistoriqueComponent } from './components/historique.component/historique.component';
+import { HeaderComponent } from './components/header.component/header.component';
+import { ParametrageComponent } from './components/parametrage.component.ts/parametrage.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -34,6 +32,7 @@ import { HttpService } from './services/http.service';
 import { ConstService } from './services/const.service';
 import { TokenStorageService } from './services/token.storage.service';
 import { AppHttpInterceptor } from './services/app.interceptor.service';
+import { SaisieModule } from './modules/saisie.module/saisie.module';
 
 
 @NgModule({

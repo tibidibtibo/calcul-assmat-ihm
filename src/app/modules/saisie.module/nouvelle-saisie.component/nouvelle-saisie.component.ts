@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
-import { HttpService } from './../../services/http.service';
 import { forkJoin } from "rxjs/observable/forkJoin";
+import { HttpService } from "../../../services/http.service";
 
 @Component({
   selector: "nouvelle-saisie",
