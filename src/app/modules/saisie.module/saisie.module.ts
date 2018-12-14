@@ -1,3 +1,4 @@
+import { ReferentielService } from './../../services/referentiel.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -24,7 +25,8 @@ import { AppRoutesModule } from '../../app.routes.module';
     TimepickerModule.forRoot()
   ],
   providers: [
-    HttpService
+    HttpService,
+    ReferentielService
   ],
   bootstrap: [SaisieComponent]
 })

@@ -29,14 +29,17 @@ export class ParametrageComponent {
   }
 
   private loadData() {
+
+    // FIXME : remplacer cet appel par la méthode referentielsService
     var employesCall = this.httpService.getAllEmployes();
     var enfantsCall = this.httpService.getAllEnfants();
 
     forkJoin(employesCall, enfantsCall).subscribe((results: any) => {
-      this.employes = results[0];
-      this.initModelEmployes(this.employes);
 
+      this.employes = results[0];
       this.enfants = results[1];
+
+      this.initModelEmployes(this.employes);
       this.initModelEnfants(this.enfants, this.employes);
     });
   }
