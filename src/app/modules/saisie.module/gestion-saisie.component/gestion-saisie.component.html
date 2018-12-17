@@ -19,8 +19,8 @@
         <tbody>
           <tr>
             <td>{{ saisie.dateSaisie | date: "dd/MM/yyyy" }}</td>
-            <td>{{ saisie.enfant }}</td>
-            <td>{{ saisie.employe }}</td>
+            <td>{{ saisie.refEnfant.nom }}</td>
+            <td>{{ saisie.refEmploye.nom }}</td>
             <td>{{ saisie.heureArrivee | date: "dd/MM/yyyy HH:mm" }}</td>
             <td>{{ saisie.heureDepart | date: "dd/MM/yyyy HH:mm" }}</td>
             <td>{{ saisie.nbDejeuner }}</td>

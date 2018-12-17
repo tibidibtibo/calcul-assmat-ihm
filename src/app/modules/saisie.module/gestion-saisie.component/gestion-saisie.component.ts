@@ -16,10 +16,8 @@ export class GestionSaisieComponent {
     var findSaisieCall = httpService.findSaisieMonth(this.monthSelected, this.yearSelected);
 
     forkJoin(findSaisieCall, referentielsCall).subscribe(data => {
-      this.donneesSaisies = data[0];
-      this.referentielEmployeEtEnfant = data[1];
-
-      // TODO : consolider saisie avec référentiel
+      this.referentielEmployeEtEnfant = refService.employesEtEnfantsToObjects(data[1]);
+      this.donneesSaisies = refService.consoliderSaisies(data[0], this.referentielEmployeEtEnfant);
     });
   }
 

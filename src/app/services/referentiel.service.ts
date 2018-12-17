@@ -11,6 +11,27 @@ export class ReferentielService {
 
   // INTERFACE
 
+  public employesEtEnfantsToObjects(listesReferentiels) {
+    if(listesReferentiels) {
+      return {
+        employes: this.listToObjectById(listesReferentiels.employes),
+        enfants: this.listToObjectById(listesReferentiels.enfants)
+      }
+    }
+  }
+
+  public consoliderSaisies(listeSaisies, referentiel) {
+    var saisies = [];
+    if(listeSaisies) {
+      listeSaisies.forEach(saisie => {
+        saisie.refEmploye = referentiel.employes[saisie.employe];
+        saisie.refEnfant = referentiel.enfants[saisie.enfant];
+        saisies.push(saisie);
+      });
+    }
+    return saisies;
+  }
+
   public loadEnfantEtEmployes() {
 
     var employesCall = this.httpService.getAllEmployes();
@@ -52,4 +73,13 @@ export class ReferentielService {
 
   // UTILS
 
+  private listToObjectById(liste) {
+    var objectToReturn = {};
+    if(liste) {
+      liste.forEach(element => {
+        objectToReturn[element.id] = element;
+      });
+    }
+    return objectToReturn;
+  }
 }
