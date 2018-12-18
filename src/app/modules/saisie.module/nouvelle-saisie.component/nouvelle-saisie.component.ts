@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 
 import { forkJoin } from "rxjs/observable/forkJoin";
 import { HttpService } from "../../../services/http.service";
+import { ReferentielService } from "../../../services/referentiel.service";
 
 @Component({
   selector: "nouvelle-saisie",
@@ -10,6 +11,7 @@ import { HttpService } from "../../../services/http.service";
 })
 export class NouvelleSaisieComponent {
 
+  public modeSaisie = true;
   public loading = false;
   public error = null;
   public enfants = [];
@@ -20,19 +22,22 @@ export class NouvelleSaisieComponent {
   public inputNbAREcole = this.getNumArray(5);
   public dateSaisie = new Date();
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private refService: ReferentielService) {
 
-    var employesCall = this.httpService.getAllEmployes();
-    var enfantsCall = this.httpService.getAllEnfants();
+    this.initForm();
 
-    forkJoin(employesCall, enfantsCall).subscribe((results: any) => {
+  }
 
-      // init employes object
-      this.employes = results[0];
+  public initForm() {
 
-      // init enfants object
+    this.refService.loadEnfantEtEmployes().subscribe((referentiel: any) => {
+
+       // init employes object
+       this.employes = referentiel.employes;
+
+        // init enfants object
       var enfants = [];
-      results[1].forEach(enfant => {
+      referentiel.enfants.forEach(enfant => {
 
         // init model object
         this.model[enfant.id] = {
@@ -42,7 +47,6 @@ export class NouvelleSaisieComponent {
           heureArrivee: this.initTime(7, 45),
           heureDepart: this.initTime(17, 0)
         };
-
         // init view object
         enfants.push({
           id: enfant.id,
@@ -98,6 +102,7 @@ export class NouvelleSaisieComponent {
       this.httpService.sendSaisie({ saisie: request}).subscribe(
         ok => {
           this.loading = false;
+          this.modeSaisie = false;
         }, ko => {
           this.error = {
             libelle: "Une erreur s'est produite. Veuillez réessayer.",
