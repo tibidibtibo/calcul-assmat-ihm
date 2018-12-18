@@ -91,6 +91,7 @@ export class NouvelleSaisieComponent {
     if(this.model) {
       Object.keys(this.model).forEach(enfant => {
         if(this.model[enfant] && this.model[enfant].saisie) {
+          this.model[enfant].dateSaisie = this.dateSaisie;
           request.push(this.model[enfant]);
         }
       });

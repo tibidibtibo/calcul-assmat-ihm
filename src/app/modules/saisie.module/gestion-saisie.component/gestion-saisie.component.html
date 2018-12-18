@@ -1,5 +1,29 @@
 <div>
   <h4>Gestion des saisies</h4>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col align-self-center form-group">
+        <label for="mois">Mois</label>
+        <select class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected" formControlName="mois">
+          <option *ngFor="let month of monthsList" [ngValue]="month">{{month}}</option>
+        </select>
+      </div>
+      <div class="col align-self-center form-group">
+        <label for="annee">Année</label>
+        <input type="number" required minlength="4" class="form-control" name="annee" id="annee" [(ngModel)]="yearSelected"
+          formControlName="annee" />
+      </div>
+      <div class="col align-self-center form-group">
+        <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success btn-lg">
+          Rechercher <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
+          </button>
+      </div>
+    </div>
+    <hr class="my-4">
+  </form>
+  <div *ngIf="!donneesSaisies || (donneesSaisies && donneesSaisies.length < 1)" class="alert alert-info">
+    <h6>Aucune saisie trouvée.</h6>
+  </div>
   <ul class="list-group" *ngIf="donneesSaisies">
     <li *ngFor="let saisie of donneesSaisies" class="list-group-item">
       <table class="table table-striped">

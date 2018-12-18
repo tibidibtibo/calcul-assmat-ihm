@@ -14,7 +14,6 @@ import { ConstService } from "../../../services/const.service";
 @Component({
   selector: "synthese-form",
   templateUrl: "./syntheseForm.component.html"
-  // styleUrls: ["./syntheseForm.component.css"]
 })
 export class SyntheseFormComponent {
 
