@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 
-import { forkJoin } from "rxjs/observable/forkJoin";
 import { HttpService } from "../../../services/http.service";
 import { ReferentielService } from "../../../services/referentiel.service";
 

@@ -1,3 +1,4 @@
+import { ImportSaisieComponent } from './modules/saisie.module/import-saisie.component/import-saisie.component';
 import { RouterModule, Routes } from '@angular/router';
 
 
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'nouvelle',
         component: NouvelleSaisieComponent
+      },
+      {
+        path: 'import',
+        component: ImportSaisieComponent
       },
       {
         path: 'gestion',

@@ -1,3 +1,4 @@
+import { ImportSaisieComponent } from './import-saisie.component/import-saisie.component';
 import { ReferentielService } from './../../services/referentiel.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
@@ -14,7 +15,8 @@ import { AppRoutesModule } from '../../app.routes.module';
   declarations: [
     SaisieComponent,
     NouvelleSaisieComponent,
-    GestionSaisieComponent
+    GestionSaisieComponent,
+    ImportSaisieComponent
   ],
   imports: [
     AppRoutesModule,
