@@ -1,7 +1,7 @@
-import { ConstService } from './../../../services/const.service';
-import { HttpService } from './../../../services/http.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { ConstService } from "./../../../services/const.service";
+import { HttpService } from "./../../../services/http.service";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Component, ViewChild, ElementRef } from "@angular/core";
 
 @Component({
   selector: "import-saisie",
@@ -10,19 +10,26 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 })
 export class ImportSaisieComponent {
 
-
+  // Variables
   @ViewChild("fileInput")
   public fileInput: ElementRef;
-
   public resultat: Object;
   public form: FormGroup;
   public monthsList: Array<Object> = this.constantes.MONTHS_LIST;
-
   public loading: boolean = false;
-  public monthSelected = ((new Date()).getMonth()).toString().padStart(2, "0");
-  public yearSelected = (new Date()).getFullYear();
+  public monthSelected = new Date()
+    .getMonth()
+    .toString()
+    .padStart(2, "0");
+  public yearSelected = new Date().getFullYear();
+  public modeImport = true;
 
-  constructor(private httpService: HttpService, private fb: FormBuilder, private constantes: ConstService) {
+  // Constructor
+  constructor(
+    private httpService: HttpService,
+    private fb: FormBuilder,
+    private constantes: ConstService
+  ) {
     this.createForm();
   }
 
@@ -48,19 +55,20 @@ export class ImportSaisieComponent {
   }
 
   onSubmit() {
-
-    if(this.fileInput) {
-
+    if (this.fileInput) {
       const formModel = this.prepareSave();
 
       this.loading = true;
 
-      console.log("Service TODO")
-      console.log(formModel)
-      this.loading = false;
-      // TODO : service d'import saisie
-      // .calcul(this.monthSelected, this.yearSelected, formModel)
-      }
+      this.httpService
+      .importSaisie(this.monthSelected, this.yearSelected, formModel)
+      .subscribe(ok => {
+        this.loading = false;
+        this.modeImport = false;
+      }, ko => {
+        this.loading = false;
+        });
+    }
   }
 
   clearFile() {

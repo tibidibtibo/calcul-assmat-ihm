@@ -1,10 +1,18 @@
-<div class="container" *ngIf="!resultat">
-  <div class="row">
+<div class="container">
+  <div *ngIf="!modeImport">
+    <p>Saisies importées !</p>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-link" routerLink="/saisie/gestion">Consulter les saisies</button>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="modeImport">
     <div class="col">
       <p>Importer un fichier .xlsx de saisie mensuelle.</p>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="modeImport">
     <div class="col align-self-center">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="row">

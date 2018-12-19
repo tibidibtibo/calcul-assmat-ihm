@@ -40,6 +40,15 @@ export class HttpService {
     return this.http.get(this.buildUrl("/saisie/" + year + "/" + month))
   }
 
+  public importSaisie(monthSelected: string, yearSelected: number, formData) {
+
+    let URLArray = [this.constantes.serverUrl, "saisie/file", yearSelected.toString(), monthSelected];
+    const URL = URLArray.join(URL_SEPARATOR);
+
+    return this.http
+      .post(URL, formData)
+  }
+
   // PARAMS
   // Enfants
   public getAllEnfants() {
