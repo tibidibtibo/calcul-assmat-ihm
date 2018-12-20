@@ -38,6 +38,7 @@
             <th scope="col">Goûters</th>
             <th scope="col">AR école</th>
             <th scope="col">Autres km</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -51,6 +52,7 @@
             <td>{{ saisie.nbGouter }}</td>
             <td>{{ saisie.nbArEcole }}</td>
             <td>{{ saisie.autreKm }}</td>
+            <td class="action-icons"><button class="btn btn-light" (click)="editSaisie(saisie)"><i class="fa fa-pen"></i></button> <button class="btn btn-danger" (click)="deleteSaisie(saisie)">✖</button></td>
           </tr>
         </tbody>
       </table>

@@ -46,7 +46,11 @@ export class HttpService {
     const URL = URLArray.join(URL_SEPARATOR);
 
     return this.http
-      .post(URL, formData)
+    .post(URL, formData)
+  }
+
+  public supprimerSaisie(identifiant: string) {
+    return this.http.delete(this.buildUrl("/saisie/" + identifiant));
   }
 
   // PARAMS

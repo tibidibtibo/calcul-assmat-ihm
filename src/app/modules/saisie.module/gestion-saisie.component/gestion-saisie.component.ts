@@ -43,14 +43,24 @@ export class GestionSaisieComponent {
     });
   }
 
-  createForm() {
+  private createForm() {
     this.form = this.fb.group({
       mois: [null, [Validators.required, Validators.minLength(2)]],
       annee: [null, [Validators.required, Validators.minLength(4)]],
     });
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.initListeSaisie(this.monthSelected, this.yearSelected);
+  }
+
+  public deleteSaisie(saisie) {
+    this.httpService.supprimerSaisie(saisie.id).subscribe(ok => {
+      console.log(ok)
+    })
+  }
+
+  public editSaisie(saisie) {
+    // TODO
   }
 }
