@@ -52,10 +52,33 @@
             <td>{{ saisie.nbGouter }}</td>
             <td>{{ saisie.nbArEcole }}</td>
             <td>{{ saisie.autreKm }}</td>
-            <td class="action-icons"><button class="btn btn-light" (click)="editSaisie(saisie)"><i class="fa fa-pen"></i></button> <button class="btn btn-danger" (click)="deleteSaisie(saisie)">✖</button></td>
+            <td class="action-icons"><button class="btn btn-light" (click)="editSaisie(saisie)"><i class="fas fa-pen"></i></button> <button class="btn btn-danger" (click)="deleteSaisie(saisie)">✖</button></td>
           </tr>
         </tbody>
       </table>
     </li>
   </ul>
+
+  <!-- <ng-template #deleteModalTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Suppression</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()" [disabled]="toDelete.deleteEnCours">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Voulez-vous vraiment supprimer <strong>{{toDelete.name}}</strong> du paramétrage ?</p>
+      <div class="row">
+        <div class="col text-right">
+          <button type="button" class="btn btn-light" (click)="declineDeletion()" [disabled]="toDelete.deleteEnCours">Annuler</button>
+          <button type="button" class="btn btn-danger" (click)="confirmDeletion(toDelete.deleteFunction, toDelete.id)"
+            [disabled]="toDelete.deleteEnCours">
+            <span><i *ngIf="toDelete.deleteEnCours" class="fa fa-spinner fa-spin fa-fw"></i></span>
+            <span *ngIf="!toDelete.deleteEnCours">Supprimer</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </ng-template> -->
 </div>

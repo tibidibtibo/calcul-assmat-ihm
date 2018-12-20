@@ -56,7 +56,7 @@ export class GestionSaisieComponent {
 
   public deleteSaisie(saisie) {
     this.httpService.supprimerSaisie(saisie.id).subscribe(ok => {
-      console.log(ok)
+      this.initListeSaisie(this.monthSelected, this.yearSelected);
     })
   }
 
