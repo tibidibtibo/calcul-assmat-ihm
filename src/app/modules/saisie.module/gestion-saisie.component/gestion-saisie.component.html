@@ -39,6 +39,7 @@
             <th scope="col">AR école</th>
             <th scope="col">Autres km</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -52,14 +53,15 @@
             <td>{{ saisie.nbGouter }}</td>
             <td>{{ saisie.nbArEcole }}</td>
             <td>{{ saisie.autreKm }}</td>
-            <td class="action-icons"><button class="btn btn-light" (click)="editSaisie(saisie)"><i class="fas fa-pen"></i></button> <button class="btn btn-danger" (click)="deleteSaisie(saisie)">✖</button></td>
+            <td><button class="btn btn-light" (click)="editSaisie(saisie)"><i class="fas fa-edit"></i></button></td>
+            <td><button class="btn btn-danger" (click)="deleteSaisie(saisie, deleteModalTemplate)"><i class="fas fa-times"></i></button></td>
           </tr>
         </tbody>
       </table>
     </li>
   </ul>
 
-  <!-- <ng-template #deleteModalTemplate>
+  <ng-template #deleteModalTemplate>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Suppression</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()" [disabled]="toDelete.deleteEnCours">
@@ -67,7 +69,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <p>Voulez-vous vraiment supprimer <strong>{{toDelete.name}}</strong> du paramétrage ?</p>
+      <p>Voulez-vous vraiment supprimer la saisie du <strong>{{ toDelete.date | date: "dd/MM/yyyy" }}</strong> pour <strong>{{ toDelete.nom }}</strong> ?</p>
       <div class="row">
         <div class="col text-right">
           <button type="button" class="btn btn-light" (click)="declineDeletion()" [disabled]="toDelete.deleteEnCours">Annuler</button>
@@ -80,5 +82,5 @@
       </div>
 
     </div>
-  </ng-template> -->
+  </ng-template>
 </div>
