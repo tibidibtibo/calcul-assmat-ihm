@@ -53,6 +53,10 @@ export class HttpService {
     return this.http.delete(this.buildUrl("/saisie/" + identifiant));
   }
 
+  public certifierMois(saisies: Array<any>, mois: string, annee: number) {
+    return this.http.post(this.buildUrl("/saisie/certification/" + mois + "/" + annee), saisies);
+  }
+
   // PARAMS
   // Enfants
   public getAllEnfants() {

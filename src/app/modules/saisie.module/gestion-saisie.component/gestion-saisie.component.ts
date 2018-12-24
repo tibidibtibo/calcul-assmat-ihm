@@ -16,7 +16,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 export class GestionSaisieComponent {
 
   constructor(private httpService: HttpService, private refService: ReferentielService,
-    private fb: FormBuilder,private constantes: ConstService, private modalService: BsModalService) {
+    private fb: FormBuilder, private constantes: ConstService, private modalService: BsModalService) {
     this.initListeSaisie(this.monthSelected, this.yearSelected);
     this.createForm();
   }
@@ -25,6 +25,7 @@ export class GestionSaisieComponent {
   public modalRef: BsModalRef;
 
   public toDelete;
+  public certif;
   public loading: boolean = false;
   public monthsList = this.constantes.MONTHS_LIST;
   public monthSelected = ((new Date()).getMonth() + 1).toString().padStart(2, "0");
@@ -53,8 +54,10 @@ export class GestionSaisieComponent {
     });
   }
 
-  public onSubmit() {
-    this.initListeSaisie(this.monthSelected, this.yearSelected);
+  public onChange() {
+    if (this.monthSelected && this.yearSelected) {
+      this.initListeSaisie(this.monthSelected, this.yearSelected);
+    }
   }
 
   public deleteSaisie(saisie, template: TemplateRef<any>) {
@@ -65,7 +68,7 @@ export class GestionSaisieComponent {
       deleteFunction: this.deleteSaisieCall,
       deleteEnCours: false
     };
-    this.openDeleteModal(template);
+    this.openModal(template);
   }
 
   public deleteSaisieCall(saisieId, httpService) {
@@ -76,24 +79,73 @@ export class GestionSaisieComponent {
     // TODO
   }
 
-  private openDeleteModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  public certifSaisie(template: TemplateRef<any>) {
+    this.certif = {
+      certifEncours: true,
+      certifFunction: this.certifier,
+      mois: this.monthSelected,
+      annee: this.yearSelected
+    };
+    this.openModal(template);
+  }
+
+  private openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template)
   }
 
   public confirmDeletion(deleteFunction, paramId) {
     this.toDelete.deleteEnCours = true;
     deleteFunction(paramId, this.httpService).subscribe(
-        ok => {
-          this.initListeSaisie(this.monthSelected, this.yearSelected);
-          this.toDelete.deleteEnCours = false;
-          this.modalRef.hide();
-        }, ko => {
-          this.toDelete.deleteEnCours = false;
-        }
+      ok => {
+        this.initListeSaisie(this.monthSelected, this.yearSelected);
+        this.toDelete.deleteEnCours = false;
+        this.modalRef.hide();
+      }, ko => {
+        this.toDelete.deleteEnCours = false;
+      }
     );
   }
 
-  public declineDeletion() {
+  public decline() {
     this.modalRef.hide();
   }
+
+  public confirmCertif(certifFunction) {
+    certifFunction(this.httpService, this.donneesSaisies, this.monthSelected, this.yearSelected).subscribe( ok => {
+      console.log(ok)
+    }, ko => {
+      console.log(ko)
+    });
+  }
+
+  public checkAll(state: boolean) {
+    if (this.donneesSaisies) {
+      this.donneesSaisies.forEach(element => {
+        element.checked = state;
+      });
+    }
+  }
+
+  public certifier(httpService, donneesSaisies, month, year) {
+    if (donneesSaisies) {
+      var certification = [];
+      donneesSaisies.forEach(element => {
+        if (element.checked === true) {
+          certification.push(element);
+        }
+      });
+      return httpService.certifierMois(certification, month, year);
+    }
+  }
+
+  public checkSaisie(identifiant) {
+    if (this.donneesSaisies) {
+      this.donneesSaisies.forEach(element => {
+        if (element.id === identifiant) {
+          element.checked = !element.checked;
+        }
+      });
+    }
+  }
+
 }
