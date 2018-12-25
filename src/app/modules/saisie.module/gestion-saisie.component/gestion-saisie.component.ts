@@ -80,11 +80,16 @@ export class GestionSaisieComponent {
   }
 
   public certifSaisie(template: TemplateRef<any>) {
+    var nbSaisies = this.donneesSaisies.filter(data => {
+      return data.checked;
+    }).length;
+
     this.certif = {
-      certifEncours: true,
+      certifEncours: false,
       certifFunction: this.certifier,
       mois: this.monthSelected,
-      annee: this.yearSelected
+      annee: this.yearSelected,
+      nbSaisies: nbSaisies
     };
     this.openModal(template);
   }
@@ -111,11 +116,17 @@ export class GestionSaisieComponent {
   }
 
   public confirmCertif(certifFunction) {
-    certifFunction(this.httpService, this.donneesSaisies, this.monthSelected, this.yearSelected).subscribe( ok => {
-      console.log(ok)
-    }, ko => {
-      console.log(ko)
-    });
+    this.certif.certifEncours = true;
+    certifFunction(this.httpService, this.donneesSaisies, this.monthSelected, this.yearSelected)
+    .subscribe(ok => {
+      this.certif.error = null;
+        this.initListeSaisie(this.monthSelected, this.yearSelected);
+        this.certif.certifEncours = false;
+        this.modalRef.hide();
+      }, ko => {
+        this.certif.error = ko;
+        this.certif.certifEncours = false;
+      });
   }
 
   public checkAll(state: boolean) {

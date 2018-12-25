@@ -46,7 +46,7 @@ export class HttpService {
     const URL = URLArray.join(URL_SEPARATOR);
 
     return this.http
-    .post(URL, formData)
+      .post(URL, formData)
   }
 
   public supprimerSaisie(identifiant: string) {
@@ -54,7 +54,10 @@ export class HttpService {
   }
 
   public certifierMois(saisies: Array<any>, mois: string, annee: number) {
-    return this.http.post(this.buildUrl("/saisie/certification/" + mois + "/" + annee), saisies);
+    return this.http
+      .post(this.buildUrl("/saisie/certification/" + annee + "/" + mois),
+        { saisies: saisies }
+      );
   }
 
   // PARAMS
