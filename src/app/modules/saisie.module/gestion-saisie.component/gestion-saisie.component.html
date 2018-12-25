@@ -19,7 +19,16 @@
   <div *ngIf="!donneesSaisies || (donneesSaisies && donneesSaisies.length < 1)" class="alert alert-info">
     <h6>Aucune saisie trouvée.</h6>
   </div>
-  <div *ngIf="donneesSaisies">
+  <div *ngIf="certifOk" class="alert alert-info">
+    <p>Certification enregistrée !</p>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary" (click)="closeCertifOk()">Retour à la gestion des saisies</button>
+        <button class="btn btn-link" routerLink="/Certification/gestion">Gérer les certifications</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="donneesSaisies && !certifOk">
     <div class="row">
       <div class="col form-group">
         <button class="btn btn-info" (click)="checkAll(true)">Tout sélectionner</button>

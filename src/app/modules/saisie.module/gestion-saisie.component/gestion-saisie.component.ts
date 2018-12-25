@@ -26,6 +26,7 @@ export class GestionSaisieComponent {
 
   public toDelete;
   public certif;
+  public certifOk = false;
   public loading: boolean = false;
   public monthsList = this.constantes.MONTHS_LIST;
   public monthSelected = ((new Date()).getMonth() + 1).toString().padStart(2, "0");
@@ -118,15 +119,21 @@ export class GestionSaisieComponent {
   public confirmCertif(certifFunction) {
     this.certif.certifEncours = true;
     certifFunction(this.httpService, this.donneesSaisies, this.monthSelected, this.yearSelected)
-    .subscribe(ok => {
-      this.certif.error = null;
+      .subscribe(ok => {
+        this.certif.error = null;
         this.initListeSaisie(this.monthSelected, this.yearSelected);
         this.certif.certifEncours = false;
         this.modalRef.hide();
+        this.certifOk = true;
       }, ko => {
         this.certif.error = ko;
         this.certif.certifEncours = false;
       });
+  }
+
+  public closeCertifOk() {
+    this.certifOk = false;
+    this.initListeSaisie(this.monthSelected, this.yearSelected);
   }
 
   public checkAll(state: boolean) {
