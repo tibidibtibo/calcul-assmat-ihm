@@ -15,10 +15,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { AppComponent } from './app.component';
-import { SyntheseComponent } from './components/synthese.component/synthese.component';
-import { SyntheseFormComponent } from './components/synthese.component/form/syntheseForm.component';
-import { SyntheseResultatComponent } from './components/synthese.component/resultat/syntheseResultat.component';
-import { SyntheseErrorComponent } from './components/synthese.component/error/syntheseError.component';
 import { LoginComponent } from './components/authentication.component/login.component';
 import { PageNotFoundComponent } from './components/page-not-found.component/page-not-found.component';
 import { HomeComponent } from './components/home.component/home.component';
@@ -33,15 +29,11 @@ import { ConstService } from './services/const.service';
 import { TokenStorageService } from './services/token.storage.service';
 import { AppHttpInterceptor } from './services/app.interceptor.service';
 import { SaisieModule } from './modules/saisie.module/saisie.module';
-
+import { SyntheseModule } from './modules/synthese.module/synthese.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SyntheseComponent,
-    SyntheseFormComponent,
-    SyntheseResultatComponent,
-    SyntheseErrorComponent,
     LoginComponent,
     PageNotFoundComponent,
     HomeComponent,
@@ -63,7 +55,8 @@ import { SaisieModule } from './modules/saisie.module/saisie.module';
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     AngularFontAwesomeModule,
-    SaisieModule
+    SaisieModule,
+    SyntheseModule
   ],
   providers: [
     ConstService,
