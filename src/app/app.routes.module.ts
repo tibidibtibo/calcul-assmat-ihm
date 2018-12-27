@@ -5,7 +5,6 @@ import { HomeComponent } from './components/home.component/home.component';
 import { SaisieComponent } from './modules/saisie.module/saisie.component';
 import { NouvelleSaisieComponent } from './modules/saisie.module/nouvelle-saisie.component/nouvelle-saisie.component';
 import { GestionSaisieComponent } from './modules/saisie.module/gestion-saisie.component/gestion-saisie.component';
-import { HistoriqueComponent } from './components/historique.component/historique.component';
 import { ParametrageComponent } from './components/parametrage.component.ts/parametrage.component';
 import { LoginComponent } from './components/authentication.component/login.component';
 import { PageNotFoundComponent } from './components/page-not-found.component/page-not-found.component';
@@ -39,7 +38,6 @@ const routes: Routes = [
       }
     ]
   },
-  { path: 'historique', component: HistoriqueComponent, canActivate: [AuthGuardService] },
   { path: 'parametrage', component: ParametrageComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent },
   { path: '**', component: PageNotFoundComponent }

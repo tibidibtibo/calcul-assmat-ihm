@@ -18,7 +18,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/authentication.component/login.component';
 import { PageNotFoundComponent } from './components/page-not-found.component/page-not-found.component';
 import { HomeComponent } from './components/home.component/home.component';
-import { HistoriqueComponent } from './components/historique.component/historique.component';
 import { HeaderComponent } from './components/header.component/header.component';
 import { ParametrageComponent } from './components/parametrage.component.ts/parametrage.component';
 
@@ -37,7 +36,6 @@ import { SyntheseModule } from './modules/synthese.module/synthese.module';
     LoginComponent,
     PageNotFoundComponent,
     HomeComponent,
-    HistoriqueComponent,
     HeaderComponent,
     ParametrageComponent
   ],

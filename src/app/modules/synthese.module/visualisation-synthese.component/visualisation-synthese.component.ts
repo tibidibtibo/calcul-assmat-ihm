@@ -33,6 +33,8 @@ export class VisualisationSyntheseComponent {
   }
 
   onChangeMois() {
+    this.loading = true;
+
     this.httpService
       .findCertificationByMonth(this.monthSelected, this.yearSelected)
       .subscribe(

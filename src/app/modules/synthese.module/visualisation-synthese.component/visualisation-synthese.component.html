@@ -1,4 +1,5 @@
 <div class="container">
+
   <div class="row">
     <div class="col align-self-center">
       <p>Visualiser la synthèse</p>
@@ -7,7 +8,8 @@
           <div class="col align-self-center">
             <div class="form-group">
               <label for="mois">Mois</label>
-              <select (change)="onChangeMois()" class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected" formControlName="mois">
+              <select (change)="onChangeMois()" class="form-control" name="mois" id="mois" [(ngModel)]="monthSelected"
+                formControlName="mois">
                 <option *ngFor="let month of monthsList" [ngValue]="month">{{month}}</option>
               </select>
             </div>
@@ -15,8 +17,8 @@
           <div class="col align-self-center">
             <div class="form-group">
               <label for="annee">Année</label>
-              <input (change)="onChangeMois()" type="number" required minlength="4" class="form-control" name="annee" id="annee" [(ngModel)]="yearSelected"
-                formControlName="annee" />
+              <input (change)="onChangeMois()" type="number" required minlength="4" class="form-control" name="annee"
+                id="annee" [(ngModel)]="yearSelected" formControlName="annee" />
             </div>
           </div>
         </div>
@@ -24,8 +26,27 @@
     </div>
   </div>
 
-  <div *ngIf="resultat">
-    <div class="row resultat-row" *ngFor="let syntheseEmploye of resultat.syntheses">
+  <div class="row">
+    <div class="col">
+      <hr>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="loading">
+    <div class="col">
+      <button class="btn btn-link"> <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i> </button>>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!resultat && !loading">
+    <div class="col alert alert-info">
+      <p>Aucune synthèse pour ce mois.</p>
+    </div>
+  </div>
+
+
+  <div *ngIf="resultat && !loading">
+    <div class="row" *ngFor="let syntheseEmploye of resultat.syntheses">
       <div class="col-sm">
 
         <div class="container">
