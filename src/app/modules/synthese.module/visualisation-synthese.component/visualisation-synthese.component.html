@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!resultat">
+<div class="container">
   <div class="row">
     <div class="col align-self-center">
       <p>Visualiser la synthèse</p>
@@ -25,7 +25,7 @@
   </div>
 
   <div *ngIf="resultat">
-    <div class="row resultat-row" *ngFor="let syntheseEmploye of resultat.synthese">
+    <div class="row resultat-row" *ngFor="let syntheseEmploye of resultat.syntheses">
       <div class="col-sm">
 
         <div class="container">

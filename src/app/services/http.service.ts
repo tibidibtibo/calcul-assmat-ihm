@@ -53,11 +53,17 @@ export class HttpService {
     return this.http.delete(this.buildUrl("/saisie/" + identifiant));
   }
 
+  // Certification
   public certifierMois(saisies: Array<any>, mois: string, annee: number) {
     return this.http
-      .post(this.buildUrl("/saisie/certification/" + annee + "/" + mois),
+      .post(this.buildUrl("/certification/" + annee + "/" + mois),
         { saisies: saisies }
       );
+  }
+
+  public findCertificationByMonth(mois: string, annee: number) {
+    return this.http
+      .get(this.buildUrl("/certification/" + annee + "/" + mois));
   }
 
   // PARAMS

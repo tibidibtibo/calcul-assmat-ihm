@@ -13,6 +13,7 @@ export class VisualisationSyntheseComponent {
 
   constructor(private httpService: HttpService, private fb: FormBuilder, private constantes: ConstService) {
     this.createForm();
+    this.onChangeMois();
   }
 
   public form: FormGroup;
@@ -32,16 +33,18 @@ export class VisualisationSyntheseComponent {
   }
 
   onChangeMois() {
-    // this.httpService
-    //   .calcul(this.monthSelected, this.yearSelected)
-    //   .subscribe(
-    //     (data: Object) => {
-    //       this.loading = false;
-    //     },
-    //     error => {
-    //       this.loading = false;
-    //     }
-    //   );
+    this.httpService
+      .findCertificationByMonth(this.monthSelected, this.yearSelected)
+      .subscribe(
+        (data: Object) => {
+          this.resultat = data;
+          this.loading = false;
+        },
+        error => {
+          this.resultat = null;
+          this.loading = false;
+        }
+      );
   }
 
   reset() {
