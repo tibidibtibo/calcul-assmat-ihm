@@ -1,15 +1,11 @@
 <div class="container">
+  <h4>Import de saisies</h4>
   <div *ngIf="!modeImport">
     <p>Saisies importées !</p>
     <div class="row">
       <div class="col">
         <button class="btn btn-link" routerLink="/saisie/gestion">Consulter les saisies</button>
       </div>
-    </div>
-  </div>
-  <div class="row" *ngIf="modeImport">
-    <div class="col">
-      <p>Importer un fichier .xlsx de saisie mensuelle.</p>
     </div>
   </div>
   <div class="row" *ngIf="modeImport">

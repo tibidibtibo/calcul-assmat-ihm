@@ -1,5 +1,7 @@
 <div class="container">
 
+  <h4>Nouvelle saisie</h4>
+
   <div *ngIf="!modeSaisie">
     <p>Saisie enregistrée !</p>
     <div class="row">
@@ -11,12 +13,6 @@
   </div>
 
   <form (ngSubmit)="onSubmit()" *ngIf="modeSaisie">
-
-    <div class="row">
-      <div class="col">
-        <p>Saisie des heures de garde des enfants.</p>
-      </div>
-    </div>
 
     <div class="form-group row">
       <label for="dateSaisie" class="col-1 col-form-label">Date : </label>

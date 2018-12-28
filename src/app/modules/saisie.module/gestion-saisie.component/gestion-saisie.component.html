@@ -41,7 +41,7 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col"></th>
+          <th scope="col">✔/✖</th>
           <th scope="col">Date</th>
           <th scope="col">Enfant</th>
           <th scope="col">Employé</th>
@@ -58,8 +58,10 @@
       <tbody>
         <tr *ngFor="let saisie of donneesSaisies">
           <td class="form-group">
-            <input class="form-check-input" type="checkbox" id="{{saisie.id}}" name="{{saisie.id}}" [checked]="saisie.checked"
+            <label for="{{saisie.id}}">
+              <input class="" type="checkbox" id="{{saisie.id}}" name="{{saisie.id}}" [checked]="saisie.checked"
               (change)="checkSaisie(saisie.id)" />
+            </label>
           </td>
           <td>{{ saisie.dateSaisie | date: "dd/MM/yyyy" }}</td>
           <td>{{ saisie.refEnfant.nom }}</td>
