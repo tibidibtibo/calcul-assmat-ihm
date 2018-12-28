@@ -99,9 +99,64 @@
               <label for="nom{{enfant.id}}">Nom</label>
               <input type="text" class="form-control" name="nom{{enfant.id}}" [(ngModel)]="modelEnfant[enfant.id].nom" />
             </div>
-
-
+            <div class="col form-group">
+              <label for="typeGarde{{enfant.id}}">Type de garde</label>
+              <select [(ngModel)]="modelEnfant[enfant.id].typeGarde" name="typeGarde{{enfant.id}}" class="custom-select">
+                <option *ngFor="let type of typesGarde" [ngValue]="type.code">{{type.libelle}}</option>
+              </select>
+            </div>
+            <div class="col form-group">
+              <label for="employes{{enfant.id}}">Employés</label>
+              <div>
+                <ul class="list-group">
+                  <li *ngFor="let employe of employes" class="list-group-item">
+                    <span><input /></span><span>{{employe.nom}}</span>
+                    <!-- TODO : checkbox + change -->
+                  </li>
+                </ul>
+              </div>
+              <!-- <select class="custom-select" [(ngModel)]="modelEnfant[enfant.id].typeGarde" name="employes{{enfant.id}}">
+                <option *ngFor="let type of typesGarde" [ngValue]="type.code">{{type.libelle}}</option>
+              </select> -->
+            </div>
           </div>
+
+          <div class="row">
+            <div class="col form-group">
+              <label for="salaireNetMens{{enfant.id}}">Salaire NET mensualisé</label>
+              <input type="number" class="form-control" name="salaireNetMens{{enfant.id}}" [(ngModel)]="modelEnfant[enfant.id].salaireNetMensualise" />
+            </div>
+            <div class="col form-group">
+              <label for="hNormMens{{enfant.id}}">H. normales mensualisées</label>
+              <input type="number" class="form-control" name="hNormMens{{enfant.id}}" [(ngModel)]="modelEnfant[enfant.id].heuresNormalesMensualisees" />
+            </div>
+            <div class="col form-group">
+              <label for="arEcoleKm{{enfant.id}}">Distance AR école</label>
+              <input type="number" class="form-control" name="arEcoleKm{{enfant.id}}" [(ngModel)]="modelEnfant[enfant.id].arEcoleKm" />
+            </div>
+          </div>
+          <!-- {
+              "employesIds" : [
+                  ObjectId("5baff2462efb71c0790b6e55")
+              ],
+              "horairesEcole" : [
+                  { "jour" : 1,
+                      "horairesJournaliersEcole" : {
+                          "am" : "08:50",
+                          "dm" : "12:00",
+                          "aa" : "13:30",
+                          "da" : "16:45"
+                      }
+                  } ...
+              ],
+              "heuresNormales" : [
+                  {
+                      "jour" : 1,
+                      "heures" : 1.083
+                  },
+              ]
+          } -->
+
           <div class="row">
             <div class="col form-group text-right">
               <button class="btn btn-primary" (click)="saveEnfant(enfant.id)">Enregistrer</button>

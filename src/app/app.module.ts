@@ -1,3 +1,4 @@
+import { ParametrageModule } from './modules/parametrage.module/parametrage.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,7 +20,6 @@ import { LoginComponent } from './components/authentication.component/login.comp
 import { PageNotFoundComponent } from './components/page-not-found.component/page-not-found.component';
 import { HomeComponent } from './components/home.component/home.component';
 import { HeaderComponent } from './components/header.component/header.component';
-import { ParametrageComponent } from './components/parametrage.component.ts/parametrage.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -36,8 +36,7 @@ import { SyntheseModule } from './modules/synthese.module/synthese.module';
     LoginComponent,
     PageNotFoundComponent,
     HomeComponent,
-    HeaderComponent,
-    ParametrageComponent
+    HeaderComponent
   ],
   imports: [
     AppRoutesModule,
@@ -49,12 +48,12 @@ import { SyntheseModule } from './modules/synthese.module/synthese.module';
     TooltipModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot(),
-    AccordionModule.forRoot(),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     AngularFontAwesomeModule,
     SaisieModule,
-    SyntheseModule
+    SyntheseModule,
+    ParametrageModule
   ],
   providers: [
     ConstService,
