@@ -33,6 +33,11 @@
       <div class="col form-group">
         <button class="btn btn-info" (click)="checkAll(true)">Tout sélectionner</button>
         <button class="btn btn-info" (click)="checkAll(false)">Déselectionner</button>
+        <span class="pl-2"></span>
+        <span class="badge badge-light">{{countChecked()}}</span>
+        <span><em> sélectionnée(s) / </em></span>
+        <span class="badge badge-light">{{donneesSaisies.length}}</span>
+        <span><em> saisie(s)</em></span>
       </div>
       <div class="col text-right">
         <button class="btn btn-success" (click)="certifSaisie(certificationModalTemplate)">Certifier</button>
@@ -60,7 +65,7 @@
           <td class="form-group">
             <label for="{{saisie.id}}">
               <input class="" type="checkbox" id="{{saisie.id}}" name="{{saisie.id}}" [checked]="saisie.checked"
-              (change)="checkSaisie(saisie.id)" />
+                (change)="checkSaisie(saisie.id)" />
             </label>
           </td>
           <td>{{ saisie.dateSaisie | date: "dd/MM/yyyy" }}</td>

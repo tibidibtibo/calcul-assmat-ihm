@@ -41,11 +41,16 @@ export class GestionSaisieComponent {
 
     forkJoin(findSaisieCall, referentielsCall).subscribe(data => {
       this.referentielEmployeEtEnfant = this.refService.employesEtEnfantsToObjects(data[1]);
-      this.donneesSaisies = this.refService.consoliderSaisies(data[0], this.referentielEmployeEtEnfant);
+      this.donneesSaisies = this.refService.consoliderSaisies(data[0], this.referentielEmployeEtEnfant).sort(this.sortSaisies);
       this.loading = false;
     }, ko => {
       this.loading = false;
     });
+  }
+
+  private sortSaisies(a, b): number {
+    // console.log(a.refEnfant.nom.localeCompare(b.refEnfant.nom)); // TODO : trier par nom enfant
+    return (new Date(a.dateSaisie)).getTime() - (new Date(b.dateSaisie)).getTime();
   }
 
   private createForm() {
@@ -142,6 +147,16 @@ export class GestionSaisieComponent {
         element.checked = state;
       });
     }
+  }
+
+  public countChecked() {
+    if (this.donneesSaisies) {
+      var checked = this.donneesSaisies.filter(element => {
+        return element.checked;
+      });
+      return checked.length;
+    }
+    return 0;
   }
 
   public certifier(httpService, donneesSaisies, month, year) {
