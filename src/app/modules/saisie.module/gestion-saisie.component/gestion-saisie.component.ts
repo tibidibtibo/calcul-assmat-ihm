@@ -91,7 +91,7 @@ export class GestionSaisieComponent {
     }).length;
 
     this.certif = {
-      certifEncours: false,
+      certifEnCours: false,
       certifFunction: this.certifier,
       mois: this.monthSelected,
       annee: this.yearSelected,
@@ -122,17 +122,17 @@ export class GestionSaisieComponent {
   }
 
   public confirmCertif(certifFunction) {
-    this.certif.certifEncours = true;
+    this.certif.certifEnCours = true;
     certifFunction(this.httpService, this.donneesSaisies, this.monthSelected, this.yearSelected)
       .subscribe(ok => {
         this.certif.error = null;
         this.initListeSaisie(this.monthSelected, this.yearSelected);
-        this.certif.certifEncours = false;
+        this.certif.certifEnCours = false;
         this.modalRef.hide();
         this.certifOk = true;
       }, ko => {
         this.certif.error = ko;
-        this.certif.certifEncours = false;
+        this.certif.certifEnCours = false;
       });
   }
 
