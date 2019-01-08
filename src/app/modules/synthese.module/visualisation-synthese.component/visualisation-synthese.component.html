@@ -3,7 +3,7 @@
 
   <div class="row">
     <div class="col align-self-center">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <form [formGroup]="form">
         <div class="row">
           <div class="col align-self-center">
             <div class="form-group">
@@ -20,6 +20,11 @@
               <input (change)="onChangeMois()" type="number" required minlength="4" class="form-control" name="annee"
                 id="annee" [(ngModel)]="yearSelected" formControlName="annee" />
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-right">
+            <button class="btn btn-danger" (click)="deleteCertification(deleteModalTemplate)">Supprimer</button>
           </div>
         </div>
       </form>
@@ -164,5 +169,27 @@
       </div>
     </div>
   </div>
+
+  <ng-template #deleteModalTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Suppression</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()" [disabled]="toDelete.deleteEnCours">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Voulez-vous vraiment supprimer la certification du <strong>{{toDelete.month}}/{{toDelete.year}}</strong></p>
+      <div class="row">
+        <div class="col text-right">
+          <button type="button" class="btn btn-light" (click)="declineDeletion()" [disabled]="toDelete.deleteEnCours">Annuler</button>
+          <button type="button" class="btn btn-danger" (click)="confirmDeletion(toDelete.deleteFunction, toDelete.month, toDelete.year)"
+            [disabled]="toDelete.deleteEnCours">
+            <span><i *ngIf="toDelete.deleteEnCours" class="fa fa-spinner fa-spin fa-fw"></i></span>
+            <span *ngIf="!toDelete.deleteEnCours">Supprimer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 
 </div>

@@ -17,11 +17,8 @@ export class ImportSaisieComponent {
   public form: FormGroup;
   public monthsList: Array<Object> = this.constantes.MONTHS_LIST;
   public loading: boolean = false;
-  public monthSelected = new Date()
-    .getMonth()
-    .toString()
-    .padStart(2, "0");
-  public yearSelected = new Date().getFullYear();
+  public monthSelected = this.constantes.getPreviousMonth()[0];
+  public yearSelected = this.constantes.getPreviousMonth()[1];
   public modeImport = true;
 
   // Constructor

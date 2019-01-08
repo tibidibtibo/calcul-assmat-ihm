@@ -60,6 +60,10 @@ export class HttpService {
         { saisies: saisies }
       );
   }
+  public deleteCertification(mois: string, annee: number) {
+    return this.http
+      .delete(this.buildUrl("/certification/" + annee + "/" + mois));
+  }
 
   public findCertificationByMonth(mois: string, annee: number) {
     return this.http
