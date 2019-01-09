@@ -122,7 +122,9 @@ export class GestionSaisieComponent {
   }
 
   public confirmCertif(certifFunction) {
+
     this.certif.certifEnCours = true;
+
     certifFunction(this.httpService, this.donneesSaisies, this.monthSelected, this.yearSelected)
       .subscribe(ok => {
         this.certif.error = null;

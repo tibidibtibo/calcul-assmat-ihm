@@ -36,9 +36,10 @@
               <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">Effacer</button>
             </div>
           </div>
-          <div class="col align-self-center">
-            <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success btn-lg">
-              Importer <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
+          <div class="col text-right">
+            <button type="button" [disabled]="form.invalid || loading" class="btn btn-success">
+              <span *ngIf="!loading">Importer</span>
+              <span *ngIf="loading"><i class="fa fa-spinner fa-spin fa-fw"></i></span>
             </button>
           </div>
         </div>
