@@ -3,8 +3,8 @@ export class Enfant {
 
 
     id: string;
-    employesIds: Array<string>;
-    employes: Array<Employe>; // transient
+    refEmployes: Array<Employe>; // transient
+    employes: Array<Employe>; // FIXME : model employeInfo à créer
     nom: string;
     typeGarde: string;
     salaireNetMensualise: number;
@@ -14,7 +14,7 @@ export class Enfant {
     public static fork(enfant): Enfant {
       var newEnfant = new Enfant();
       newEnfant.id = enfant.id;
-      newEnfant.employesIds = enfant.employesIds;
+      newEnfant.employes = enfant.employes;
       newEnfant.nom = enfant.nom;
       newEnfant.typeGarde = enfant.typeGarde;
       newEnfant.salaireNetMensualise = enfant.salaireNetMensualise;

@@ -51,10 +51,10 @@ export class ReferentielService {
         var newListEnfants = [];
         params.enfants.forEach(enfant => {
           var listeEmployesEnfant = [];
-          enfant.employesIds.forEach(empId => {
+          enfant.employes.forEach(empInfo => {
             listeEmployesEnfant.push(
               params.employes.find(employe => {
-                return employe.id === empId;
+                return employe.id === empInfo.employeId;
               })
             );
           });

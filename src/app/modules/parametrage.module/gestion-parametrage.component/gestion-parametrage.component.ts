@@ -58,16 +58,17 @@ export class GestionParametrageComponent {
     return Employe.fork(employe);
   }
 
-  private initModelEnfants(enfants, enployes) {
+  private initModelEnfants(enfants, employes) {
     enfants.forEach(enfant => {
       var listeEmployesEnfant = [];
-      enfant.employesIds.forEach(empId => {
+      enfant.employes.forEach(emp => {
         listeEmployesEnfant.push(
-          enployes.find(employe => {
-            return employe.id === empId;
+          employes.find(employe => {
+            return employe.id === emp.id;
           })
         );
       });
+      console.log(listeEmployesEnfant)
       this.modelEnfant[enfant.id] = this.forkEnfantModel(
         enfant,
         listeEmployesEnfant
@@ -77,7 +78,7 @@ export class GestionParametrageComponent {
 
   private forkEnfantModel(enfant, listeEmployesEnfant) {
     var newEnfant = Enfant.fork(enfant);
-    newEnfant.employes = listeEmployesEnfant;
+    newEnfant.refEmployes = listeEmployesEnfant;
     return newEnfant;
   }
 
