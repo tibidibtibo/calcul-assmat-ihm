@@ -105,7 +105,6 @@ export class GestionParametrageComponent {
   }
 
   public saveEmploye(employeId, savedTemplate: TemplateRef<any>) {
-    console.log(this.modelEmploye[employeId]);
     this.httpService.updateParamEmploye(employeId, this.modelEmploye[employeId]).subscribe(ok => {
       this.modalRef = this.modalService.show(savedTemplate);
       this.loadData();
