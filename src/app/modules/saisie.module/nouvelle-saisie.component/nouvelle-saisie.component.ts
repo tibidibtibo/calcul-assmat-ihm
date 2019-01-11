@@ -27,48 +27,43 @@ export class NouvelleSaisieComponent {
 
   }
 
-  public initForm() {
+  public initModelEnfant(paramEnfants) {
 
-    this.refService.loadEnfantEtEmployes().subscribe((referentiel: any) => {
+     // init enfants object
+     var enfants = [];
 
-       // init employes object
-       this.employes = referentiel.employes;
+     paramEnfants.forEach(enfant => {
 
-        // init enfants object
-      var enfants = [];
-      referentiel.enfants.forEach(enfant => {
-
-        // init model object
-        this.model[enfant.id] = {
-          dateSaisie: this.dateSaisie,
-          enfant: enfant.id,
-          saisie: false,
-          heureArrivee: this.initTime(7, 45),
-          heureDepart: this.initTime(17, 0)
-        };
-        // init view object
-        enfants.push({
-          id: enfant.id,
-          nom: enfant.nom,
-          employes: this.findEmployesById(enfant.employesIds, this.employes)
-        })
-      });
-      this.enfants = enfants;
-    });
+       // init model object
+       this.model[enfant.id] = {
+         dateSaisie: this.dateSaisie,
+         enfant: enfant.id,
+         saisie: false,
+         heureArrivee: this.initTime(7, 45),
+         heureDepart: this.initTime(17, 0)
+       };
+       // init view object
+       enfants.push({
+         id: enfant.id,
+         nom: enfant.nom,
+         employes: enfant.employes
+       })
+     });
+     return enfants;
   }
 
-  public findEmployesById(idEmployesEnfant: any, employes: any) {
-    return employes.map(employe => {
-      return {
-        id: employe.id,
-        text: employe.prenom + " " + employe.nom
-      };
-    }).filter(employe => {
-      var isEmp = idEmployesEnfant.find(id => {
-        return id === employe.id
-      })
-      return isEmp;
-    });
+  public initForm() {
+
+    this.refService.loadParametrageEnfantsEtEmployes()
+      .subscribe((referentiel: any) => {
+        // init employes object
+        this.employes = referentiel.employes;
+
+        // init enfants object
+        this.enfants = this.initModelEnfant(referentiel.enfants);
+
+      });
+
   }
 
   public selected(value: any, enfantId): void {
@@ -91,14 +86,14 @@ export class NouvelleSaisieComponent {
     var request = [];
     this.error = null;
     this.loading = true;
-    if(this.model) {
+    if (this.model) {
       Object.keys(this.model).forEach(enfant => {
-        if(this.model[enfant] && this.model[enfant].saisie) {
+        if (this.model[enfant] && this.model[enfant].saisie) {
           this.model[enfant].dateSaisie = this.dateSaisie;
           request.push(this.model[enfant]);
         }
       });
-      this.httpService.sendSaisie({ saisie: request}).subscribe(
+      this.httpService.sendSaisie({ saisie: request }).subscribe(
         ok => {
           this.loading = false;
           this.modeSaisie = false;

@@ -12,7 +12,7 @@ export class ReferentielService {
   // INTERFACE
 
   public employesEtEnfantsToObjects(listesReferentiels) {
-    if(listesReferentiels) {
+    if (listesReferentiels) {
       return {
         employes: this.listToObjectById(listesReferentiels.employes),
         enfants: this.listToObjectById(listesReferentiels.enfants)
@@ -22,7 +22,7 @@ export class ReferentielService {
 
   public consoliderSaisies(listeSaisies, referentiel) {
     var saisies = [];
-    if(listeSaisies) {
+    if (listeSaisies) {
       listeSaisies.forEach(saisie => {
         saisie.refEmploye = referentiel.employes[saisie.employe];
         saisie.refEnfant = referentiel.enfants[saisie.enfant];
@@ -32,50 +32,30 @@ export class ReferentielService {
     return saisies;
   }
 
-  public loadEnfantEtEmployes() {
+  public loadParametrageEnfant() {
+    return this.httpService.getAllEnfants();
+  }
 
-    var employesCall = this.httpService.getAllEmployes();
-    var enfantsCall = this.httpService.getAllEnfants();
+  public loadParametrageEmploye() {
+    return this.httpService.getAllEmployes();
+  }
 
-    return forkJoin(employesCall, enfantsCall)
+  public loadParametrageEnfantsEtEmployes() {
+    return forkJoin(this.loadParametrageEnfant(), this.loadParametrageEmploye())
       .map((results: any) => {
-
         return {
-          employes: results[0],
-          enfants: results[1]
+          enfants: results[0],
+          employes: results[1]
         };
-
-      })
-      .map((params: any) => {
-
-        var newListEnfants = [];
-        params.enfants.forEach(enfant => {
-          var listeEmployesEnfant = [];
-          enfant.employes.forEach(empInfo => {
-            listeEmployesEnfant.push(
-              params.employes.find(employe => {
-                return employe.id === empInfo.employeId;
-              })
-            );
-          });
-          enfant.employes = listeEmployesEnfant;
-          newListEnfants.push(enfant);
-        });
-
-        return {
-          enfants: newListEnfants,
-          employes: params.employes
-        };
-
-
       });
   }
+
 
   // UTILS
 
   private listToObjectById(liste) {
     var objectToReturn = {};
-    if(liste) {
+    if (liste) {
       liste.forEach(element => {
         objectToReturn[element.id] = element;
       });

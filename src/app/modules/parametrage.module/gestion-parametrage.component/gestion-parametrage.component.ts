@@ -37,9 +37,9 @@ export class GestionParametrageComponent {
 
   private loadData() {
 
-    this.refService.loadEnfantEtEmployes().subscribe(data => {
+    this.refService.loadParametrageEnfantsEtEmployes().subscribe(data => {
       this.initModelEmployes(data.employes);
-      this.initModelEnfants(data.enfants, data.employes);
+      this.initModelEnfants(data.enfants);
 
       this.employes = data.employes;
       this.enfants = data.enfants;
@@ -50,36 +50,15 @@ export class GestionParametrageComponent {
 
   private initModelEmployes(employes: Array<Employe>) {
     employes.forEach((employe: Employe) => {
-      this.modelEmploye[employe.id] = this.forkEmployeModel(employe);
+      this.modelEmploye[employe.id] = Employe.fork(employe);
     });
   }
 
-  private forkEmployeModel(employe: Employe) {
-    return Employe.fork(employe);
-  }
-
-  private initModelEnfants(enfants, employes) {
+  private initModelEnfants(enfants) {
     enfants.forEach(enfant => {
-      var listeEmployesEnfant = [];
-      enfant.employes.forEach(emp => {
-        listeEmployesEnfant.push(
-          employes.find(employe => {
-            return employe.id === emp.id;
-          })
-        );
-      });
-      console.log(listeEmployesEnfant)
-      this.modelEnfant[enfant.id] = this.forkEnfantModel(
-        enfant,
-        listeEmployesEnfant
-      );
+      console.log(enfant)
+      this.modelEnfant[enfant.id] = Enfant.fork(enfant);
     });
-  }
-
-  private forkEnfantModel(enfant, listeEmployesEnfant) {
-    var newEnfant = Enfant.fork(enfant);
-    newEnfant.refEmployes = listeEmployesEnfant;
-    return newEnfant;
   }
 
   private openDeleteModal(template: TemplateRef<any>) {
@@ -102,7 +81,7 @@ export class GestionParametrageComponent {
   }
 
   public reinitEnfants() {
-    this.initModelEnfants(this.enfants, this.employes);
+    this.initModelEnfants(this.enfants);
   }
 
   public saveEmploye(employeId, savedTemplate: TemplateRef<any>) {

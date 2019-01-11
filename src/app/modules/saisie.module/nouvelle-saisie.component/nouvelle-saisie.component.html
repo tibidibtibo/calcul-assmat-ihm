@@ -42,7 +42,7 @@
         <div class="form-group text-center">
           <span>Employé</span>
           <select [(ngModel)]="model[enfant.id].employe" name="employe_{{enfant.id}}" class="custom-select" [disabled]="!model[enfant.id].saisie">
-            <option *ngFor="let employe of enfant.employes" [ngValue]="employe.id">{{employe.text}}</option>
+            <option *ngFor="let employe of enfant.employes" [ngValue]="employe.paramEmploye.id">{{employe.paramEmploye.prenom}} {{employe.paramEmploye.nom}}</option>
           </select>
         </div>
       </div>

@@ -1,10 +1,9 @@
-import { Employe } from './employe';
+import { EmployeInfo } from './employeInfo';
 export class Enfant {
 
 
     id: string;
-    refEmployes: Array<Employe>; // transient
-    employes: Array<Employe>; // FIXME : model employeInfo à créer
+    employes: Array<EmployeInfo>;
     nom: string;
     typeGarde: string;
     salaireNetMensualise: number;

@@ -36,7 +36,7 @@ export class GestionSaisieComponent {
 
   private initListeSaisie(monthSelected, yearSelected) {
     this.loading = true;
-    var referentielsCall = this.refService.loadEnfantEtEmployes();
+    var referentielsCall = this.refService.loadParametrageEnfantsEtEmployes();
     var findSaisieCall = this.httpService.findSaisieMonth(monthSelected, yearSelected);
 
     forkJoin(findSaisieCall, referentielsCall).subscribe(data => {
@@ -49,7 +49,6 @@ export class GestionSaisieComponent {
   }
 
   private sortSaisies(a, b): number {
-    // console.log(a.refEnfant.nom.localeCompare(b.refEnfant.nom)); // TODO : trier par nom enfant
     return (new Date(a.dateSaisie)).getTime() - (new Date(b.dateSaisie)).getTime();
   }
 
