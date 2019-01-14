@@ -41,13 +41,21 @@ export class GestionSaisieComponent {
 
     forkJoin(findSaisieCall, referentielsCall).subscribe(data => {
       this.referentielEmployeEtEnfant = this.refService.employesEtEnfantsToObjects(data[1]);
-      this.donneesSaisies = this.refService.consoliderSaisies(data[0], this.referentielEmployeEtEnfant).sort(this.sortSaisies);
+
+      this.donneesSaisies = data[0];
+      this.donneesSaisies.sort(this.sortSaisies); // sort
+
       this.loading = false;
     }, ko => {
       this.loading = false;
     });
   }
 
+  /**
+   * Tri par date
+   * @param a
+   * @param b
+   */
   private sortSaisies(a, b): number {
     return (new Date(a.dateSaisie)).getTime() - (new Date(b.dateSaisie)).getTime();
   }

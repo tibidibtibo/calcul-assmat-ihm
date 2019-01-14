@@ -9,6 +9,7 @@ export class Enfant {
     salaireNetMensualise: number;
     heuresNormalesMensualisees: number;
     arEcoleKm: number;
+    horairesEcole: Array<any>;
 
     public static fork(enfant): Enfant {
       var newEnfant = new Enfant();
@@ -19,6 +20,8 @@ export class Enfant {
       newEnfant.salaireNetMensualise = enfant.salaireNetMensualise;
       newEnfant.heuresNormalesMensualisees = enfant.heuresNormalesMensualisees;
       newEnfant.arEcoleKm = enfant.arEcoleKm;
+      newEnfant.horairesEcole = enfant.horairesEcole;
+
       return newEnfant;
     }
 

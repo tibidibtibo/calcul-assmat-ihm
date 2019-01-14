@@ -56,9 +56,40 @@ export class GestionParametrageComponent {
 
   private initModelEnfants(enfants) {
     enfants.forEach(enfant => {
-      console.log(enfant)
       this.modelEnfant[enfant.id] = Enfant.fork(enfant);
+      this.modelEnfant[enfant.id].mapEmployes = this.initEmployeInfoModel(enfant);
+      this.modelEnfant[enfant.id].mapHorairesEcole = this.initHorairesEcoleModel(enfant);
     });
+  }
+
+  private initEmployeInfoModel(enfant) {
+    var mapEmployes = {};
+    if(enfant.employes && enfant.employes.length > 0) {
+      enfant.employes.forEach(employe => {
+        mapEmployes[employe.paramEmploye.id] = {
+          arEcoleKm: employe.arEcoleKm,
+          heuresNormales: employe.heuresNormales,
+          heuresNormalesMensualisees: employe.heuresNormalesMensualisees,
+          salaireNetMensualise: employe.salaireNetMensualise
+        }
+      });
+    }
+    return mapEmployes;
+  }
+
+  public initHorairesEcoleModel(enfant) {
+    var mapHoraires = {};
+    if(enfant.horairesEcole && enfant.horairesEcole.length > 0) {
+      enfant.horairesEcole.forEach(horaire => {
+        mapHoraires[horaire.jour] = {
+          am: horaire.horairesJournaliersEcole.am,
+          dm: horaire.horairesJournaliersEcole.dm,
+          aa: horaire.horairesJournaliersEcole.aa,
+          da: horaire.horairesJournaliersEcole.da
+        }
+      });
+    }
+    return mapHoraires;
   }
 
   private openDeleteModal(template: TemplateRef<any>) {
@@ -144,5 +175,10 @@ export class GestionParametrageComponent {
 
   public declineDeletion() {
     this.modalRef.hide();
+  }
+
+  public onChangeTypeGarde(enfantId) {
+    //TODO
+    console.log(this.modelEnfant[enfantId]);
   }
 }
