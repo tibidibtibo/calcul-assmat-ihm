@@ -1,3 +1,4 @@
+import { DateService } from './../../services/date.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,7 +32,8 @@ import { ImportSaisieComponent } from './import-saisie.component/import-saisie.c
   ],
   providers: [
     HttpService,
-    ReferentielService
+    ReferentielService,
+    DateService
   ],
   bootstrap: [SaisieComponent]
 })

@@ -1,3 +1,4 @@
+import { DateService } from './../../../services/date.service';
 import { Component } from "@angular/core";
 
 import { HttpService } from "../../../services/http.service";
@@ -21,7 +22,7 @@ export class NouvelleSaisieComponent {
   public inputNbAREcole = this.getNumArray(5);
   public dateSaisie = new Date();
 
-  constructor(private httpService: HttpService, private refService: ReferentielService) {
+  constructor(private httpService: HttpService, private refService: ReferentielService, private dateService: DateService) {
 
     this.initForm();
 
@@ -39,8 +40,8 @@ export class NouvelleSaisieComponent {
          dateSaisie: this.dateSaisie,
          enfant: enfant.id,
          saisie: false,
-         heureArrivee: this.initTime(7, 45),
-         heureDepart: this.initTime(17, 0)
+         heureArrivee: this.dateService.initTime(7, 45),
+         heureDepart: this.dateService.initTime(17, 0)
        };
        // init view object
        enfants.push({
@@ -110,13 +111,6 @@ export class NouvelleSaisieComponent {
 
   public getNumArray(size: number) {
     return Array.from(new Array(size), (val, index) => index);
-  }
-
-  public initTime(hours, minutes) {
-    var date = new Date();
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    return date;
   }
 
   public toggleEnfant(enfant) {

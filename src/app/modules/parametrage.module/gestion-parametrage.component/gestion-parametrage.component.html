@@ -147,21 +147,33 @@
                       <span class="input-group-text">{{horaire.jour}}</span>
                     </div>
                     <div class="input-group-prepend">
-                      <span class="input-group-text">Arrivée matin</span>
+                      <span class="input-group-text">Arr. matin</span>
                     </div>
-                    <input type="text" class="form-control" name="am{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am" />
+                    <timepicker name="am{{enfant.id}}{{horaire.jour}}"
+                      [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am"
+                      [showMeridian]="false"></timepicker>
+                    <!-- <input type="text" class="form-control" name="am{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am" /> -->
                     <div class="input-group-prepend">
-                      <span class="input-group-text">Départ matin</span>
+                      <span class="input-group-text">Dép. matin</span>
                     </div>
-                    <input type="text" class="form-control" name="dm{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm" />
+                    <timepicker name="dm{{enfant.id}}{{horaire.jour}}"
+                      [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm"
+                      [showMeridian]="false"></timepicker>
+                    <!-- <input type="text" class="form-control" name="dm{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm" /> -->
                     <div class="input-group-prepend">
-                      <span class="input-group-text">Arrivée après-midi</span>
+                      <span class="input-group-text">Arr. AM</span>
                     </div>
-                    <input type="text" class="form-control" name="aa{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa" />
+                    <timepicker name="aa{{enfant.id}}{{horaire.jour}}"
+                      [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa"
+                      [showMeridian]="false"></timepicker>
+                    <!-- <input type="text" class="form-control" name="aa{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa" /> -->
                     <div class="input-group-prepend">
-                      <span class="input-group-text">Départ après-midi</span>
+                      <span class="input-group-text">Dép. AM</span>
                     </div>
-                    <input type="text" class="form-control" name="da{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da" />
+                    <timepicker name="da{{enfant.id}}{{horaire.jour}}"
+                      [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da"
+                      [showMeridian]="false"></timepicker>
+                    <!-- <input type="text" class="form-control" name="da{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da" /> -->
                   </div>
                 </li>
               </ul>

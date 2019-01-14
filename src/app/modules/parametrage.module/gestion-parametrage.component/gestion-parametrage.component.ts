@@ -1,3 +1,4 @@
+import { DateService } from './../../../services/date.service';
 import { Component, TemplateRef } from "@angular/core";
 
 import { forkJoin } from "rxjs/observable/forkJoin";
@@ -30,7 +31,8 @@ export class GestionParametrageComponent {
   constructor(
     public httpService: HttpService,
     private modalService: BsModalService,
-    private refService: ReferentielService
+    private refService: ReferentielService,
+    private dateService: DateService
   ) {
     this.loadData();
   }
@@ -82,10 +84,10 @@ export class GestionParametrageComponent {
     if(enfant.horairesEcole && enfant.horairesEcole.length > 0) {
       enfant.horairesEcole.forEach(horaire => {
         mapHoraires[horaire.jour] = {
-          am: horaire.horairesJournaliersEcole.am,
-          dm: horaire.horairesJournaliersEcole.dm,
-          aa: horaire.horairesJournaliersEcole.aa,
-          da: horaire.horairesJournaliersEcole.da
+          am: this.dateService.toTime(horaire.horairesJournaliersEcole.am),
+          dm: this.dateService.toTime(horaire.horairesJournaliersEcole.dm),
+          aa: this.dateService.toTime(horaire.horairesJournaliersEcole.aa),
+          da: this.dateService.toTime(horaire.horairesJournaliersEcole.da)
         }
       });
     }
