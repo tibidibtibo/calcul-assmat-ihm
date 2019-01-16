@@ -71,6 +71,7 @@ export class GestionParametrageComponent {
         mapEmployes[employe.paramEmploye.id] = {
           arEcoleKm: employe.arEcoleKm,
           heuresNormales: employe.heuresNormales,
+          mapHeuresNormales: this.initHeuresNormales(employe.heuresNormales),
           heuresNormalesMensualisees: employe.heuresNormalesMensualisees,
           salaireNetMensualise: employe.salaireNetMensualise
         }
@@ -79,15 +80,28 @@ export class GestionParametrageComponent {
     return mapEmployes;
   }
 
+  public initHeuresNormales(heuresNormales) {
+    var mapHeuresNormales = {};
+    if(heuresNormales && heuresNormales.length > 0) {
+      heuresNormales.forEach(heureNormale => {
+        mapHeuresNormales[heureNormale.jour] = {
+          heures: heureNormale.heures
+        }
+      });
+    }
+    console.log(mapHeuresNormales)
+    return mapHeuresNormales;
+  }
+
   public initHorairesEcoleModel(enfant) {
     var mapHoraires = {};
     if(enfant.horairesEcole && enfant.horairesEcole.length > 0) {
       enfant.horairesEcole.forEach(horaire => {
         mapHoraires[horaire.jour] = {
-          am: this.dateService.toTime(horaire.horairesJournaliersEcole.am),
-          dm: this.dateService.toTime(horaire.horairesJournaliersEcole.dm),
-          aa: this.dateService.toTime(horaire.horairesJournaliersEcole.aa),
-          da: this.dateService.toTime(horaire.horairesJournaliersEcole.da)
+          am: horaire.horairesJournaliersEcole.am,
+          dm: horaire.horairesJournaliersEcole.dm,
+          aa: horaire.horairesJournaliersEcole.aa,
+          da: horaire.horairesJournaliersEcole.da
         }
       });
     }

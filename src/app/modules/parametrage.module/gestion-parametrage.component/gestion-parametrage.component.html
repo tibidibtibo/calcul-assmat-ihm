@@ -149,31 +149,19 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Arr. matin</span>
                     </div>
-                    <timepicker name="am{{enfant.id}}{{horaire.jour}}"
-                      [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am"
-                      [showMeridian]="false"></timepicker>
-                    <!-- <input type="text" class="form-control" name="am{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am" /> -->
+                    <input type="text" class="form-control" name="am{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am" />
                     <div class="input-group-prepend">
                       <span class="input-group-text">Dép. matin</span>
                     </div>
-                    <timepicker name="dm{{enfant.id}}{{horaire.jour}}"
-                      [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm"
-                      [showMeridian]="false"></timepicker>
-                    <!-- <input type="text" class="form-control" name="dm{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm" /> -->
+                    <input type="text" class="form-control" name="dm{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm" />
                     <div class="input-group-prepend">
                       <span class="input-group-text">Arr. AM</span>
                     </div>
-                    <timepicker name="aa{{enfant.id}}{{horaire.jour}}"
-                      [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa"
-                      [showMeridian]="false"></timepicker>
-                    <!-- <input type="text" class="form-control" name="aa{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa" /> -->
+                    <input type="text" class="form-control" name="aa{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa" />
                     <div class="input-group-prepend">
                       <span class="input-group-text">Dép. AM</span>
                     </div>
-                    <timepicker name="da{{enfant.id}}{{horaire.jour}}"
-                      [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da"
-                      [showMeridian]="false"></timepicker>
-                    <!-- <input type="text" class="form-control" name="da{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da" /> -->
+                    <input type="text" class="form-control" name="da{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da" />
                   </div>
                 </li>
               </ul>
@@ -210,8 +198,24 @@
 
                     <div class="row">
                       <div class="col form-group">
+                          <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th *ngFor="let heureNormale of employe.heuresNormales" scope="col">{{heureNormale.jour}}</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td *ngFor="let heureNormale of employe.heuresNormales">
+                                      <input type="number" class="form-control" name="hn{{enfant.id}}{{heureNormale.jour}}"
+                                      [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].mapHeuresNormales[heureNormale.jour].heures" />
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
                       </div>
                     </div>
+
                   </li>
                 </ul>
               </div>
