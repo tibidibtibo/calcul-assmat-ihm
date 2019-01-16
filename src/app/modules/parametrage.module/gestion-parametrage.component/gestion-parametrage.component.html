@@ -198,21 +198,22 @@
 
                     <div class="row">
                       <div class="col form-group">
-                          <table class="table table-striped">
-                              <thead>
-                                <tr>
-                                  <th *ngFor="let heureNormale of employe.heuresNormales" scope="col">{{heureNormale.jour}}</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td *ngFor="let heureNormale of employe.heuresNormales">
-                                      <input type="number" class="form-control" name="hn{{enfant.id}}{{heureNormale.jour}}"
-                                      [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].mapHeuresNormales[heureNormale.jour].heures" />
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
+                        <label>Heures normales par jour</label>
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th *ngFor="let heureNormale of employe.heuresNormales" scope="col">{{heureNormale.jour}}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td *ngFor="let heureNormale of employe.heuresNormales">
+                                <input type="number" class="form-control" name="hn{{enfant.id}}{{heureNormale.jour}}"
+                                  [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].mapHeuresNormales[heureNormale.jour].heures" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
 

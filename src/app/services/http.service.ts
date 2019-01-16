@@ -99,10 +99,9 @@ export class HttpService {
     return this.http.put(this.buildUrl("/parametrage/employes/" + employeId), data)
   }
 
-  // HISTORIQUE
-  public getHistorique() {
-    return this.http.get(this.buildUrl("/archives/all"), {});
+  // REFERENTIELS
+  public getTypesGarde() {
+    return this.http.get(this.buildUrl("/referentiels/typegarde"));
   }
-
 
 }

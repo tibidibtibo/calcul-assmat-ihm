@@ -20,6 +20,16 @@ export class ConstService {
     "12"
   ];
 
+  public MAP_JOURS = {
+    1: "Lundi",
+    2: "Mardi",
+    3: "Mercredi",
+    4: "Jeudi",
+    5: "Vendredi",
+    6: "Samedi",
+    7: "Dimanche"
+  }
+
   /**
    * Retourne le mois et l'année à M-1
    */

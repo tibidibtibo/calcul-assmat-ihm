@@ -1,3 +1,4 @@
+import { ConstService } from './../../../services/const.service';
 import { DateService } from './../../../services/date.service';
 import { Component, TemplateRef } from "@angular/core";
 
@@ -23,29 +24,33 @@ export class GestionParametrageComponent {
   public modelEnfant = {};
   public modalRef: BsModalRef;
   public toDelete;
-  public typesGarde = [
-    { code: "TEMPS_PLEIN", libelle: "Temps plein" },
-    { code: "PERISCOLAIRE", libelle: "Périscolaire" }
-  ];
+  public typesGarde;
+  public mapJours = this.constantes.MAP_JOURS;
 
   constructor(
     public httpService: HttpService,
     private modalService: BsModalService,
     private refService: ReferentielService,
-    private dateService: DateService
+    private dateService: DateService,
+    private constantes: ConstService
   ) {
     this.loadData();
   }
 
   private loadData() {
 
-    this.refService.loadParametrageEnfantsEtEmployes().subscribe(data => {
-      this.initModelEmployes(data.employes);
-      this.initModelEnfants(data.enfants);
+    var refTypeGardeCall = this.httpService.getTypesGarde();
+    var paramsCall = this.refService.loadParametrageEnfantsEtEmployes();
 
-      this.employes = data.employes;
-      this.enfants = data.enfants;
+    forkJoin(paramsCall, refTypeGardeCall).subscribe(data => {
+      this.initModelEmployes(data[0].employes);
+      this.initModelEnfants(data[0].enfants);
 
+      this.employes = data[0].employes;
+      this.enfants = data[0].enfants;
+
+      console.log(data[1])
+      this.typesGarde = data[1];
     });
 
   }
@@ -66,7 +71,7 @@ export class GestionParametrageComponent {
 
   private initEmployeInfoModel(enfant) {
     var mapEmployes = {};
-    if(enfant.employes && enfant.employes.length > 0) {
+    if (enfant.employes && enfant.employes.length > 0) {
       enfant.employes.forEach(employe => {
         mapEmployes[employe.paramEmploye.id] = {
           arEcoleKm: employe.arEcoleKm,
@@ -82,20 +87,19 @@ export class GestionParametrageComponent {
 
   public initHeuresNormales(heuresNormales) {
     var mapHeuresNormales = {};
-    if(heuresNormales && heuresNormales.length > 0) {
+    if (heuresNormales && heuresNormales.length > 0) {
       heuresNormales.forEach(heureNormale => {
         mapHeuresNormales[heureNormale.jour] = {
           heures: heureNormale.heures
         }
       });
     }
-    console.log(mapHeuresNormales)
     return mapHeuresNormales;
   }
 
   public initHorairesEcoleModel(enfant) {
     var mapHoraires = {};
-    if(enfant.horairesEcole && enfant.horairesEcole.length > 0) {
+    if (enfant.horairesEcole && enfant.horairesEcole.length > 0) {
       enfant.horairesEcole.forEach(horaire => {
         mapHoraires[horaire.jour] = {
           am: horaire.horairesJournaliersEcole.am,
