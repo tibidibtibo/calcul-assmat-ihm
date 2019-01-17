@@ -1,2 +1,8 @@
 @import "~bootstrap/dist/css/bootstrap.css";
-@import "~ngx-bootstrap/datepicker/bs-datepicker.css"
+@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+
+.acc-header {
+  /* color: black; */
+  background-color: #eee;
+  cursor: pointer;
+}

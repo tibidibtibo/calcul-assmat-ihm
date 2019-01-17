@@ -10,7 +10,8 @@
 <div class="row">
   <div class="col">
     <accordion [closeOthers]="true">
-      <accordion-group *ngFor="let employe of employes" heading="{{employe.prenom}} {{employe.nom}}" panelClass="acc-header">
+      <accordion-group *ngFor="let employe of employes" panelClass="acc-header">
+        <div accordion-heading><strong>{{employe.prenom}} {{employe.nom}}</strong></div>
         <i *ngIf="!modelEmploye[employe.id]" class="fa fa-spinner fa-spin fa-fw"></i>
         <form name="form{{employe.id}}" *ngIf="modelEmploye[employe.id]">
 
@@ -118,7 +119,8 @@
 <div class="row">
   <div class="col">
     <accordion [closeOthers]="true">
-      <accordion-group *ngFor="let enfant of enfants" heading="{{enfant.nom}}" panelClass="acc-header">
+      <accordion-group *ngFor="let enfant of enfants" panelClass="acc-header">
+        <div accordion-heading><strong>{{enfant.nom}}</strong></div>
         <i *ngIf="!modelEnfant[enfant.id]" class="fa fa-spinner fa-spin fa-fw"></i>
         <form name="form{{enfant.id}}" *ngIf="modelEnfant[enfant.id]">
 
@@ -144,7 +146,7 @@
                 <li class="list-group-item" *ngFor="let horaire of modelEnfant[enfant.id].horairesEcole">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">{{horaire.jour}}</span>
+                      <span class="input-group-text">{{mapJours[horaire.jour]}}</span>
                     </div>
                     <div class="input-group-prepend">
                       <span class="input-group-text">Arr. matin</span>
@@ -202,7 +204,7 @@
                         <table class="table table-striped">
                           <thead>
                             <tr>
-                              <th *ngFor="let heureNormale of employe.heuresNormales" scope="col">{{heureNormale.jour}}</th>
+                              <th *ngFor="let heureNormale of employe.heuresNormales" class="w-6-em" scope="col">{{mapJours[heureNormale.jour]}}</th>
                             </tr>
                           </thead>
                           <tbody>
