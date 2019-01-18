@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutesModule } from '../../app.routes.module';
 
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 
@@ -24,7 +25,8 @@ import { ReferentielService } from './../../services/referentiel.service';
     FormsModule,
     ReactiveFormsModule,
     AccordionModule.forRoot(),
-    TimepickerModule.forRoot()
+    TimepickerModule.forRoot(),
+    TabsModule.forRoot()
   ],
   providers: [
     HttpService,
