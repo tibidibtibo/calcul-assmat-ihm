@@ -200,5 +200,8 @@ export class GestionParametrageComponent {
   public onChangeTypeGarde(enfantId) {
     //TODO
     console.log(this.modelEnfant[enfantId]);
+
+    // if(this.modelEnfant[enfantId].typeGarde)
+    // this.modelEnfant[enfant.id].mapHorairesEcole = this.initHorairesEcoleModel(enfant);
   }
 }

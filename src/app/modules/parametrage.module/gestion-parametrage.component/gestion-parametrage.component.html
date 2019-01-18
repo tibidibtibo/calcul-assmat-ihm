@@ -1,5 +1,9 @@
 <div>
   <tabset [justified]="true">
+
+    <!-- ------------ -->
+    <!-- TAB EMPLOYES -->
+    <!-- ------------ -->
     <tab heading="Employés" id="employes-tab">
 
       <div class="row param-row">
@@ -113,6 +117,10 @@
       </div>
 
     </tab>
+
+    <!-- ------------ -->
+    <!-- TAB ENFANTS -->
+    <!-- ------------ -->
     <tab heading="Enfants" id="enfants-tab">
       <div class="row param-row">
         <div class="col">
@@ -122,9 +130,7 @@
           <button type="button" class="btn btn-light" (click)="reinitEnfants()">Réinitialiser</button>
         </div>
       </div>
-
       <hr>
-
       <div class="row">
         <div class="col">
           <accordion [closeOthers]="true">
