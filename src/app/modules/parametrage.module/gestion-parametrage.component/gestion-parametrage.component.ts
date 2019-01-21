@@ -26,6 +26,8 @@ export class GestionParametrageComponent {
   public toDelete;
   public typesGarde;
   public mapJours = this.constantes.MAP_JOURS;
+  public TYPE_PERISCOLAIRE;
+  public TYPE_TEMPS_PLEIN;
 
   constructor(
     public httpService: HttpService,
@@ -49,8 +51,9 @@ export class GestionParametrageComponent {
       this.employes = data[0].employes;
       this.enfants = data[0].enfants;
 
-      console.log(data[1])
       this.typesGarde = data[1];
+      this.TYPE_PERISCOLAIRE = this.constantes.findByCode(this.typesGarde, "PERISCOLAIRE");
+      this.TYPE_TEMPS_PLEIN = this.constantes.findByCode(this.typesGarde, "TEMPS_PLEIN");
     });
 
   }
@@ -201,7 +204,22 @@ export class GestionParametrageComponent {
     //TODO
     console.log(this.modelEnfant[enfantId]);
 
+    if(this.modelEnfant[enfantId].typeGarde === this.TYPE_PERISCOLAIRE.code) {
+
+      this.modelEnfant[enfantId].horairesEcole = this.initVoidHorairesEcole();
+      // this.modelEnfant[enfantId].mapHorairesEcole = this.initHorairesEcoleModel(enfant);
+
+    }
+
     // if(this.modelEnfant[enfantId].typeGarde)
-    // this.modelEnfant[enfant.id].mapHorairesEcole = this.initHorairesEcoleModel(enfant);
+  }
+
+  public initVoidHorairesEcole () {
+    var horaires = [];
+    Object.keys(this.constantes.MAP_JOURS).forEach(jour => {
+      // horaires.push()
+      // console.log(jour)
+    });
+    return horaires;
   }
 }

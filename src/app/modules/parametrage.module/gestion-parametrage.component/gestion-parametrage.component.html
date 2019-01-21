@@ -153,8 +153,8 @@
                   </div>
                 </div>
 
-                TODO : mettre sous forme d'input horaire
-                <div class="row" *ngIf="modelEnfant[enfant.id].horairesEcole">
+                <!-- TODO : mettre sous forme d'input horaire -->
+                <div class="row" *ngIf="modelEnfant[enfant.id].horairesEcole && modelEnfant[enfant.id].typeGarde === TYPE_PERISCOLAIRE.code">
                   <div class="col form-group">
                     <label>Horaires école</label>
 

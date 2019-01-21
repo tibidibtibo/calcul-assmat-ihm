@@ -35,7 +35,7 @@ export class ConstService {
    */
   public getPreviousMonth() {
     var now = new Date();
-    now.setMonth(now.getMonth()-1);
+    now.setMonth(now.getMonth() - 1);
     return this.getMonthYearAsString(now);
   }
 
@@ -48,4 +48,15 @@ export class ConstService {
     return [(date.getMonth() + 1).toString().padStart(2, "0"), date.getFullYear()];
   }
 
+  public findByCode(liste, code) {
+    var found = null;
+    if (liste && liste.length > 0 && code) {
+      liste.forEach(element => {
+        if (element && element.code === code) {
+          found = element;
+        }
+      });
+    }
+    return found;
+  }
 }
