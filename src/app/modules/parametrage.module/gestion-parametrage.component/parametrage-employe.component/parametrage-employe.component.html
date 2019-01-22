@@ -1,0 +1,148 @@
+<div class="row param-row">
+  <div class="col">
+    <h4>Employés</h4>
+  </div>
+  <div class="col text-right">
+    <button type="button" class="btn btn-light" (click)="reinitEmployes()">Réinitialiser</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col">
+    <accordion [closeOthers]="true">
+      <accordion-group *ngFor="let employe of employes" panelClass="acc-header">
+        <div accordion-heading><strong>{{employe.prenom}} {{employe.nom}}</strong></div>
+        <i *ngIf="!modelEmploye[employe.id]" class="fa fa-spinner fa-spin fa-fw"></i>
+        <form name="form{{employe.id}}" *ngIf="modelEmploye[employe.id]">
+
+          <!-- Identité -->
+          <div class="row">
+            <div class="col form-group">
+              <label for="nom{{employe.id}}">Nom</label>
+              <input type="text" class="form-control" name="nom{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].nom" />
+            </div>
+            <div class="col form-group">
+              <label for="prenom{{employe.id}}">Prénom</label>
+              <input type="text" class="form-control" name="prenom{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].prenom" />
+            </div>
+          </div>
+
+          <!-- Taux horaire -->
+          <div class="row">
+            <div class="col form-group">
+              <label for="tauxHoraireNormalBrut{{employe.id}}">Tx horaire HN BRUT</label>
+              <input type="number" class="form-control" name="tauxHoraireNormalBrut{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxHoraireNormalBrut" />
+            </div>
+            <div class="col form-group">
+              <label for="tauxHoraireNormalNet{{employe.id}}">Tx horaire HN NET</label>
+              <input type="number" class="form-control" name="tauxHoraireNormalNet{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxHoraireNormalNet" />
+            </div>
+            <div class="col form-group">
+              <label for="tauxHoraireComplementaireBrut{{employe.id}}">Tx horaire HC BRUT</label>
+              <input type="number" class="form-control" name="tauxHoraireComplementaireBrut{{employe.id}}"
+                [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireBrut" />
+            </div>
+            <div class="col form-group">
+              <label for="tauxHoraireComplementaireNet{{employe.id}}">Tx horaire HC NET</label>
+              <input type="number" class="form-control" name="tauxHoraireComplementaireNet{{employe.id}}"
+                [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireNet" />
+            </div>
+          </div>
+
+          <!-- Indemnités -->
+          <div class="row">
+            <div class="col form-group">
+              <label for="indemnitesKm{{employe.id}}">Ind. KM</label>
+              <input type="number" class="form-control" name="indemnitesKm{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].indemnitesKm" />
+            </div>
+
+            <div class="col form-group">
+              <label for="indemnitesEntretien{{employe.id}}">Ind. Entretien : MIN € &lt; Borne h &lt; MAX €</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Min</span>
+                </div>
+                <input type="number" class="form-control" name="indemnitesEntretienMin{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].indemnitesEntretien.indemniteInf" />
+                <div class="input-group-prepend">
+                  <span class="input-group-text">&lt;</span>
+                </div>
+                <input type="number" class="form-control" name="indemnitesEntretienBorne{{employe.id}}"
+                  [(ngModel)]="modelEmploye[employe.id].indemnitesEntretien.borne" />
+                <div class="input-group-append">
+                  <span class="input-group-text">&lt;</span>
+                </div>
+                <input type="number" class="form-control" name="indemnitesEntretienMax{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].indemnitesEntretien.indemniteSup" />
+                <div class="input-group-append">
+                  <span class="input-group-text">Max</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Repas / CP -->
+          <div class="row">
+            <div class="col form-group">
+              <label for="fraisDejeuner{{employe.id}}">Déjeuner</label>
+              <input type="number" class="form-control" name="fraisDejeuner{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].fraisDejeuner" />
+            </div>
+            <div class="col form-group">
+              <label for="fraisGouter{{employe.id}}">Goûter</label>
+              <input type="number" class="form-control" name="fraisGouter{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].fraisGouter" />
+            </div>
+            <div class="col form-group">
+              <label for="tauxCongesPayes{{employe.id}}">Tx CP</label>
+              <input type="number" class="form-control" name="tauxCongesPayes{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxCongesPayes" />
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="row">
+            <div class="col form-group text-right">
+              <button class="btn btn-primary" (click)="saveEmploye(employe.id, savedTemplate)">Enregistrer</button>
+              <span class="delete-employe-link" (click)="deleteEmploye(employe.id, deleteModalTemplate)">Supprimer</span>
+            </div>
+          </div>
+        </form>
+      </accordion-group>
+    </accordion>
+  </div>
+</div>
+
+<ng-template #deleteModalTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Suppression</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()" [disabled]="toDelete.deleteEnCours">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Voulez-vous vraiment supprimer <strong>{{toDelete.name}}</strong> du paramétrage ?</p>
+    <div class="row">
+      <div class="col text-right">
+        <button type="button" class="btn btn-light" (click)="declineDeletion()" [disabled]="toDelete.deleteEnCours">Annuler</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDeletion(toDelete.deleteFunction, toDelete.id)"
+          [disabled]="toDelete.deleteEnCours">
+          <span><i *ngIf="toDelete.deleteEnCours" class="fa fa-spinner fa-spin fa-fw"></i></span>
+          <span *ngIf="!toDelete.deleteEnCours">Supprimer</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #savedTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Enregistré</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Paramétrage enregistré !</p>
+    <div class="row">
+      <div class="col text-right">
+        <button type="button" class="btn btn-light" (click)="okModalSave()">Ok</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

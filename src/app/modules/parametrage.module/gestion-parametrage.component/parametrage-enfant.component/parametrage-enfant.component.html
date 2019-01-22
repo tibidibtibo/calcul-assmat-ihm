@@ -1,0 +1,174 @@
+<div class="row param-row">
+  <div class="col">
+    <h4>Enfants</h4>
+  </div>
+  <div class="col text-right">
+    <button type="button" class="btn btn-light" (click)="reinitEnfants()">Réinitialiser</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col">
+    <accordion [closeOthers]="true">
+      <accordion-group *ngFor="let enfant of enfants" panelClass="acc-header">
+        <div accordion-heading><strong>{{enfant.nom}}</strong></div>
+        <i *ngIf="!modelEnfant[enfant.id]" class="fa fa-spinner fa-spin fa-fw"></i>
+        <form name="form{{enfant.id}}" *ngIf="modelEnfant[enfant.id]">
+
+          <div class="row">
+            <div class="col form-group">
+              <label for="nom{{enfant.id}}">Nom</label>
+              <input type="text" class="form-control" name="nom{{enfant.id}}" [(ngModel)]="modelEnfant[enfant.id].nom" />
+            </div>
+            <div class="col form-group">
+              <label for="typeGarde{{enfant.id}}">Type de garde</label>
+              <select [(ngModel)]="modelEnfant[enfant.id].typeGarde" name="typeGarde{{enfant.id}}" class="custom-select"
+                (change)="onChangeTypeGarde(enfant.id)">
+                <option *ngFor="let type of typesGarde" [ngValue]="type.code">{{type.libelle}}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- TODO : mettre sous forme d'input horaire -->
+          <div class="row" *ngIf="modelEnfant[enfant.id].horairesEcole && modelEnfant[enfant.id].typeGarde === TYPE_PERISCOLAIRE.code">
+            <div class="col form-group">
+              <label>Horaires école</label>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Arr. matin</th>
+                    <th>Dép. matin</th>
+                    <th>Arr. AM</th>
+                    <th>Dép. AM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let horaire of modelEnfant[enfant.id].horairesEcole">
+                    <td>{{mapJours[horaire.jour]}}</td>
+                    <td>
+                      <input type="text" class="form-control" name="am{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am" />
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" name="dm{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm" />
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" name="aa{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa" />
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" name="da{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col form-group">
+              <label>Employés</label>
+              <div>
+                <ul class="list-group">
+                  <li *ngFor="let employe of modelEnfant[enfant.id].employes" class="list-group-item">
+                    <span>
+                      <h6>{{employe.paramEmploye.nom}}</h6>
+                    </span>
+
+                    <div class="row">
+                      <div class="col form-group">
+                        <label for="salaireNetMens{{enfant.id}}{{employe.paramEmploye.id}}">Salaire NET
+                          mensualisé</label>
+                        <input type="number" class="form-control" name="salaireNetMens{{enfant.id}}{{employe.paramEmploye.id}}"
+                          [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].salaireNetMensualise" />
+                      </div>
+                      <div class="col form-group">
+                        <label for="hNormMens{{enfant.id}}{{employe.paramEmploye.id}}">H. normales mensualisées</label>
+                        <input type="number" class="form-control" name="hNormMens{{enfant.id}}{{employe.paramEmploye.id}}"
+                          [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].heuresNormalesMensualisees" />
+                      </div>
+                      <div class="col form-group">
+                        <label for="arEcoleKm{{enfant.id}}{{employe.paramEmploye.id}}">Distance AR école</label>
+                        <input type="number" class="form-control" name="arEcoleKm{{enfant.id}}{{employe.paramEmploye.id}}"
+                          [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].arEcoleKm" />
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col form-group">
+                        <label>Heures normales par jour</label>
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th *ngFor="let heureNormale of employe.heuresNormales" class="w-6-em" scope="col">{{mapJours[heureNormale.jour]}}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td *ngFor="let heureNormale of employe.heuresNormales">
+                                <input type="number" class="form-control" name="hn{{enfant.id}}{{heureNormale.jour}}"
+                                  [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].mapHeuresNormales[heureNormale.jour].heures" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col form-group text-right">
+              <button class="btn btn-primary" (click)="saveEnfant(enfant.id)">Enregistrer</button>
+              <span class="delete-employe-link" (click)="deleteEnfant(enfant.id, deleteModalTemplate)">Supprimer</span>
+            </div>
+          </div>
+        </form>
+      </accordion-group>
+    </accordion>
+  </div>
+</div>
+
+<ng-template #deleteModalTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Suppression</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()" [disabled]="toDelete.deleteEnCours">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Voulez-vous vraiment supprimer <strong>{{toDelete.name}}</strong> du paramétrage ?</p>
+    <div class="row">
+      <div class="col text-right">
+        <button type="button" class="btn btn-light" (click)="declineDeletion()" [disabled]="toDelete.deleteEnCours">Annuler</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDeletion(toDelete.deleteFunction, toDelete.id)"
+          [disabled]="toDelete.deleteEnCours">
+          <span><i *ngIf="toDelete.deleteEnCours" class="fa fa-spinner fa-spin fa-fw"></i></span>
+          <span *ngIf="!toDelete.deleteEnCours">Supprimer</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #savedTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Enregistré</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Paramétrage enregistré !</p>
+    <div class="row">
+      <div class="col text-right">
+        <button type="button" class="btn btn-light" (click)="okModalSave()">Ok</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

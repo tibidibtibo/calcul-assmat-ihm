@@ -1,11 +1,7 @@
 import { ConstService } from './../../../services/const.service';
-import { DateService } from './../../../services/date.service';
 import { Component, TemplateRef } from "@angular/core";
 
 import { forkJoin } from "rxjs/observable/forkJoin";
-
-import { BsModalService } from "ngx-bootstrap/modal";
-import { BsModalRef } from "ngx-bootstrap/modal/bs-modal-ref.service";
 
 import { Enfant } from './../../../models/enfant';
 import { HttpService } from './../../../services/http.service';
@@ -18,22 +14,18 @@ import { ReferentielService } from "../../../services/referentiel.service";
   styleUrls: ["./gestion-parametrage.component.css"]
 })
 export class GestionParametrageComponent {
+
   public enfants;
   public employes: Array<Employe>;
-  public modelEmploye = {};
   public modelEnfant = {};
-  public modalRef: BsModalRef;
-  public toDelete;
+  public modelEmploye = {};
   public typesGarde;
-  public mapJours = this.constantes.MAP_JOURS;
   public TYPE_PERISCOLAIRE;
   public TYPE_TEMPS_PLEIN;
 
   constructor(
     public httpService: HttpService,
-    private modalService: BsModalService,
     private refService: ReferentielService,
-    private dateService: DateService,
     private constantes: ConstService
   ) {
     this.loadData();
@@ -115,111 +107,11 @@ export class GestionParametrageComponent {
     return mapHoraires;
   }
 
-  private openDeleteModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
-  }
-
-  private deleteEnfantService(enfantId, httpService) {
-    return httpService.deleteParamEnfant(enfantId);
-  }
-
-  private deleteEmployeService(employeId, httpService) {
-    return httpService.deleteParamEmploye(employeId);
-  }
-
-  // INTERFACE
-  // ---------
-
-  public reinitEmployes() {
-    this.initModelEmployes(this.employes);
-  }
-
   public reinitEnfants() {
     this.initModelEnfants(this.enfants);
   }
 
-  public saveEmploye(employeId, savedTemplate: TemplateRef<any>) {
-    this.httpService.updateParamEmploye(employeId, this.modelEmploye[employeId]).subscribe(ok => {
-      this.modalRef = this.modalService.show(savedTemplate);
-      this.loadData();
-    }, ko => {
-      console.log(ko);
-    })
-  }
-
-  public saveEnfant(enfantId) {
-    console.log(this.modelEnfant[enfantId]);
-    this.httpService.updateParamEnfant(enfantId, this.modelEnfant[enfantId]).subscribe(ok => {
-      console.log(ok);
-    }, ko => {
-      console.log(ko);
-    })
-  }
-
-  public okModalSave() {
-    this.modalRef.hide();
-  }
-
-  public deleteEmploye(employeId, template: TemplateRef<any>) {
-    this.toDelete = {
-      id: employeId,
-      name:
-        this.modelEmploye[employeId].prenom +
-        " " +
-        this.modelEmploye[employeId].nom,
-      deleteFunction: this.deleteEmployeService,
-      deleteEnCours: false
-    };
-    this.openDeleteModal(template);
-  }
-
-  public deleteEnfant(enfantId, template: TemplateRef<any>) {
-    this.toDelete = {
-      id: enfantId,
-      name: this.modelEnfant[enfantId].nom,
-      deleteFunction: this.deleteEnfantService,
-      deleteEnCours: false
-    };
-    this.openDeleteModal(template);
-  }
-
-  public confirmDeletion(deleteFunction, paramId) {
-    this.toDelete.deleteEnCours = true;
-    deleteFunction(paramId, this.httpService).subscribe(
-      ok => {
-        this.loadData();
-        this.toDelete.deleteEnCours = false;
-        this.modalRef.hide();
-      }, ko => {
-        this.toDelete.deleteEnCours = false;
-      }
-    );
-  }
-
-  public declineDeletion() {
-    this.modalRef.hide();
-  }
-
-  public onChangeTypeGarde(enfantId) {
-    //TODO
-    console.log(this.modelEnfant[enfantId]);
-
-    if(this.modelEnfant[enfantId].typeGarde === this.TYPE_PERISCOLAIRE.code) {
-
-      this.modelEnfant[enfantId].horairesEcole = this.initVoidHorairesEcole();
-      // this.modelEnfant[enfantId].mapHorairesEcole = this.initHorairesEcoleModel(enfant);
-
-    }
-
-    // if(this.modelEnfant[enfantId].typeGarde)
-  }
-
-  public initVoidHorairesEcole () {
-    var horaires = [];
-    Object.keys(this.constantes.MAP_JOURS).forEach(jour => {
-      // horaires.push()
-      // console.log(jour)
-    });
-    return horaires;
+  public reinitEmployes() {
+    this.initModelEmployes(this.employes);
   }
 }

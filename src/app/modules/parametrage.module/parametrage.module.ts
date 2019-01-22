@@ -9,6 +9,8 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 import { ParametrageComponent } from './parametrage.component';
 import { GestionParametrageComponent } from './gestion-parametrage.component/gestion-parametrage.component';
+import { ParametrageEnfantComponent } from './gestion-parametrage.component/parametrage-enfant.component/parametrage-enfant.component';
+import { ParametrageEmployeComponent } from './gestion-parametrage.component/parametrage-employe.component/parametrage-employe.component';
 
 import { DateService } from './../../services/date.service';
 import { HttpService } from '../../services/http.service';
@@ -17,7 +19,9 @@ import { ReferentielService } from './../../services/referentiel.service';
 @NgModule({
   declarations: [
     ParametrageComponent,
-    GestionParametrageComponent
+    GestionParametrageComponent,
+    ParametrageEmployeComponent,
+    ParametrageEnfantComponent
   ],
   imports: [
     AppRoutesModule,
