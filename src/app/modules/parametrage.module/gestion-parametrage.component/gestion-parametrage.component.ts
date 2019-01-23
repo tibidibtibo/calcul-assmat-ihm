@@ -22,6 +22,8 @@ export class GestionParametrageComponent {
   public typesGarde;
   public TYPE_PERISCOLAIRE;
   public TYPE_TEMPS_PLEIN;
+  public employesLoaded: boolean = false;
+  public enfantsLoaded: boolean = false;
 
   constructor(
     public httpService: HttpService,
@@ -46,6 +48,9 @@ export class GestionParametrageComponent {
       this.typesGarde = data[1];
       this.TYPE_PERISCOLAIRE = this.constantes.findByCode(this.typesGarde, "PERISCOLAIRE");
       this.TYPE_TEMPS_PLEIN = this.constantes.findByCode(this.typesGarde, "TEMPS_PLEIN");
+
+      this.employesLoaded = (this.employes && this.modelEmploye) ? true : false;
+      this.enfantsLoaded = this.enfants && this.modelEnfant && this.typesGarde && this.TYPE_PERISCOLAIRE && this.TYPE_TEMPS_PLEIN ? true : false;
     });
 
   }

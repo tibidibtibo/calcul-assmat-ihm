@@ -17,11 +17,13 @@ export class ParametrageEnfantComponent {
   @Input() public enfants;
   @Input() public employes;
   @Input() public modelEnfant;
+  @Input() public typesGarde;
+  @Input() public typePeriscolaire;
+  @Input() public typeTempsPlein;
+
   public modalRef: BsModalRef;
   public toDelete;
   public mapJours = this.constantes.MAP_JOURS;
-  public TYPE_PERISCOLAIRE;
-  public TYPE_TEMPS_PLEIN;
 
   constructor(
     public httpService: HttpService,
@@ -84,7 +86,7 @@ export class ParametrageEnfantComponent {
     //TODO
     console.log(this.modelEnfant[enfantId]);
 
-    if (this.modelEnfant[enfantId].typeGarde === this.TYPE_PERISCOLAIRE.code) {
+    if (this.modelEnfant[enfantId].typeGarde === this.typePeriscolaire.code) {
 
       // this.modelEnfant[enfantId].horairesEcole = this.initVoidHorairesEcole();
       // this.modelEnfant[enfantId].mapHorairesEcole = this.initHorairesEcoleModel(enfant);
