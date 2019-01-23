@@ -67,15 +67,19 @@
           </div>
 
           <div class="row">
+              <div class="col form-group">
+              <label for="empRefs">Liste des employés</label>
+              <select class="form-control">
+                <option *ngFor="let empRef of employes">{{empRef.nom}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
             <div class="col form-group">
               <label>Employés</label>
               <div>
                 <ul class="list-group">
-                  <li><label for="empRefs">
-                      Liste des employés :
-                    </label> // TODO
-                    <!-- <select *ngFor="let empRef of employes">{{empRef.nom}}</select> -->
-                  </li>
                   <li *ngFor="let employe of modelEnfant[enfant.id].employes" class="list-group-item">
                     <span>
                       <h6>{{employe.paramEmploye.nom}}</h6>
