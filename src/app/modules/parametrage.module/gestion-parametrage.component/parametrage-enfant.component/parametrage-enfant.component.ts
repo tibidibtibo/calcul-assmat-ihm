@@ -28,8 +28,6 @@ export class ParametrageEnfantComponent {
   constructor(
     public httpService: HttpService,
     private modalService: BsModalService,
-    private refService: ReferentielService,
-    private dateService: DateService,
     private constantes: ConstService
   ) {
 
@@ -44,6 +42,7 @@ export class ParametrageEnfantComponent {
   }
 
   public saveEnfant(enfantId) {
+    // TODO TDU
     console.log(this.modelEnfant[enfantId]);
     this.httpService.updateParamEnfant(enfantId, this.modelEnfant[enfantId]).subscribe(ok => {
       console.log(ok);
@@ -83,25 +82,51 @@ export class ParametrageEnfantComponent {
   }
 
   public onChangeTypeGarde(enfantId) {
-    //TODO
-    console.log(this.modelEnfant[enfantId]);
-
     if (this.modelEnfant[enfantId].typeGarde === this.typePeriscolaire.code) {
-
-      // this.modelEnfant[enfantId].horairesEcole = this.initVoidHorairesEcole();
-      // this.modelEnfant[enfantId].mapHorairesEcole = this.initHorairesEcoleModel(enfant);
-
+      this.modelEnfant[enfantId].horairesEcole = this.initVoidHorairesEcole();
+      this.modelEnfant[enfantId].mapHorairesEcole = this.initHorairesEcoleModel();
+    } else if (this.modelEnfant[enfantId].typeGarde === this.typeTempsPlein.code) {
+      this.modelEnfant[enfantId].horairesEcole = null;
+      this.modelEnfant[enfantId].mapHorairesEcole = null;
     }
+  }
 
-    // if(this.modelEnfant[enfantId].typeGarde)
+  public initHorairesEcoleModel() {
+    var mapHoraires = {};
+    Object.keys(this.constantes.MAP_JOURS).forEach(jour => {
+      mapHoraires[jour] = {
+          am: "",
+          dm: "",
+          aa: "",
+          da: ""
+        };
+    });
+    return mapHoraires;
   }
 
   public initVoidHorairesEcole() {
     var horaires = [];
     Object.keys(this.constantes.MAP_JOURS).forEach(jour => {
-      // horaires.push()
-      // console.log(jour)
+      horaires.push({
+        jour: jour,
+        horairesJournaliersEcole: {
+          am: "",
+          dm: "",
+          aa: "",
+          da: ""
+        }
+      });
     });
     return horaires;
+  }
+
+  public findEnfant(id, liste) {
+    if(liste && liste.length > 0) {
+      var found = liste.filter(enfant => {
+        return enfant.id === id
+      });
+      return (found && found.length > 0) ? found[0] : null;
+    }
+    return null;
   }
 }
