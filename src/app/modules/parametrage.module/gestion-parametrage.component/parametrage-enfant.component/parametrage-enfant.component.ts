@@ -9,8 +9,8 @@ import { ReferentielService } from '../../../../services/referentiel.service';
 
 @Component({
   selector: "parametrage-enfant",
-  templateUrl: "./parametrage-enfant.component.html"
-  // styleUrls: ["./parametrage-enfant.component.css"]
+  templateUrl: "./parametrage-enfant.component.html",
+  styleUrls: ["../gestion-parametrage.component.css"]
 })
 export class ParametrageEnfantComponent {
 
@@ -24,6 +24,7 @@ export class ParametrageEnfantComponent {
   public modalRef: BsModalRef;
   public toDelete;
   public mapJours = this.constantes.MAP_JOURS;
+  public employeSelected = {};
 
   constructor(
     public httpService: HttpService,
@@ -128,5 +129,15 @@ export class ParametrageEnfantComponent {
       return (found && found.length > 0) ? found[0] : null;
     }
     return null;
+  }
+
+  public addSelectedEmploye(enfantId, employeSelected) {
+    // TODO
+    console.log(enfantId + " / " + employeSelected);
+  }
+
+  public removeEmployeFromParam(enfantId, employeToRemove) {
+    // TODO
+    console.log(employeToRemove);
   }
 }

@@ -9,8 +9,8 @@ import { ReferentielService } from '../../../../services/referentiel.service';
 
 @Component({
   selector: "parametrage-employe",
-  templateUrl: "./parametrage-employe.component.html"
-  // styleUrls: ["./parametrage-employe.component.css"]
+  templateUrl: "./parametrage-employe.component.html",
+  styleUrls: ["../gestion-parametrage.component.css"]
 })
 export class ParametrageEmployeComponent {
 
