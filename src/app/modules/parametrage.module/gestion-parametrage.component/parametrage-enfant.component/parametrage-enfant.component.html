@@ -1,4 +1,4 @@
-<div class="row param-row">
+<div class="row param-row pt-4">
   <div class="col">
     <p>Paramétrage des enfants</p>
   </div>
@@ -67,23 +67,43 @@
           </div>
 
           <div class="row">
-              <div class="col form-group">
-              <label for="empRefs">Liste des employés</label>
-              <select class="form-control">
+            <div class="col">
+              <label>Employés</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col form-group text-right">
+              <label for="empRefs{{enfant.id}}">Liste des employés</label>
+            </div>
+            <div class="col form-group">
+              <select class="form-control" name="empRefs{{enfant.id}}" [(ngModel)]="employeSelected[enfant.id]">
                 <option *ngFor="let empRef of employes">{{empRef.nom}}</option>
               </select>
+            </div>
+            <div class="col form-group">
+              <button class="btn btn-default" (click)="addSelectedEmploye(enfant.id, employeSelected[enfant.id])">Ajouter</button>
             </div>
           </div>
 
           <div class="row">
             <div class="col form-group">
-              <label>Employés</label>
               <div>
                 <ul class="list-group">
                   <li *ngFor="let employe of modelEnfant[enfant.id].employes" class="list-group-item">
-                    <span>
-                      <h6>{{employe.paramEmploye.nom}}</h6>
-                    </span>
+
+                    <div class="row">
+                      <div class="col">
+                        <h6>{{employe.paramEmploye.nom}}</h6>
+                      </div>
+                      <div class="col text-right">
+                        <button class="btn btn-danger" (click)="removeEmployeFromParam(enfant.id, employe)"
+                        tooltip="Retirer l'employé '{{employe.paramEmploye.nom}}'"
+                          placement="left">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
 
                     <div class="row">
                       <div class="col form-group">
