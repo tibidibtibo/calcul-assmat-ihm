@@ -137,7 +137,16 @@ export class ParametrageEnfantComponent {
   }
 
   public removeEmployeFromParam(enfantId, employeToRemove) {
-    // TODO
-    console.log(employeToRemove);
+
+    // FIXME : gestion erreurs DOM
+
+    // Remove from object
+    delete this.modelEnfant[enfantId].mapEmployes[employeToRemove.paramEmploye.id]
+
+    // Remove from list
+    this.modelEnfant[enfantId].employes = this.modelEnfant[enfantId].employes.filter(employe => {
+      return employe.paramEmploye.id === employeToRemove.paramEmploye.id;
+    });
+
   }
 }
