@@ -1,9 +1,10 @@
-import { BehaviorSubject } from 'rxjs';
-import { Employe } from './../../../../models/employe';
 import { Component, Input, TemplateRef, OnInit } from '@angular/core';
+
+import { BehaviorSubject } from 'rxjs';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
+import { Employe } from './../../../../models/employe';
 import { HttpService } from './../../../../services/http.service';
 
 @Component({
@@ -39,10 +40,7 @@ export class ParametrageEmployeComponent implements OnInit {
   }
 
   // Constructor
-  constructor(
-    public httpService: HttpService,
-    private modalService: BsModalService,
-  ) { }
+  constructor(public httpService: HttpService, private modalService: BsModalService) { }
 
   // Privates Methods
   private initModelEmployes(employes: Array<Employe>) {

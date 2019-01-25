@@ -53,6 +53,7 @@ export class ParametrageEnfantComponent implements OnInit {
       this.initModelEnfants(this.enfants);
       this.TYPE_PERISCOLAIRE = this.constantes.findByCode(this.typesGarde, "PERISCOLAIRE");
       this.TYPE_TEMPS_PLEIN = this.constantes.findByCode(this.typesGarde, "TEMPS_PLEIN");
+      console.log(this.modelEnfant)
     });
 
   }
