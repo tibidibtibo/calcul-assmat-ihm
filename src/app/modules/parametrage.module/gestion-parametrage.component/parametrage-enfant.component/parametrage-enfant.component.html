@@ -7,7 +7,7 @@
   </div>
 </div>
 <hr>
-<div class="row">
+<div class="row" *ngIf="modelLoaded">
   <div class="col">
     <accordion [closeOthers]="true">
       <accordion-group *ngFor="let enfant of enfants" panelClass="acc-header">
@@ -30,7 +30,7 @@
           </div>
 
           <!-- TODO : mettre sous forme d'input horaire -->
-          <div class="row" *ngIf="modelEnfant[enfant.id].horairesEcole && modelEnfant[enfant.id].typeGarde === typePeriscolaire.code">
+          <div class="row" *ngIf="modelEnfant[enfant.id].horairesEcole && modelEnfant[enfant.id].typeGarde === TYPE_PERISCOLAIRE.code">
             <div class="col form-group">
               <label>Horaires école</label>
 

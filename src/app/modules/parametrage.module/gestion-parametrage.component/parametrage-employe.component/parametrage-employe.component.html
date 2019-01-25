@@ -7,7 +7,7 @@
   </div>
 </div>
 <hr>
-<div class="row">
+<div class="row" *ngIf="modelLoaded">
   <div class="col">
     <accordion [closeOthers]="true">
       <accordion-group *ngFor="let employe of employes" panelClass="acc-header">

@@ -1,43 +1,65 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Employe } from './../../../../models/employe';
+import { Component, Input, TemplateRef, OnInit } from '@angular/core';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
-import { ConstService } from './../../../../services/const.service';
-import { DateService } from './../../../../services/date.service';
 import { HttpService } from './../../../../services/http.service';
-import { ReferentielService } from '../../../../services/referentiel.service';
 
 @Component({
   selector: "parametrage-employe",
   templateUrl: "./parametrage-employe.component.html",
   styleUrls: ["../gestion-parametrage.component.css"]
 })
-export class ParametrageEmployeComponent {
+export class ParametrageEmployeComponent implements OnInit {
 
-  @Input() public employes;
-  @Input() public modelEmploye;
+  // Inputs
+  private _asyncEmployesInputs = new BehaviorSubject<any>([]);
+  @Input() set refEmployes(value) {
+    this._asyncEmployesInputs.next(value);
+  }
+  get refEmployes() {
+    return this._asyncEmployesInputs.getValue();
+  }
+
+  // Class variables
+  public employes;
+  public modelEmploye = {};
   public modalRef: BsModalRef;
   public toDelete;
+  public modelLoaded: boolean = false;
 
+  // Init
+  ngOnInit() {
+    this._asyncEmployesInputs.subscribe(data => {
+      this.employes = data;
+      this.initModelEmployes(this.employes);
+    });
+
+  }
+
+  // Constructor
   constructor(
     public httpService: HttpService,
     private modalService: BsModalService,
-    private refService: ReferentielService,
-    private dateService: DateService,
-    private constantes: ConstService
-  ) {
+  ) { }
 
+  // Privates Methods
+  private initModelEmployes(employes: Array<Employe>) {
+    employes.forEach((employe: Employe) => {
+      this.modelEmploye[employe.id] = Employe.fork(employe);
+    });
+    this.modelLoaded = true;
   }
 
   private deleteEmployeService(employeId, httpService) {
     return httpService.deleteParamEmploye(employeId);
   }
 
-  // PUBLIC
+  // Public methods
 
   public reinitEmployes() {
-    // TODO : send event
-    // this.initModelEmployes(this.employes);
+    this.initModelEmployes(this.employes);
   }
 
   public saveEmploye(employeId, savedTemplate: TemplateRef<any>) {
