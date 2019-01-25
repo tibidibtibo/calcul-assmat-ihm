@@ -1,11 +1,25 @@
 import { HeureNormale } from './HeureNormale';
+import { ModelEmploye } from '../characters/ModelEmploye';
+import { ModelParamEmployeEnfant } from './ModelParamEmployeEnfant';
+
 export class ModelEmployeInfo {
-  heuresNormales: Array<HeureNormale>;
-  arEcoleKm: number;
-  heuresNormalesMensualisees: number;
-  salaireNetMensualise: number;
-  // paramEmploye:
-  // { id: "5baff2462efb71c0790b6e55",
-  // nom: "eda",
-  // prenom: "assistante", tauxHoraireNormalBrut: 3.8, tauxHoraireNormalNet: 2.93, … }
+  public heuresNormales: Array<HeureNormale>;
+  public arEcoleKm: number;
+  public heuresNormalesMensualisees: number;
+  public salaireNetMensualise: number;
+  public paramEmploye: ModelEmploye;
+
+  constructor() {
+
+  }
+
+  public static buildMapEmployesInfo(employes: Array<ModelEmployeInfo>): Object {
+    var mapEmployes: Object = {};
+    if(employes && employes.length > 0) {
+      employes.forEach(employe => {
+        mapEmployes[employe.paramEmploye.id] = new ModelParamEmployeEnfant(employe);
+      });
+    }
+    return mapEmployes;
+  }
 }

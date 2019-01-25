@@ -3,4 +3,11 @@ export class HorairesJournaliersEcole {
   dm: string;
   aa: string;
   da: string;
+
+  constructor() {
+    this.am = "";
+    this.dm = "";
+    this.aa = "";
+    this.da = "";
+  }
 }
