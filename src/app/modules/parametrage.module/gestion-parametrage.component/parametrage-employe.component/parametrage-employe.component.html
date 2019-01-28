@@ -9,26 +9,28 @@
 <hr>
 <div class="row" *ngIf="modelLoaded">
   <div class="col">
-    <accordion [closeOthers]="true">
-      <accordion-group *ngFor="let employe of employes" panelClass="acc-header">
-        <div accordion-heading><strong>{{employe.prenom}} {{employe.nom}}</strong></div>
-        <i *ngIf="!modelEmploye[employe.id]" class="fa fa-spinner fa-spin fa-fw"></i>
-        <form name="form{{employe.id}}" *ngIf="modelEmploye[employe.id]">
+    <form [formGroup]="employeForm" *ngIf="modelLoaded">
+      <div formArrayName="employes">
+        <accordion [closeOthers]="true">
+          <accordion-group *ngFor="let employe of employeForm.controls.employes.controls"
+            panelClass="acc-header">
+            <div accordion-heading><strong>{{employe.controls.prenom.value}} {{employe.controls.nom.value}}</strong></div>
+            <i *ngIf="!modelLoaded" class="fa fa-spinner fa-spin fa-fw"></i>
 
-          <!-- Identité -->
-          <div class="row">
-            <div class="col form-group">
-              <label for="nom{{employe.id}}">Nom</label>
-              <input type="text" class="form-control" name="nom{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].nom" />
+            <!-- Identité -->
+            <div class="row">
+              <div class="col form-group">
+                <label>Nom</label>
+                <input type="text" class="form-control" [formControl]="employe.controls.nom" />
+              </div>
+              <div class="col form-group">
+                <label>Prénom</label>
+                <input type="text" class="form-control" [formControl]="employe.controls.prenom" />
+              </div>
             </div>
-            <div class="col form-group">
-              <label for="prenom{{employe.id}}">Prénom</label>
-              <input type="text" class="form-control" name="prenom{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].prenom" />
-            </div>
-          </div>
 
-          <!-- Taux horaire -->
-          <div class="row">
+            <!-- Taux horaire -->
+            <!-- <div class="row">
             <div class="col form-group">
               <label for="tauxHoraireNormalBrut{{employe.id}}">Tx horaire HN BRUT</label>
               <input type="number" class="form-control" name="tauxHoraireNormalBrut{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxHoraireNormalBrut" />
@@ -39,18 +41,16 @@
             </div>
             <div class="col form-group">
               <label for="tauxHoraireComplementaireBrut{{employe.id}}">Tx horaire HC BRUT</label>
-              <input type="number" class="form-control" name="tauxHoraireComplementaireBrut{{employe.id}}"
-                [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireBrut" />
+              <input type="number" class="form-control" name="tauxHoraireComplementaireBrut{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireBrut" />
             </div>
             <div class="col form-group">
               <label for="tauxHoraireComplementaireNet{{employe.id}}">Tx horaire HC NET</label>
-              <input type="number" class="form-control" name="tauxHoraireComplementaireNet{{employe.id}}"
-                [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireNet" />
+              <input type="number" class="form-control" name="tauxHoraireComplementaireNet{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxHoraireComplementaireNet" />
             </div>
-          </div>
+          </div> -->
 
-          <!-- Indemnités -->
-          <div class="row">
+            <!-- Indemnités -->
+            <!-- <div class="row">
             <div class="col form-group">
               <label for="indemnitesKm{{employe.id}}">Ind. KM</label>
               <input type="number" class="form-control" name="indemnitesKm{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].indemnitesKm" />
@@ -66,8 +66,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">&lt;</span>
                 </div>
-                <input type="number" class="form-control" name="indemnitesEntretienBorne{{employe.id}}"
-                  [(ngModel)]="modelEmploye[employe.id].indemnitesEntretien.borne" />
+                <input type="number" class="form-control" name="indemnitesEntretienBorne{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].indemnitesEntretien.borne" />
                 <div class="input-group-append">
                   <span class="input-group-text">&lt;</span>
                 </div>
@@ -77,10 +76,10 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <!-- Repas / CP -->
-          <div class="row">
+            <!-- Repas / CP -->
+            <!-- <div class="row">
             <div class="col form-group">
               <label for="fraisDejeuner{{employe.id}}">Déjeuner</label>
               <input type="number" class="form-control" name="fraisDejeuner{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].fraisDejeuner" />
@@ -93,18 +92,19 @@
               <label for="tauxCongesPayes{{employe.id}}">Tx CP</label>
               <input type="number" class="form-control" name="tauxCongesPayes{{employe.id}}" [(ngModel)]="modelEmploye[employe.id].tauxCongesPayes" />
             </div>
-          </div>
+          </div> -->
 
-          <!-- Actions -->
-          <div class="row">
-            <div class="col form-group text-right">
-              <button class="btn btn-primary" (click)="saveEmploye(employe.id, savedTemplate)">Enregistrer</button>
-              <span class="delete-employe-link" (click)="deleteEmploye(employe.id, deleteModalTemplate)">Supprimer</span>
+            <!-- Actions -->
+            <div class="row">
+              <div class="col form-group text-right">
+                <button class="btn btn-primary" (click)="saveEmploye(employe.id, savedTemplate)">Enregistrer</button>
+                <span class="delete-employe-link" (click)="deleteEmploye(employe.id, deleteModalTemplate)">Supprimer</span>
+              </div>
             </div>
-          </div>
-        </form>
-      </accordion-group>
-    </accordion>
+          </accordion-group>
+        </accordion>
+      </div>
+    </form>
   </div>
 </div>
 

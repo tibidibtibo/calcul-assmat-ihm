@@ -1,3 +1,6 @@
+import { ModelEmploye } from './../../../../models/characters/ModelEmploye';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Component, Input, TemplateRef, OnInit } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
@@ -24,6 +27,7 @@ export class ParametrageEmployeComponent implements OnInit {
   }
 
   // Class variables
+  public employeForm: FormGroup;
   public employes;
   public modelEmploye = {};
   public modalRef: BsModalRef;
@@ -34,20 +38,66 @@ export class ParametrageEmployeComponent implements OnInit {
   ngOnInit() {
     this._asyncEmployesInputs.subscribe(data => {
       this.employes = data;
-      this.initModelEmployes(this.employes);
+
+      // this.initModelEmployes(this.employes);
+      this.employeForm = this.createFormGroup(this.employes);
+
+      this.modelLoaded = true;
+      console.log(this.employeForm)
     });
 
   }
 
   // Constructor
-  constructor(public httpService: HttpService, private modalService: BsModalService) { }
+  constructor(public httpService: HttpService, private modalService: BsModalService, private formBuilder: FormBuilder) { }
 
   // Privates Methods
+  private createFormGroup(employes: Array<ModelEmploye>): FormGroup {
+    var mainFormGroup = this.formBuilder.group({
+      employes: this.formBuilder.array(this.buildEmployeFormArray(employes))
+    });
+    return mainFormGroup;
+  }
+
+  private buildEmployeFormArray(employes: Array<ModelEmploye>): Array<FormGroup> {
+    var groups: Array<FormGroup> = [];
+    employes.forEach((employe: ModelEmploye) => {
+      var employeFormGroup: FormGroup = this.employeToFormGroup(employe);
+      employeFormGroup.valueChanges.subscribe(change => {
+        console.log(change)
+        // TODO : onsubmit
+      });
+      groups.push(employeFormGroup);
+    });
+    return groups;
+  }
+
+  private employeToFormGroup(employe: ModelEmploye): FormGroup {
+    return new FormGroup({
+      nom: new FormControl(employe.nom),
+      prenom: new FormControl(employe.prenom),
+      fraisDejeuner: new FormControl(employe.fraisDejeuner),
+      fraisGouter: new FormControl(employe.fraisGouter),
+      indemnitesKm: new FormControl(employe.indemnitesKm),
+      tauxCongesPayes: new FormControl(employe.tauxCongesPayes),
+      tauxHoraireComplementaireBrut: new FormControl(employe.tauxHoraireComplementaireBrut),
+      tauxHoraireComplementaireNet: new FormControl(employe.tauxHoraireComplementaireNet),
+      tauxHoraireNormalBrut: new FormControl(employe.tauxHoraireNormalBrut),
+      tauxHoraireNormalNet: new FormControl(employe.tauxHoraireNormalNet),
+      indemnitesEntretien: new FormGroup({
+        borne: new FormControl(employe.indemnitesEntretien.borne),
+        indemniteInf: new FormControl(employe.indemnitesEntretien.indemniteInf),
+        indemniteSup: new FormControl(employe.indemnitesEntretien.indemniteSup)
+      })
+    });
+  }
+
   private initModelEmployes(employes: Array<Employe>) {
     employes.forEach((employe: Employe) => {
       this.modelEmploye[employe.id] = Employe.fork(employe);
     });
-    this.modelLoaded = true;
+    // console.log(this.modelEmploye)
+    // this.modelLoaded = true;
   }
 
   private deleteEmployeService(employeId, httpService) {
