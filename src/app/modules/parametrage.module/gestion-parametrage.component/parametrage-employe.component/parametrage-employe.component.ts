@@ -39,7 +39,6 @@ export class ParametrageEmployeComponent implements OnInit {
     this._asyncEmployesInputs.subscribe(data => {
       this.employes = data;
 
-      // this.initModelEmployes(this.employes);
       this.employeForm = this.createFormGroup(this.employes);
 
       this.modelLoaded = true;
@@ -63,10 +62,6 @@ export class ParametrageEmployeComponent implements OnInit {
     var groups: Array<FormGroup> = [];
     employes.forEach((employe: ModelEmploye) => {
       var employeFormGroup: FormGroup = this.employeToFormGroup(employe);
-      employeFormGroup.valueChanges.subscribe(change => {
-        console.log(change)
-        // TODO : onsubmit
-      });
       groups.push(employeFormGroup);
     });
     return groups;
@@ -74,6 +69,7 @@ export class ParametrageEmployeComponent implements OnInit {
 
   private employeToFormGroup(employe: ModelEmploye): FormGroup {
     return new FormGroup({
+      id: new FormControl(employe.id),
       nom: new FormControl(employe.nom),
       prenom: new FormControl(employe.prenom),
       fraisDejeuner: new FormControl(employe.fraisDejeuner),
@@ -88,16 +84,9 @@ export class ParametrageEmployeComponent implements OnInit {
         borne: new FormControl(employe.indemnitesEntretien.borne),
         indemniteInf: new FormControl(employe.indemnitesEntretien.indemniteInf),
         indemniteSup: new FormControl(employe.indemnitesEntretien.indemniteSup)
-      })
+      }),
+      saved: new FormControl(false)
     });
-  }
-
-  private initModelEmployes(employes: Array<Employe>) {
-    employes.forEach((employe: Employe) => {
-      this.modelEmploye[employe.id] = Employe.fork(employe);
-    });
-    // console.log(this.modelEmploye)
-    // this.modelLoaded = true;
   }
 
   private deleteEmployeService(employeId, httpService) {
@@ -107,16 +96,20 @@ export class ParametrageEmployeComponent implements OnInit {
   // Public methods
 
   public reinitEmployes() {
-    this.initModelEmployes(this.employes);
+    this.employeForm = this.createFormGroup(this.employes);
   }
 
-  public saveEmploye(employeId, savedTemplate: TemplateRef<any>) {
-    this.httpService.updateParamEmploye(employeId, this.modelEmploye[employeId]).subscribe(ok => {
-      this.modalRef = this.modalService.show(savedTemplate);
-      // this.loadData(); // TODO : event reload
-    }, ko => {
-      console.log(ko);
-    })
+  public saveEmploye(employe: FormGroup) {
+
+    console.log(employe.controls.saved.value)
+    employe.controls.saved.setValue(true);
+    // TODO : save and reset employe group
+    // this.httpService.updateParamEmploye(employeId, this.modelEmploye[employeId]).subscribe(ok => {
+    //   this.modalRef = this.modalService.show(savedTemplate);
+    //   // this.loadData(); // TODO : event reload
+    // }, ko => {
+    //   console.log(ko);
+    // })
   }
 
   public deleteEmploye(employeId, template: TemplateRef<any>) {
