@@ -17,12 +17,12 @@ import { HttpService } from './../../../../services/http.service';
 export class ParametrageEmployeComponent implements OnInit {
 
   // Inputs
-  private _asyncEmployesInputs = new BehaviorSubject<any>([]);
+  private asyncEmployesInputs = new BehaviorSubject<any>([]);
   @Input() set refEmployes(value) {
-    this._asyncEmployesInputs.next(value);
+    this.asyncEmployesInputs.next(value);
   }
   get refEmployes() {
-    return this._asyncEmployesInputs.getValue();
+    return this.asyncEmployesInputs.getValue();
   }
 
   // Class variables
@@ -33,7 +33,7 @@ export class ParametrageEmployeComponent implements OnInit {
 
   // Init
   ngOnInit() {
-    this._asyncEmployesInputs.subscribe(data => {
+    this.asyncEmployesInputs.subscribe(data => {
       this.employes = data;
       this.employeForm = this.createFormGroup(this.employes);
       this.modelLoaded = true;
@@ -41,7 +41,7 @@ export class ParametrageEmployeComponent implements OnInit {
   }
 
   // Constructor
-  constructor(public httpService: HttpService, private modalService: BsModalService, private formBuilder: FormBuilder) { }
+  constructor(public httpService: HttpService, private formBuilder: FormBuilder) { }
 
   // Privates Methods
   private createFormGroup(employes: Array<ModelEmploye>): FormGroup {
@@ -81,39 +81,45 @@ export class ParametrageEmployeComponent implements OnInit {
     });
   }
 
+  private findEmployeInList(employeId: string) {
+    if (this.employes && this.employes.length > 0) {
+      let employeToRemove = this.employes.find(emp => {
+        return emp.id === employeId;
+      });
+      if (employeToRemove) {
+        return {
+          value: employeToRemove,
+          index: this.employes.indexOf(employeToRemove)
+        }
+      }
+    }
+    return null;
+  }
+
   // Public methods
 
-  public reinitEmployes() {
+  public resetForm() {
     this.employeForm = this.createFormGroup(this.employes);
   }
 
   public saveEmploye(employe: FormGroup) {
-
-    this.httpService.updateParamEmploye(employe.value.id, employe.value).subscribe((response: ModelEmploye) => {
-      this.updateData(response);
+    this.httpService.updateParamEmploye(employe.value.id, employe.value).subscribe((employe: ModelEmploye) => {
+      let employeToUpdate = this.findEmployeInList(employe.id);
+      this.employes[employeToUpdate.index] = employe;
+      this.resetForm();
     }, ko => {
       console.log(ko);
     })
   }
 
-  private updateData(employe: ModelEmploye) {
-    var employeToUpdate = this.employes.find( emp => {
-      return emp.id === employe.id;
-    });
-    let index = this.employes.indexOf(employeToUpdate);
-    this.employes[index] = employe;
-    this.employeForm = this.createFormGroup(this.employes);
-  }
-
   public deleteEmploye(employe: FormGroup) {
     this.httpService.deleteParamEmploye(employe.controls.id.value).subscribe(
-      ok => {
-        var employeToRemove = this.employes.find( emp => {
-          return emp.id === employe.controls.id.value;
-        });
-        this.employes.splice(this.employes.indexOf(employeToRemove), 1);
-        this.employeForm = this.createFormGroup(this.employes);
+      () => {
+        let employeToRemove = this.findEmployeInList(employe.controls.id.value);
+        this.employes.splice(employeToRemove.index, 1);
+        this.resetForm();
       }, ko => {
+        console.log(ko);
       }
     );
     employe.controls.deleteRequest.setValue(false);

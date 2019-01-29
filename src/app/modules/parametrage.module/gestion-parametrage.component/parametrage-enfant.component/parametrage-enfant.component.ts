@@ -1,4 +1,6 @@
 import { Component, TemplateRef, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -8,6 +10,8 @@ import { ConstService } from './../../../../services/const.service';
 import { HttpService } from './../../../../services/http.service';
 import { ModelParamEnfant } from '../../../../models/parametrage/ModelParamEnfant';
 import { ModelEnfant } from '../../../../models/characters/ModelEnfant';
+import { ModelHorairesEcole } from '../../../../models/parametrage/ModelHorairesEcole';
+import { ModelEmployeInfo } from '../../../../models/parametrage/ModelEmployeInfo';
 
 @Component({
   selector: "parametrage-enfant",
@@ -17,15 +21,16 @@ import { ModelEnfant } from '../../../../models/characters/ModelEnfant';
 export class ParametrageEnfantComponent implements OnInit {
 
   // Inputs
-  private _asyncEnfantsInputs = new BehaviorSubject<any>([]);
+  private asyncEnfantsInputs = new BehaviorSubject<any>([]);
   @Input() set refEnfants(value) {
-    this._asyncEnfantsInputs.next(value);
+    this.asyncEnfantsInputs.next(value);
   }
   get refEnfants() {
-    return this._asyncEnfantsInputs.getValue();
+    return this.asyncEnfantsInputs.getValue();
   }
 
   // Class attributs
+  public enfantsForm: FormGroup;
   public enfants: Array<ModelEnfant>;
   public employes;
   public typesGarde;
@@ -39,7 +44,7 @@ export class ParametrageEnfantComponent implements OnInit {
   public TYPE_TEMPS_PLEIN;
 
   // Constructor
-  constructor(
+  constructor(private formBuilder: FormBuilder,
     public httpService: HttpService,
     private modalService: BsModalService,
     private constantes: ConstService
@@ -47,12 +52,15 @@ export class ParametrageEnfantComponent implements OnInit {
 
   // Init
   ngOnInit() {
-    this._asyncEnfantsInputs.subscribe(data => {
+    this.asyncEnfantsInputs.subscribe(data => {
       this.enfants = data[0];
       this.employes = data[1];
       this.typesGarde = data[2];
 
+      this.enfantsForm = this.createFormGroup(this.enfants);
+      console.log(this.enfantsForm);
       this.modelEnfant = ModelParamEnfant.buildMapParamEnfants(this.enfants);
+      console.log(this.modelEnfant);
       this.modelLoaded = true;
 
       this.TYPE_PERISCOLAIRE = this.constantes.findByCode(this.typesGarde, "PERISCOLAIRE");
@@ -62,6 +70,44 @@ export class ParametrageEnfantComponent implements OnInit {
   }
 
   // Private methods
+
+  private createFormGroup(enfants: Array<ModelEnfant>): FormGroup {
+    return this.formBuilder.group({
+      enfants: this.formBuilder.array(this.buildEnfantsFormArray(enfants))
+    });
+  }
+
+  private buildEnfantsFormArray(enfants: Array<ModelEnfant>): Array<FormGroup> {
+    var groups: Array<FormGroup> = [];
+    enfants.forEach((enfant: ModelEnfant) => {
+      var enfantFormGroup: FormGroup = this.enfantToFormGroup(enfant);
+      groups.push(enfantFormGroup);
+    });
+    return groups;
+  }
+
+  private enfantToFormGroup(enfant: ModelEnfant): FormGroup {
+    var formGroup = new FormGroup({
+      id: new FormControl(enfant.id),
+      nom: new FormControl(enfant.nom),
+      typeGarde: new FormControl(enfant.typeGarde),
+      employes: this.formBuilder.array(this.buildFormEmployes(enfant.employes))
+    });
+    if(enfant.horairesEcole && enfant.horairesEcole.length > 0) {
+      formGroup.addControl('horairesEcole', this.formBuilder.array(this.buildFormHorairesEcole(enfant.horairesEcole)));
+    }
+    return formGroup;
+  }
+
+  private buildFormHorairesEcole(horaires: Array<ModelHorairesEcole>): Array<FormGroup> {
+    // TODO
+    if(horaires)
+    return null;
+  }
+  private buildFormEmployes(horaires: Array<ModelEmployeInfo>): Array<FormGroup> {
+    // TODO
+    return null;
+  }
 
   private openDeleteModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);

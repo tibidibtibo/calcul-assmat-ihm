@@ -3,7 +3,7 @@
     <p>Paramétrage des employés</p>
   </div>
   <div class="col text-right">
-    <button type="button" class="btn btn-light" (click)="reinitEmployes()">Réinitialiser</button>
+    <button type="button" class="btn btn-light" (click)="resetForm()">Réinitialiser</button>
   </div>
 </div>
 <hr>
@@ -98,7 +98,7 @@
               <div class="col form-group text-right">
                 <button *ngIf="!employe.controls.deleteRequest.value" class="btn btn-primary" (click)="saveEmploye(employe)" [disabled]="employe.pristine">Enregistrer</button>
                 <span *ngIf="!employe.controls.deleteRequest.value" class="delete-employe-link" (click)="askForDeleteEmploye(employe)">Supprimer</span>
-                <span *ngIf="employe.controls.deleteRequest.value">Êtes-vous vraiment sûr ? <button class="btn btn-link" (click)="cancelDeleteEmploye(employe)">Non, annuler !</button><button class="btn btn-danger" (click)="deleteEmploye(employe)">Oui, supprimer.</button>
+                <span *ngIf="employe.controls.deleteRequest.value">Êtes-vous vraiment sûr ? <button class="btn btn-danger" (click)="deleteEmploye(employe)">Oui, supprimer.</button><button class="btn btn-link" (click)="cancelDeleteEmploye(employe)">Non, annuler !</button>
                 </span>
               </div>
             </div>
