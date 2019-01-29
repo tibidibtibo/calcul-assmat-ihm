@@ -96,12 +96,10 @@
             <!-- Actions -->
             <div class="row">
               <div class="col form-group text-right">
-                <button class="btn btn-primary" (click)="saveEmploye(employe)"
-                    [disabled]="employe.pristine || employe.controls.saved.value">
-                  <span *ngIf="!employe.controls.saved.value">Enregistrer</span>
-                  <span *ngIf="employe.controls.saved.value">Enregistré !</span>
-                </button>
-                <span class="delete-employe-link" (click)="deleteEmploye(employe.id, deleteModalTemplate)">Supprimer</span>
+                <button *ngIf="!employe.controls.deleteRequest.value" class="btn btn-primary" (click)="saveEmploye(employe)" [disabled]="employe.pristine">Enregistrer</button>
+                <span *ngIf="!employe.controls.deleteRequest.value" class="delete-employe-link" (click)="askForDeleteEmploye(employe)">Supprimer</span>
+                <span *ngIf="employe.controls.deleteRequest.value">Êtes-vous vraiment sûr ? <button class="btn btn-link" (click)="cancelDeleteEmploye(employe)">Non, annuler !</button><button class="btn btn-danger" (click)="deleteEmploye(employe)">Oui, supprimer.</button>
+                </span>
               </div>
             </div>
           </accordion-group>
@@ -111,24 +109,3 @@
   </div>
 </div>
 
-<ng-template #deleteModalTemplate>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Suppression</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()" [disabled]="toDelete.deleteEnCours">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>Voulez-vous vraiment supprimer <strong>{{toDelete.name}}</strong> du paramétrage ?</p>
-    <div class="row">
-      <div class="col text-right">
-        <button type="button" class="btn btn-light" (click)="declineDeletion()" [disabled]="toDelete.deleteEnCours">Annuler</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDeletion(toDelete.deleteFunction, toDelete.id)"
-          [disabled]="toDelete.deleteEnCours">
-          <span><i *ngIf="toDelete.deleteEnCours" class="fa fa-spinner fa-spin fa-fw"></i></span>
-          <span *ngIf="!toDelete.deleteEnCours">Supprimer</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</ng-template>

@@ -1,13 +1,12 @@
 import { ModelEmploye } from './../../../../models/characters/ModelEmploye';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { Component, Input, TemplateRef, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
-import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap';
 
-import { Employe } from './../../../../models/employe';
 import { HttpService } from './../../../../services/http.service';
 
 @Component({
@@ -30,21 +29,15 @@ export class ParametrageEmployeComponent implements OnInit {
   public employeForm: FormGroup;
   public employes;
   public modelEmploye = {};
-  public modalRef: BsModalRef;
-  public toDelete;
   public modelLoaded: boolean = false;
 
   // Init
   ngOnInit() {
     this._asyncEmployesInputs.subscribe(data => {
       this.employes = data;
-
       this.employeForm = this.createFormGroup(this.employes);
-
       this.modelLoaded = true;
-      console.log(this.employeForm)
     });
-
   }
 
   // Constructor
@@ -52,10 +45,9 @@ export class ParametrageEmployeComponent implements OnInit {
 
   // Privates Methods
   private createFormGroup(employes: Array<ModelEmploye>): FormGroup {
-    var mainFormGroup = this.formBuilder.group({
+    return this.formBuilder.group({
       employes: this.formBuilder.array(this.buildEmployeFormArray(employes))
     });
-    return mainFormGroup;
   }
 
   private buildEmployeFormArray(employes: Array<ModelEmploye>): Array<FormGroup> {
@@ -85,12 +77,8 @@ export class ParametrageEmployeComponent implements OnInit {
         indemniteInf: new FormControl(employe.indemnitesEntretien.indemniteInf),
         indemniteSup: new FormControl(employe.indemnitesEntretien.indemniteSup)
       }),
-      saved: new FormControl(false)
+      deleteRequest: new FormControl(false)
     });
-  }
-
-  private deleteEmployeService(employeId, httpService) {
-    return httpService.deleteParamEmploye(employeId);
   }
 
   // Public methods
@@ -101,48 +89,42 @@ export class ParametrageEmployeComponent implements OnInit {
 
   public saveEmploye(employe: FormGroup) {
 
-    console.log(employe.controls.saved.value)
-    employe.controls.saved.setValue(true);
-    // TODO : save and reset employe group
-    // this.httpService.updateParamEmploye(employeId, this.modelEmploye[employeId]).subscribe(ok => {
-    //   this.modalRef = this.modalService.show(savedTemplate);
-    //   // this.loadData(); // TODO : event reload
-    // }, ko => {
-    //   console.log(ko);
-    // })
+    this.httpService.updateParamEmploye(employe.value.id, employe.value).subscribe((response: ModelEmploye) => {
+      this.updateData(response);
+    }, ko => {
+      console.log(ko);
+    })
   }
 
-  public deleteEmploye(employeId, template: TemplateRef<any>) {
-    this.toDelete = {
-      id: employeId,
-      name:
-        this.modelEmploye[employeId].prenom +
-        " " +
-        this.modelEmploye[employeId].nom,
-      deleteFunction: this.deleteEmployeService,
-      deleteEnCours: false
-    };
-    this.openDeleteModal(template);
+  private updateData(employe: ModelEmploye) {
+    var employeToUpdate = this.employes.find( emp => {
+      return emp.id === employe.id;
+    });
+    let index = this.employes.indexOf(employeToUpdate);
+    this.employes[index] = employe;
+    this.employeForm = this.createFormGroup(this.employes);
   }
 
-  public confirmDeletion(deleteFunction, paramId) {
-    this.toDelete.deleteEnCours = true;
-    deleteFunction(paramId, this.httpService).subscribe(
+  public deleteEmploye(employe: FormGroup) {
+    this.httpService.deleteParamEmploye(employe.controls.id.value).subscribe(
       ok => {
-        // this.loadData(); // TODO : event reload
-        this.toDelete.deleteEnCours = false;
-        this.modalRef.hide();
+        var employeToRemove = this.employes.find( emp => {
+          return emp.id === employe.controls.id.value;
+        });
+        this.employes.splice(this.employes.indexOf(employeToRemove), 1);
+        this.employeForm = this.createFormGroup(this.employes);
       }, ko => {
-        this.toDelete.deleteEnCours = false;
       }
     );
+    employe.controls.deleteRequest.setValue(false);
   }
 
-  public declineDeletion() {
-    this.modalRef.hide();
+  public askForDeleteEmploye(employe: FormGroup) {
+    employe.controls.deleteRequest.setValue(true);
   }
 
-  private openDeleteModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  public cancelDeleteEmploye(employe: FormGroup) {
+    employe.controls.deleteRequest.setValue(false);
   }
+
 }

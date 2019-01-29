@@ -1,12 +1,12 @@
 <div>
   <tabset [justified]="true">
 
-    <tab heading="Enfants" id="enfants-tab" *ngIf="enfantsLoaded">
-      <parametrage-enfant [refEnfants]="refEnfants"></parametrage-enfant>
-    </tab>
-
     <tab heading="Employés" id="employes-tab" *ngIf="employesLoaded">
       <parametrage-employe [refEmployes]="employes"></parametrage-employe>
+    </tab>
+
+    <tab heading="Enfants" id="enfants-tab" *ngIf="enfantsLoaded">
+      <parametrage-enfant [refEnfants]="refEnfants"></parametrage-enfant>
     </tab>
 
   </tabset>
