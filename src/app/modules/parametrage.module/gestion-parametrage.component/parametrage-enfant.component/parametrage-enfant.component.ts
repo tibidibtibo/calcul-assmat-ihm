@@ -12,6 +12,7 @@ import { ModelParamEnfant } from '../../../../models/parametrage/ModelParamEnfan
 import { ModelEnfant } from '../../../../models/characters/ModelEnfant';
 import { ModelHorairesEcole } from '../../../../models/parametrage/ModelHorairesEcole';
 import { ModelEmployeInfo } from '../../../../models/parametrage/ModelEmployeInfo';
+import { HeureNormale } from '../../../../models/parametrage/HeureNormale';
 
 @Component({
   selector: "parametrage-enfant",
@@ -35,18 +36,16 @@ export class ParametrageEnfantComponent implements OnInit {
   public employes;
   public typesGarde;
   public modelEnfant: Object;
-  public modalRef: BsModalRef;
   public toDelete;
-  public mapJours = this.constantes.MAP_JOURS;
   public employeSelected = {};
   public modelLoaded: boolean = false;
+  public mapJours = this.constantes.MAP_JOURS;
   public TYPE_PERISCOLAIRE;
   public TYPE_TEMPS_PLEIN;
 
   // Constructor
   constructor(private formBuilder: FormBuilder,
     public httpService: HttpService,
-    private modalService: BsModalService,
     private constantes: ConstService
   ) { }
 
@@ -59,8 +58,6 @@ export class ParametrageEnfantComponent implements OnInit {
 
       this.enfantsForm = this.createFormGroup(this.enfants);
       console.log(this.enfantsForm);
-      this.modelEnfant = ModelParamEnfant.buildMapParamEnfants(this.enfants);
-      console.log(this.modelEnfant);
       this.modelLoaded = true;
 
       this.TYPE_PERISCOLAIRE = this.constantes.findByCode(this.typesGarde, "PERISCOLAIRE");
@@ -87,12 +84,16 @@ export class ParametrageEnfantComponent implements OnInit {
   }
 
   private enfantToFormGroup(enfant: ModelEnfant): FormGroup {
-    var formGroup = new FormGroup({
+    var formGroup = this.formBuilder.group({
       id: new FormControl(enfant.id),
       nom: new FormControl(enfant.nom),
-      typeGarde: new FormControl(enfant.typeGarde),
-      employes: this.formBuilder.array(this.buildFormEmployes(enfant.employes))
+      typeGarde: new FormControl(enfant.typeGarde)
     });
+
+    if(enfant.employes && enfant.employes.length > 0) {
+      formGroup.addControl('employes', this.formBuilder.array(this.buildFormEmployes(enfant.employes)));
+    }
+
     if (enfant.horairesEcole && enfant.horairesEcole.length > 0) {
       formGroup.addControl('horairesEcole', this.formBuilder.array(this.buildFormHorairesEcole(enfant.horairesEcole)));
     }
@@ -113,17 +114,38 @@ export class ParametrageEnfantComponent implements OnInit {
     })
     return groups;
   }
-  private buildFormEmployes(horaires: Array<ModelEmployeInfo>): Array<FormGroup> {
-    // TODO
-    return null;
+  private buildFormEmployes(employes: Array<ModelEmployeInfo>): Array<FormGroup> {
+    var groups: Array<FormGroup> = [];
+    employes.forEach((employe: ModelEmployeInfo) => {
+      var group: FormGroup = this.buildEmployeGroup(employe);
+      groups.push(group);
+    })
+    return groups;
   }
 
-  private openDeleteModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  private buildEmployeGroup(employe: ModelEmployeInfo): FormGroup {
+    return new FormGroup({
+      arEcoleKm: new FormControl(employe.arEcoleKm),
+      heuresNormalesMensualisees: new FormControl(employe.heuresNormalesMensualisees),
+      salaireNetMensualise: new FormControl(employe.salaireNetMensualise),
+      heuresNormales: this.formBuilder.array(this.buildHeuresNormalesForm(employe.heuresNormales))
+    });
   }
 
-  private deleteEnfantService(enfantId, httpService) {
-    return httpService.deleteParamEnfant(enfantId);
+  private buildHeuresNormalesForm(heuresNormales: Array<HeureNormale>): Array<FormGroup> {
+    var heuresForm: Array<FormGroup> = [];
+    heuresNormales.forEach(heure => {
+      var heureGroup: FormGroup = this.buildHeureForm(heure);
+      heuresForm.push(heureGroup);
+    });
+    return heuresForm;
+  }
+
+  private buildHeureForm(heure: HeureNormale): FormGroup {
+    return this.formBuilder.group({
+      jour: new FormControl(heure.jour),
+      heures: new FormControl(heure.heures)
+    });
   }
 
   // Public methods
@@ -133,52 +155,32 @@ export class ParametrageEnfantComponent implements OnInit {
     this.modelLoaded = true;
   }
 
-  public saveEnfant(enfantId) {
+  public saveEnfant(enfant) {
     // TODO TDU
-    console.log(this.modelEnfant[enfantId]);
-    this.httpService.updateParamEnfant(enfantId, this.modelEnfant[enfantId]).subscribe(ok => {
-      console.log(ok);
-    }, ko => {
-      console.log(ko);
-    })
+    console.log(enfant);
+    // this.httpService.updateParamEnfant(enfantId, this.modelEnfant[enfantId]).subscribe(ok => {
+    //   console.log(ok);
+    // }, ko => {
+    //   console.log(ko);
+    // })
   }
 
-  public okModalSave() {
-    this.modalRef.hide();
-  }
-  public deleteEnfant(enfantId, template: TemplateRef<any>) {
-    this.toDelete = {
-      id: enfantId,
-      name: this.modelEnfant[enfantId].nom,
-      deleteFunction: this.deleteEnfantService,
-      deleteEnCours: false
-    };
-    this.openDeleteModal(template);
+  public deleteEnfant(enfant: FormGroup) {
+    // TODO
+    // this.httpService.deleteParamEnfant(enfant.controls.id.value).subscribe(
+    //   ok => {
+    //   }, ko => {
+    //   }
+    // );
   }
 
-  public confirmDeletion(deleteFunction, paramId) {
-    this.toDelete.deleteEnCours = true;
-    deleteFunction(paramId, this.httpService).subscribe(
-      ok => {
-        // this.loadData(); // FIXME : reload
-        this.toDelete.deleteEnCours = false;
-        this.modalRef.hide();
-      }, ko => {
-        this.toDelete.deleteEnCours = false;
-      }
-    );
-  }
-
-  public declineDeletion() {
-    this.modalRef.hide();
-  }
-
-  public onChangeTypeGarde(enfantId) {
-    if (this.modelEnfant[enfantId].typeGarde === this.TYPE_PERISCOLAIRE.code) {
-      this.modelEnfant[enfantId].resetHorairesEcole(this.constantes.MAP_JOURS);
-    } else if (this.modelEnfant[enfantId].typeGarde === this.TYPE_TEMPS_PLEIN.code) {
-      this.modelEnfant[enfantId].removeHorairesEcole();
-    }
+  public onChangeTypeGarde(enfant: FormGroup) {
+    // TODO
+    // if (this.modelEnfant[enfantId].typeGarde === this.TYPE_PERISCOLAIRE.code) {
+    //   this.modelEnfant[enfantId].resetHorairesEcole(this.constantes.MAP_JOURS);
+    // } else if (this.modelEnfant[enfantId].typeGarde === this.TYPE_TEMPS_PLEIN.code) {
+    //   this.modelEnfant[enfantId].removeHorairesEcole();
+    // }
   }
 
   public addSelectedEmploye(enfantId, employeSelected) {

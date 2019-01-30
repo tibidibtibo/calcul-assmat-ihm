@@ -10,7 +10,7 @@
 <div class="row" *ngIf="modelLoaded">
   <div class="col">
 
-    <form [formGroup]="enfantrsForm" *ngIf="modelEnfant[enfant.id]">
+    <form [formGroup]="enfantsForm">
       <div formArrayName="enfants">
 
         <accordion [closeOthers]="true">
@@ -21,17 +21,17 @@
                 <label>Nom</label>
                 <input type="text" class="form-control" [formControl]="enfant.controls.nom"  />
               </div>
-              <!-- <div class="col form-group">
+              <div class="col form-group">
                 <label>Type de garde</label>
-                <select [(ngModel)]="modelEnfant[enfant.id].typeGarde" name="typeGarde{{enfant.id}}" class="custom-select"
-                  (change)="onChangeTypeGarde(enfant.id)">
+                <select [formControl]="enfant.controls.typeGarde" class="custom-select"
+                  (change)="onChangeTypeGarde(enfant)">
                   <option *ngFor="let type of typesGarde" [ngValue]="type.code">{{type.libelle}}</option>
                 </select>
-              </div> -->
+              </div>
             </div>
 
-            <!-- TODO : mettre sous forme d'input horaire
-            <div class="row" *ngIf="modelEnfant[enfant.id].horairesEcole && modelEnfant[enfant.id].typeGarde === TYPE_PERISCOLAIRE.code">
+            <!-- TODO : mettre sous forme d'input horaire -->
+             <div class="row" *ngIf="enfant.controls.horairesEcole && enfant.controls.typeGarde.value === TYPE_PERISCOLAIRE.code">
               <div class="col form-group">
                 <label>Horaires école</label>
 
@@ -46,19 +46,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let horaire of modelEnfant[enfant.id].horairesEcole">
-                      <td>{{mapJours[horaire.jour]}}</td>
+                    <tr *ngFor="let horaire of enfant.controls.horairesEcole.controls">
+                      <td>{{mapJours[horaire.controls.jour.value]}}</td>
                       <td>
-                        <input type="text" class="form-control" name="am{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am" />
+                        <input type="text" class="form-control" [formControl]="horaire.controls.am" />
                       </td>
                       <td>
-                        <input type="text" class="form-control" name="dm{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm" />
+                        <input type="text" class="form-control" [formControl]="horaire.controls.dm" />
                       </td>
                       <td>
-                        <input type="text" class="form-control" name="aa{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa" />
+                        <input type="text" class="form-control" [formControl]="horaire.controls.aa" />
                       </td>
                       <td>
-                        <input type="text" class="form-control" name="da{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da" />
+                        <input type="text" class="form-control" [formControl]="horaire.controls.da" />
                       </td>
                     </tr>
                   </tbody>
@@ -73,54 +73,50 @@
               </div>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
               <div class="col form-group text-right">
-                <label for="empRefs{{enfant.id}}">Liste des employés</label>
+                <label>Liste des employés</label>
               </div>
               <div class="col form-group">
-                <select class="form-control" name="empRefs{{enfant.id}}" [(ngModel)]="employeSelected[enfant.id]">
+                <select class="form-control" [(ngModel)]="employeSelected[enfant.id]">
                   <option *ngFor="let empRef of employes">{{empRef.nom}}</option>
                 </select>
               </div>
               <div class="col form-group">
                 <button class="btn btn-default" (click)="addSelectedEmploye(enfant.id, employeSelected[enfant.id])">Ajouter</button>
               </div>
-            </div>
+            </div> -->
 
             <div class="row">
               <div class="col form-group">
                 <div>
                   <ul class="list-group">
-                    <li *ngFor="let employe of modelEnfant[enfant.id].employes" class="list-group-item">
+                    <li *ngFor="let employe of enfant.controls.employes.controls" class="list-group-item">
 
                       <div class="row">
                         <div class="col">
-                          <h6>{{employe.paramEmploye.nom}}</h6>
+                          <h6>{{employe.controls.nom}}</h6>
                         </div>
                         <div class="col text-right">
-                          <button class="btn btn-danger" (click)="removeEmployeFromParam(enfant.id, employe)" tooltip="Retirer l'employé '{{employe.paramEmploye.nom}}'"
-                            placement="left">
-                            <i class="fas fa-times"></i>
-                          </button>
+                          <!-- <button class="btn btn-danger" (click)="removeEmployeFromParam(enfant.id, employe)" tooltip="Retirer l'employé '{{employe.paramEmploye.nom}}'"
+                            placement="left"> -->
+                            <!-- <i class="fas fa-times"></i>
+                          </button> -->
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="col form-group">
-                          <label for="salaireNetMens{{enfant.id}}{{employe.paramEmploye.id}}">Salaire NET
-                            mensualisé</label>
-                          <input type="number" class="form-control" name="salaireNetMens{{enfant.id}}{{employe.paramEmploye.id}}"
-                            [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].salaireNetMensualise" />
+                          <label>Salaire NET mensualisé</label>
+                          <input type="number" class="form-control" [formControl]="employe.controls.salaireNetMensualise" />
                         </div>
                         <div class="col form-group">
-                          <label for="hNormMens{{enfant.id}}{{employe.paramEmploye.id}}">H. normales mensualisées</label>
-                          <input type="number" class="form-control" name="hNormMens{{enfant.id}}{{employe.paramEmploye.id}}"
-                            [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].heuresNormalesMensualisees" />
+                          <label>H. normales mensualisées</label>
+                          <input type="number" class="form-control" [formControl]="employe.controls.heuresNormalesMensualisees" />
                         </div>
                         <div class="col form-group">
-                          <label for="arEcoleKm{{enfant.id}}{{employe.paramEmploye.id}}">Distance AR école</label>
-                          <input type="number" class="form-control" name="arEcoleKm{{enfant.id}}{{employe.paramEmploye.id}}"
-                            [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].arEcoleKm" />
+                          <label>Distance AR école</label>
+                          <input type="number" class="form-control" [formControl]="employe.controls.arEcoleKm" />
                         </div>
                       </div>
 
@@ -130,14 +126,13 @@
                           <table class="table table-striped">
                             <thead>
                               <tr>
-                                <th *ngFor="let heureNormale of employe.heuresNormales" class="w-6-em" scope="col">{{mapJours[heureNormale.jour]}}</th>
+                                <th *ngFor="let heureNormale of employe.controls.heuresNormales.controls" class="w-6-em" scope="col">{{mapJours[heureNormale.controls.jour.value]}}</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-                                <td *ngFor="let heureNormale of employe.heuresNormales">
-                                  <input type="number" class="form-control" name="hn{{enfant.id}}{{heureNormale.jour}}"
-                                    [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].mapHeuresNormales[heureNormale.jour].heures" />
+                                <td *ngFor="let heureNormale of employe.controls.heuresNormales.controls">
+                                  <input type="number" class="form-control" [formControl]="heureNormale.controls.heures" />
                                 </td>
                               </tr>
                             </tbody>
@@ -153,52 +148,13 @@
 
             <div class="row">
               <div class="col form-group text-right">
-                <button class="btn btn-primary" (click)="saveEnfant(enfant.id)">Enregistrer</button>
-                <span class="delete-employe-link" (click)="deleteEnfant(enfant.id, deleteModalTemplate)">Supprimer</span>
+                <button class="btn btn-primary" (click)="saveEnfant(enfant)">Enregistrer</button>
+                <span class="delete-employe-link" (click)="deleteEnfant(enfant)">Supprimer</span>
               </div>
-            </div> -->
+            </div>
           </accordion-group>
         </accordion>
       </div>
     </form>
   </div>
 </div>
-
-<ng-template #deleteModalTemplate>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Suppression</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()" [disabled]="toDelete.deleteEnCours">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>Voulez-vous vraiment supprimer <strong>{{toDelete.name}}</strong> du paramétrage ?</p>
-    <div class="row">
-      <div class="col text-right">
-        <button type="button" class="btn btn-light" (click)="declineDeletion()" [disabled]="toDelete.deleteEnCours">Annuler</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDeletion(toDelete.deleteFunction, toDelete.id)"
-          [disabled]="toDelete.deleteEnCours">
-          <span><i *ngIf="toDelete.deleteEnCours" class="fa fa-spinner fa-spin fa-fw"></i></span>
-          <span *ngIf="!toDelete.deleteEnCours">Supprimer</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #savedTemplate>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Enregistré</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>Paramétrage enregistré !</p>
-    <div class="row">
-      <div class="col text-right">
-        <button type="button" class="btn btn-light" (click)="okModalSave()">Ok</button>
-      </div>
-    </div>
-  </div>
-</ng-template>
