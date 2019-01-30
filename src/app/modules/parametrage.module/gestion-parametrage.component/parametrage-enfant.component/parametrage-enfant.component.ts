@@ -93,16 +93,25 @@ export class ParametrageEnfantComponent implements OnInit {
       typeGarde: new FormControl(enfant.typeGarde),
       employes: this.formBuilder.array(this.buildFormEmployes(enfant.employes))
     });
-    if(enfant.horairesEcole && enfant.horairesEcole.length > 0) {
+    if (enfant.horairesEcole && enfant.horairesEcole.length > 0) {
       formGroup.addControl('horairesEcole', this.formBuilder.array(this.buildFormHorairesEcole(enfant.horairesEcole)));
     }
     return formGroup;
   }
 
   private buildFormHorairesEcole(horaires: Array<ModelHorairesEcole>): Array<FormGroup> {
-    // TODO
-    if(horaires)
-    return null;
+    var groups: Array<FormGroup> = [];
+    horaires.forEach((horaire: ModelHorairesEcole) => {
+      var groupHoraire: FormGroup = new FormGroup({
+        jour: new FormControl(horaire.jour),
+        am: new FormControl(horaire.horairesJournaliersEcole.am),
+        dm: new FormControl(horaire.horairesJournaliersEcole.dm),
+        aa: new FormControl(horaire.horairesJournaliersEcole.aa),
+        da: new FormControl(horaire.horairesJournaliersEcole.da)
+      });
+      groups.push(groupHoraire);
+    })
+    return groups;
   }
   private buildFormEmployes(horaires: Array<ModelEmployeInfo>): Array<FormGroup> {
     // TODO

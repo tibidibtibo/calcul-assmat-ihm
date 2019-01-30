@@ -9,157 +9,158 @@
 <hr>
 <div class="row" *ngIf="modelLoaded">
   <div class="col">
-    <accordion [closeOthers]="true">
-      <accordion-group *ngFor="let enfant of enfants" panelClass="acc-header">
-        <div accordion-heading><strong>{{enfant.nom}}</strong></div>
-        <i *ngIf="!modelEnfant[enfant.id]" class="fa fa-spinner fa-spin fa-fw"></i>
-        <form name="form{{enfant.id}}" *ngIf="modelEnfant[enfant.id]">
 
-          <div class="row">
-            <div class="col form-group">
-              <label for="nom{{enfant.id}}">Nom</label>
-              <input type="text" class="form-control" name="nom{{enfant.id}}" [(ngModel)]="modelEnfant[enfant.id].nom" />
+    <form [formGroup]="enfantrsForm" *ngIf="modelEnfant[enfant.id]">
+      <div formArrayName="enfants">
+
+        <accordion [closeOthers]="true">
+          <accordion-group *ngFor="let enfant of enfantsForm.controls.enfants.controls" panelClass="acc-header">
+            <div accordion-heading><strong>{{enfant.controls.nom.value}}</strong></div>
+            <div class="row">
+              <div class="col form-group">
+                <label>Nom</label>
+                <input type="text" class="form-control" [formControl]="enfant.controls.nom"  />
+              </div>
+              <!-- <div class="col form-group">
+                <label>Type de garde</label>
+                <select [(ngModel)]="modelEnfant[enfant.id].typeGarde" name="typeGarde{{enfant.id}}" class="custom-select"
+                  (change)="onChangeTypeGarde(enfant.id)">
+                  <option *ngFor="let type of typesGarde" [ngValue]="type.code">{{type.libelle}}</option>
+                </select>
+              </div> -->
             </div>
-            <div class="col form-group">
-              <label for="typeGarde{{enfant.id}}">Type de garde</label>
-              <select [(ngModel)]="modelEnfant[enfant.id].typeGarde" name="typeGarde{{enfant.id}}" class="custom-select"
-                (change)="onChangeTypeGarde(enfant.id)">
-                <option *ngFor="let type of typesGarde" [ngValue]="type.code">{{type.libelle}}</option>
-              </select>
-            </div>
-          </div>
 
-          <!-- TODO : mettre sous forme d'input horaire -->
-          <div class="row" *ngIf="modelEnfant[enfant.id].horairesEcole && modelEnfant[enfant.id].typeGarde === TYPE_PERISCOLAIRE.code">
-            <div class="col form-group">
-              <label>Horaires école</label>
+            <!-- TODO : mettre sous forme d'input horaire
+            <div class="row" *ngIf="modelEnfant[enfant.id].horairesEcole && modelEnfant[enfant.id].typeGarde === TYPE_PERISCOLAIRE.code">
+              <div class="col form-group">
+                <label>Horaires école</label>
 
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Arr. matin</th>
-                    <th>Dép. matin</th>
-                    <th>Arr. AM</th>
-                    <th>Dép. AM</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let horaire of modelEnfant[enfant.id].horairesEcole">
-                    <td>{{mapJours[horaire.jour]}}</td>
-                    <td>
-                      <input type="text" class="form-control" name="am{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am" />
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" name="dm{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm" />
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" name="aa{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa" />
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" name="da{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Arr. matin</th>
+                      <th>Dép. matin</th>
+                      <th>Arr. AM</th>
+                      <th>Dép. AM</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let horaire of modelEnfant[enfant.id].horairesEcole">
+                      <td>{{mapJours[horaire.jour]}}</td>
+                      <td>
+                        <input type="text" class="form-control" name="am{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].am" />
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" name="dm{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].dm" />
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" name="aa{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].aa" />
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" name="da{{enfant.id}}{{horaire.jour}}" [(ngModel)]="modelEnfant[enfant.id].mapHorairesEcole[horaire.jour].da" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <label>Employés</label>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col form-group text-right">
-              <label for="empRefs{{enfant.id}}">Liste des employés</label>
-            </div>
-            <div class="col form-group">
-              <select class="form-control" name="empRefs{{enfant.id}}" [(ngModel)]="employeSelected[enfant.id]">
-                <option *ngFor="let empRef of employes">{{empRef.nom}}</option>
-              </select>
-            </div>
-            <div class="col form-group">
-              <button class="btn btn-default" (click)="addSelectedEmploye(enfant.id, employeSelected[enfant.id])">Ajouter</button>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col form-group">
-              <div>
-                <ul class="list-group">
-                  <li *ngFor="let employe of modelEnfant[enfant.id].employes" class="list-group-item">
-
-                    <div class="row">
-                      <div class="col">
-                        <h6>{{employe.paramEmploye.nom}}</h6>
-                      </div>
-                      <div class="col text-right">
-                        <button class="btn btn-danger" (click)="removeEmployeFromParam(enfant.id, employe)"
-                        tooltip="Retirer l'employé '{{employe.paramEmploye.nom}}'"
-                          placement="left">
-                          <i class="fas fa-times"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col form-group">
-                        <label for="salaireNetMens{{enfant.id}}{{employe.paramEmploye.id}}">Salaire NET
-                          mensualisé</label>
-                        <input type="number" class="form-control" name="salaireNetMens{{enfant.id}}{{employe.paramEmploye.id}}"
-                          [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].salaireNetMensualise" />
-                      </div>
-                      <div class="col form-group">
-                        <label for="hNormMens{{enfant.id}}{{employe.paramEmploye.id}}">H. normales mensualisées</label>
-                        <input type="number" class="form-control" name="hNormMens{{enfant.id}}{{employe.paramEmploye.id}}"
-                          [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].heuresNormalesMensualisees" />
-                      </div>
-                      <div class="col form-group">
-                        <label for="arEcoleKm{{enfant.id}}{{employe.paramEmploye.id}}">Distance AR école</label>
-                        <input type="number" class="form-control" name="arEcoleKm{{enfant.id}}{{employe.paramEmploye.id}}"
-                          [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].arEcoleKm" />
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col form-group">
-                        <label>Heures normales par jour</label>
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th *ngFor="let heureNormale of employe.heuresNormales" class="w-6-em" scope="col">{{mapJours[heureNormale.jour]}}</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td *ngFor="let heureNormale of employe.heuresNormales">
-                                <input type="number" class="form-control" name="hn{{enfant.id}}{{heureNormale.jour}}"
-                                  [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].mapHeuresNormales[heureNormale.jour].heures" />
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-
-                  </li>
-                </ul>
               </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col form-group text-right">
-              <button class="btn btn-primary" (click)="saveEnfant(enfant.id)">Enregistrer</button>
-              <span class="delete-employe-link" (click)="deleteEnfant(enfant.id, deleteModalTemplate)">Supprimer</span>
+            <div class="row">
+              <div class="col">
+                <label>Employés</label>
+              </div>
             </div>
-          </div>
-        </form>
-      </accordion-group>
-    </accordion>
+
+            <div class="row">
+              <div class="col form-group text-right">
+                <label for="empRefs{{enfant.id}}">Liste des employés</label>
+              </div>
+              <div class="col form-group">
+                <select class="form-control" name="empRefs{{enfant.id}}" [(ngModel)]="employeSelected[enfant.id]">
+                  <option *ngFor="let empRef of employes">{{empRef.nom}}</option>
+                </select>
+              </div>
+              <div class="col form-group">
+                <button class="btn btn-default" (click)="addSelectedEmploye(enfant.id, employeSelected[enfant.id])">Ajouter</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col form-group">
+                <div>
+                  <ul class="list-group">
+                    <li *ngFor="let employe of modelEnfant[enfant.id].employes" class="list-group-item">
+
+                      <div class="row">
+                        <div class="col">
+                          <h6>{{employe.paramEmploye.nom}}</h6>
+                        </div>
+                        <div class="col text-right">
+                          <button class="btn btn-danger" (click)="removeEmployeFromParam(enfant.id, employe)" tooltip="Retirer l'employé '{{employe.paramEmploye.nom}}'"
+                            placement="left">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col form-group">
+                          <label for="salaireNetMens{{enfant.id}}{{employe.paramEmploye.id}}">Salaire NET
+                            mensualisé</label>
+                          <input type="number" class="form-control" name="salaireNetMens{{enfant.id}}{{employe.paramEmploye.id}}"
+                            [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].salaireNetMensualise" />
+                        </div>
+                        <div class="col form-group">
+                          <label for="hNormMens{{enfant.id}}{{employe.paramEmploye.id}}">H. normales mensualisées</label>
+                          <input type="number" class="form-control" name="hNormMens{{enfant.id}}{{employe.paramEmploye.id}}"
+                            [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].heuresNormalesMensualisees" />
+                        </div>
+                        <div class="col form-group">
+                          <label for="arEcoleKm{{enfant.id}}{{employe.paramEmploye.id}}">Distance AR école</label>
+                          <input type="number" class="form-control" name="arEcoleKm{{enfant.id}}{{employe.paramEmploye.id}}"
+                            [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].arEcoleKm" />
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col form-group">
+                          <label>Heures normales par jour</label>
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th *ngFor="let heureNormale of employe.heuresNormales" class="w-6-em" scope="col">{{mapJours[heureNormale.jour]}}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td *ngFor="let heureNormale of employe.heuresNormales">
+                                  <input type="number" class="form-control" name="hn{{enfant.id}}{{heureNormale.jour}}"
+                                    [(ngModel)]="modelEnfant[enfant.id].mapEmployes[employe.paramEmploye.id].mapHeuresNormales[heureNormale.jour].heures" />
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col form-group text-right">
+                <button class="btn btn-primary" (click)="saveEnfant(enfant.id)">Enregistrer</button>
+                <span class="delete-employe-link" (click)="deleteEnfant(enfant.id, deleteModalTemplate)">Supprimer</span>
+              </div>
+            </div> -->
+          </accordion-group>
+        </accordion>
+      </div>
+    </form>
   </div>
 </div>
 
